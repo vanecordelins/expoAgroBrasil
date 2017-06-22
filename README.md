@@ -1,7 +1,7 @@
 Repositório do projeto ExpoAgro Brasil para a disciplina de Projetão do curso de Bacharelado em Ciência da Computação da UFRPE-UAG 
 
 
-![alt text](http://url/to/imagem_logo_readme.png)
+![alt text](https://github.com/vanecordelins/expoAgroBrasil/blob/master/imagem_logo_readme.png)
 
 
 
