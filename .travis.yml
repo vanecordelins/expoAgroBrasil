@@ -1,32 +1,15 @@
-#https://docs.travis-ci.com/user/customizing-the-build/variaveis
+
 language: android
 jdk: oraclejdk8
 sudo: false
-env:  #adicionado 22/06 - 15:17
-  global:
-    - ANDROID_TARGET=android-15
-    - ANDROID_ABI=armeabi-v7a
-
-
 android:
   components:
-    # Update Android SDK Tools
-    - tools   #adicionado 22/06 - 14:53
-    # The BuildTools version used by your project
-    - platform-tools #adicionado 22/06 - 15:17
     - build-tools-26.0.0
-    # The SDK version used to compile your project
     - android-26
-    # Additional components
     - extra-android-m2repository
     - extra-android-support
     - extra-google-m2repository
-    #- addon-google_apis-google-19
-
-    # system image to run emulator(s) during tests
-    #- sys-img-armeabi-v7a-android-26
-    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}   #adicionado 22/06 - 15:19
-    
+    - sys-img-armeabi-v7a-android-26
   licenses:
     - android-sdk-preview-license-.+
     - android-sdk-license-.+
@@ -36,7 +19,6 @@ android:
 before_cache:
     - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
     - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-    
 cache:
     directories:
     - $HOME/.gradle/caches/
@@ -44,25 +26,16 @@ cache:
     - $HOME/.android/build-cache
     
 before_script:
-    - android list target
-    # Emulator Management: Create, Start and Wait
     - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
     - emulator -avd test -no-skin -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
     
-#script: ./gradlew build connectedCheck --stacktrace --info
 script: 
-    - ./gradlew build jacocoTestReport assembleAndroidTest  
-    - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI    #adicionado 22/06 - 15:19
-    - emulator -avd test -no-skin -no-audio -no-window & 
-    - android-wait-for-emulator
-    - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-    - ./gradlew connectedCheck
-    #- ./gradlew test
-    #- ./gradlew build connectedCheck -PdisablePreDex
-    #- chmod +x ./gradlew  #adicionado 22/06 - 14:53
-
+    - ./gradlew build jacocoTestReport assembleAndroidTest
+    - ./gradlew test
+    - ./gradlew build connectedCheck -PdisablePreDex
+    
 
 before_install:
     - chmod +x gradlew 
@@ -70,25 +43,18 @@ before_install:
     - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
     - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
     - pip install --user codecov
-    
 after_success:
-    #- codecov --file coverage/lcov.info --disable search
     - bash <(curl -s https://codecov.io/bash)
-    - git clone https://github.com/vanecordelins/expoAgroBrasil.git
-    - pwd
-    - ls
-    
+    - chmod +x backend.sh
+    - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+    - ./backend.sh $GITHUB_PASSHASH_PM $BRANCH
 after_failure:
-    #- git clone https://github.com/vanecordelins/expoAgroBrasil.git
-    - pwd
-    - ls
-    #- cp -a /home/travis/build/ddefb/expoAgroBrasil/app/build/reports/tests/testDebugUnitTest/. /dest/
-    #- cd expoAgroBrasil
-    #- git commit -m "Initial commit"
-    #- 
     - bash <(curl -s https://codecov.io/bash)
-
+    - chmod +x backend.sh
+    - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+    - ./backend.sh $GITHUB_PASSHASH_PM $BRANCH
     
+
 #install:
   #- echo y | android update sdk -u -a -t tools
   #- echo y | android update sdk -u -a -t platform-tools
@@ -101,4 +67,4 @@ after_failure:
 env:
   global:
     # install timeout in minutes (2 minutes by default)
-    - ADB_INSTALL_TIMEOUT=10
+    - ADB_INSTALL_TIMEOUT=20
