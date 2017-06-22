@@ -2,12 +2,18 @@
 language: android
 jdk: oraclejdk8
 sudo: false
+env:  #adicionado 22/06 - 15:17
+  global:
+    - ANDROID_TARGET=android-15
+    - ANDROID_ABI=armeabi-v7a
+
 
 android:
   components:
     # Update Android SDK Tools
     - tools   #adicionado 22/06 - 14:53
     # The BuildTools version used by your project
+    - platform-tools #adicionado 22/06 - 15:17
     - build-tools-26.0.0
     # The SDK version used to compile your project
     - android-26
@@ -18,7 +24,8 @@ android:
     #- addon-google_apis-google-19
 
     # system image to run emulator(s) during tests
-    - sys-img-armeabi-v7a-android-26
+    #- sys-img-armeabi-v7a-android-26
+    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}   #adicionado 22/06 - 15:19
     
   licenses:
     - android-sdk-preview-license-.+
@@ -46,10 +53,15 @@ before_script:
     
 #script: ./gradlew build connectedCheck --stacktrace --info
 script: 
-    - ./gradlew build jacocoTestReport assembleAndroidTest
-    - ./gradlew test
-    - ./gradlew build connectedCheck -PdisablePreDex
-    - chmod +x ./gradlew  #adicionado 22/06 - 14:53
+    - ./gradlew build jacocoTestReport assembleAndroidTest  
+    - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI    #adicionado 22/06 - 15:19
+    - emulator -avd test -no-skin -no-audio -no-window & 
+    - android-wait-for-emulator
+    - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+    - ./gradlew connectedCheck
+    #- ./gradlew test
+    #- ./gradlew build connectedCheck -PdisablePreDex
+    #- chmod +x ./gradlew  #adicionado 22/06 - 14:53
 
 
 before_install:
