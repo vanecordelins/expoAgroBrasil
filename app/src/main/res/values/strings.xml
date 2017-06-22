@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">ExpoAgro Brasil</string>
-    <string name="signed_in_fmt">Sign in.. %s</string>
-    <string name="sign_out">Sign out</string>
-    <string name="title_activity_login">LoginActivity</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Senha</string>
+    <string name="acao_login">Entrar</string>
+    <string name="acao_voltar">Voltar</string>
+    <string name="acao_login_curta">Entrar</string>
+    <string name="error_email_invalido">Endereço de email inválido</string>
+    <string name="error_senha_invalida">Insira a senha</string>
+    <string name="error_incorrect_password">Senha incorreta</string>
+    <string name="error_field_required">Campo obrigatório</string>
+    <string name="cadastre_se">Não é cadastrado? Cadastre-se</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
 </resources>
