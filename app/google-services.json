@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "484342406744",
+    "firebase_url": "https://expoagro-brasil.firebaseio.com",
+    "project_id": "expoagro-brasil",
+    "storage_bucket": "expoagro-brasil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484342406744:android:9a62667880b3e35b",
+        "android_client_info": {
+          "package_name": "com.expoagro.expoagrobrasil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484342406744-snq8hgu8i54rp61rtc93q9lrn0ifj755.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expoagro.expoagrobrasil",
+            "certificate_hash": "16b6a900654cf749152695aa8a65d89e3e3b07f4"
+          }
+        },
+        {
+          "client_id": "484342406744-dfo9dq0qf1oou2erg42qcm6ap343hogb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expoagro.expoagrobrasil",
+            "certificate_hash": "fc18f23f90a816fbbd82223ddf4d103ced07a064"
+          }
+        },
+        {
+          "client_id": "484342406744-hshk4maqt0k34pcmb8mgqfea8npdi5cj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATDoaP-9V1b4HxDqwGtJLFTxTOSKk_7Ag"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484342406744-hshk4maqt0k34pcmb8mgqfea8npdi5cj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

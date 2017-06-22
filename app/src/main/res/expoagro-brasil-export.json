@@ -1,0 +1,20 @@
+{
+  "Usuário" : {
+    "-KmgEoFR6EjeVATG-UKi" : {
+      "email" : "email",
+      "id" : "-KmgEoFR6EjeVATG-UKi",
+      "login" : "login1",
+      "nome" : "User1",
+      "senha" : "senha1",
+      "telefone" : "2222-9999"
+    },
+    "-KmgizmGtplK2mVLPMxu" : {
+      "email" : "email2",
+      "id" : "-KmgizmGtplK2mVLPMxu",
+      "login" : "login1",
+      "nome" : "User2",
+      "senha" : "senha1",
+      "telefone" : "2222-9999"
+    }
+  }
+}
