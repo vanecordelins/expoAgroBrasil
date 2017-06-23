@@ -1,7 +1,9 @@
-package com.expoagro.expoagrobrasil;
+package com.expoagro.expoagrobrasil.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.expoagro.expoagrobrasil.R;
 
 public class AnunciosActivity extends AppCompatActivity {
 
