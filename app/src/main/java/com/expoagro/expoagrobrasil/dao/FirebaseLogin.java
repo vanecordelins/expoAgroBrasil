@@ -1,10 +1,13 @@
 package com.expoagro.expoagrobrasil.dao;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.model.Usuario;
+import com.expoagro.expoagrobrasil.view.AnunciosActivity;
+import com.expoagro.expoagrobrasil.view.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -51,6 +54,8 @@ public class FirebaseLogin {
                             Toast.makeText(activity, "Não foi possível realizar o Login. Tente Novamente", Toast.LENGTH_LONG).show();
                         } else {
                             System.out.println("Autorizado.");
+                            Intent it = new Intent(activity, AnunciosActivity.class);
+                            activity.startActivity(it);
                         }
                     }
                 });

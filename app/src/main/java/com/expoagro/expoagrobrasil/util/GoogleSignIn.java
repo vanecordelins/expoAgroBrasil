@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
+import com.expoagro.expoagrobrasil.view.AnunciosActivity;
+import com.expoagro.expoagrobrasil.view.LoginActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -28,7 +30,7 @@ public class GoogleSignIn {
 
     private static final int RC_SIGN_IN = 9001;
 
-    public static void firebaseAuthWithGoogle(FirebaseAuth mAuth, Activity activity, GoogleSignInAccount acct) {
+    public static void firebaseAuthWithGoogle(FirebaseAuth mAuth, final Activity activity, GoogleSignInAccount acct) {
         System.out.println("firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -43,6 +45,9 @@ public class GoogleSignIn {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             System.out.println("signInWithCredential. " + "Not Successful." );
+                        } else {
+                            Intent it = new Intent(activity, AnunciosActivity.class);
+                            activity.startActivity(it);
                         }
                         // ...
                     }
@@ -55,7 +60,7 @@ public class GoogleSignIn {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
        //     mStatusTextView.setText(activity.getString(R.string.signed_in_fmt, acct.getDisplayName()));
-            System.out.println("true");
+            System.out.println("Google Sign In:Success");
         } else {
             // Signed out, show unauthenticated UI.
             System.out.println("false");
@@ -74,7 +79,7 @@ public class GoogleSignIn {
         System.out.println("saiu");
     }
 
-    public void getInfo() {
+    public static void getInfo() {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
