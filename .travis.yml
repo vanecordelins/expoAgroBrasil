@@ -32,11 +32,9 @@ before_script:
     - adb shell input keyevent 82 &
     
 script: 
-    #- ./gradlew build jacocoTestReport assembleAndroidTest
     - ./gradlew jacocoTestReport
     - ./gradlew test
     - ./gradlew connectedCheck
-    #- ./gradlew build connectedCheck -PdisablePreDex
     
 
 before_install:
@@ -56,6 +54,15 @@ after_failure:
     - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
     - ./backend.sh $GITHUB_PASSHASH_PM $BRANCH
     
+    
+addons:
+  sonarcloud:
+    organization: "expoagrobrasil" # the key of the org you chose at step #3
+    token:
+      secure: $SonarQube
+#script:
+  # other script steps might be done before running the actual analysis
+#  - sonar-scanner
 
 #install:
   #- echo y | android update sdk -u -a -t tools
