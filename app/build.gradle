@@ -1,3 +1,7 @@
+plugins {
+    id "org.sonarqube" version "2.2"
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco-android'
 
@@ -60,7 +64,7 @@ dependencies {
 sonarqube {
     properties {
         property "sonar.projectName", "ExpoAgroBrasil"
-        property "sonar.projectKey", "com.expoagrobrasil.app"//ID do projeto no sonarqube
+        property "sonar.projectKey", "com.expoagro.expoagrobrasil"//ID do projeto no sonarqube
         property "sonar.projectVersion", "1.0.0"
         property "sonar.junit.reportsPath", "${project.buildDir}/test-results/testDebugUnitTest, ${project.buildDir}/test-results/testReleaseUnitTest"
         property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/testDebugUnitTest.exec, ${project.buildDir}/jacoco/testReleaseUnitTest.exec"
