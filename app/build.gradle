@@ -56,6 +56,19 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
 
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "ExpoAgroBrasil"
+        property "sonar.projectKey", "com.expoagrobrasil.app"//ID do projeto no sonarqube
+        property "sonar.projectVersion", "1.0.0"
+        property "sonar.junit.reportsPath", "${project.buildDir}/test-results/testDebugUnitTest, ${project.buildDir}/test-results/testReleaseUnitTest"
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/testDebugUnitTest.exec, ${project.buildDir}/jacoco/testReleaseUnitTest.exec"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/testDebugUnitTest.exec, ${project.buildDir}/jacoco/testReleaseUnitTest.exec"//versao prior to 6.2
+        property "sonar.sourceEncoding", "UTF-8"
+    }
+}
+
 sourceSets {
     unitTest {
         java.srcDir file('src/androidTest/java')
