@@ -29,12 +29,12 @@ android {
             testCoverageEnabled true
         }
         release {
-            minifyEnabled true #alteração de false para true
+            minifyEnabled true           //alteração de false para true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     
-    dataBinding { #adição
+    dataBinding {                     //adição
         enabled = true
     }
 }
@@ -71,7 +71,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
 
-dependencies {  #adição
+dependencies {                    //adição
   compile support.appCompat
 
   testCompile assertJCore
