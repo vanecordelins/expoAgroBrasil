@@ -6,8 +6,7 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.model.Usuario;
-import com.expoagro.expoagrobrasil.view.AnunciosActivity;
-import com.expoagro.expoagrobrasil.view.LoginActivity;
+import com.expoagro.expoagrobrasil.controller.AnunciosActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -56,6 +55,7 @@ public class FirebaseLogin {
                             System.out.println("Autorizado.");
                             Intent it = new Intent(activity, AnunciosActivity.class);
                             activity.startActivity(it);
+                            activity.finish();
                         }
                     }
                 });
