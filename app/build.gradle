@@ -100,4 +100,3 @@ sourceSets {
         java.srcDir file('src/androidTest/java')
     }
 }
-
