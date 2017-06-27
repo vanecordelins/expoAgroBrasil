@@ -21,75 +21,47 @@ before_cache:
     - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
     directories:
-    #- $HOME/.gradle/caches/
     - $HOME/.gradle/
-    - $HOME/.gradle/wrapper/
     - $HOME/.sonar/cache
     - $HOME/.m2/repository
+    - $HOME/.android/build-cache
+    #- '.gradle'
     
+   
 before_script:
     - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
     - emulator -avd test -no-skin -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
     
-
-#script:
-# - ./gradlew build jacocoTestReport assembleAndroidTest
-#  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-#  - emulator -avd test -no-skin -no-audio -no-window &
-#  - android-wait-for-emulator
-#  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-#  - ./gradlew connectedCheck
-
-
+script:
+  # other script steps might be done before running the actual analysis
+   - ./gradlew build jacocoTestReport assembleAndroidTest
+  - ./gradlew connectedCheck
+  - ./gradlew sonarqube #adição
+  - ./gradlew build jacocoTestReport sonarqube connectedCheck -PdisablePreDex 
   
-script: 
-    - ./gradlew build jacocoTestReport sonarqube connectedCheck -PdisablePreDex 
-  #  - ./gradlew jacocoTestReport
-  #  - ./gradlew test
-  #  - ./gradlew connectedCheck
-    
-
 before_install:
     - chmod +x gradlew 
     - mkdir "$ANDROID_HOME/licenses" || true
     - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
     - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
     - pip install --user codecov
+    
 after_success:
     - bash <(curl -s https://codecov.io/bash)
-    #- chmod +x backend.sh
-    #- export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-    #- ./backend.sh $GITHUB_PASSHASH_PM $BRANCH   
-#after_failure:
-   # - bash <(curl -s https://codecov.io/bash)
-    #- chmod +x backend.sh
-    #- export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-    #- ./backend.sh $GITHUB_PASSHASH_PM $BRANCH
     
+after_failure:
+    - bash <(curl -s https://codecov.io/bash)
     
 addons:
   sonarcloud:
     organization: "expoagrobrasil" # the key of the org you chose at step #3
     token:
-      secure: $SonarQube
-    github_token:
-      secure: $SonarCloudKey #adição
-script:
-  # other script steps might be done before running the actual analysis
-  - sonar-scanner  #adição
+      secure: $SonarCloudKey
+    #github_token:
+    #  secure: 3be673877f25401ef4d79ebfc9021509805b4024 
 
-
-
-#install:
-  #- echo y | android update sdk -u -a -t tools
-  #- echo y | android update sdk -u -a -t platform-tools
-  #- echo y | android update sdk -u -a -t build-tools-26.0.0
-  #- echo y | android update sdk -u -a -t android-26
-  #- echo y | android update sdk -u -a -t extra-android-support
-  #- echo y | android update sdk -u -a -t extra-google-m2repository
-  #- echo y | android update sdk -u -a -t extra-android-m2repository
 
 env:
   global:
