@@ -73,7 +73,6 @@ public class LoginActivityTestEmailInvalido {
                 allOf(withId(R.id.password), withText("senhateste"), isDisplayed()));
         appCompatEditText2.perform(pressImeActionButton());
 
-
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.btnEntrar), withText("Entrar"),
                         withParent(withId(R.id.email_login_form)),
@@ -89,6 +88,8 @@ public class LoginActivityTestEmailInvalido {
                         0),
                         isDisplayed()));
         viewGroup.check(matches(isDisplayed()));
+
+
 
     }
 
