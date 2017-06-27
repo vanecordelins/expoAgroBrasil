@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
