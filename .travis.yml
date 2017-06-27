@@ -74,9 +74,13 @@ addons:
     organization: "expoagrobrasil" # the key of the org you chose at step #3
     token:
       secure: $SonarQube
-#script:
+    github_token:
+      secure: $SonarCloudKey #adição
+script:
   # other script steps might be done before running the actual analysis
-#  - sonar-scanner
+  - sonar-scanner  #adição
+
+
 
 #install:
   #- echo y | android update sdk -u -a -t tools
