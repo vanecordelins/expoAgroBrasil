@@ -3,7 +3,9 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco-android'
+apply from: '../android-sonarqube.gradle'
 
 android {
    //compileSdkVersion 25
