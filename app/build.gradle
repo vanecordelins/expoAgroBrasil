@@ -7,37 +7,29 @@ apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco-android'
 apply from: '../android-sonarqube.gradle'
 
+
 android {
-   //compileSdkVersion 25
-   //buildToolsVersion "25.0.3"
-   compileSdkVersion configCompileSdkVersion
-   buildToolsVersion configBuildToolsVersion
-    
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.expoagro.expoagrobrasil"
         minSdkVersion 15
-        //targetSdkVersion 25
-        targetSdkVersion configTargetSdkVersion
+        targetSdkVersion 25
         versionCode 1
-        //versionName "1.0"
-        versionName project.version
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     
     buildTypes {    
          debug {
-            //applicationIdSuffix '.debug' 
+            //applicationIdSuffix '.debug'
             versionNameSuffix '-debug'
             testCoverageEnabled true
         }
         release {
-            minifyEnabled true           //alteração de false para true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    
-    dataBinding {                     //adição
-        enabled = true
     }
 }
 
@@ -46,7 +38,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.1.1'  //25.3.1
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
@@ -54,48 +46,14 @@ dependencies {
 dependencies {
     // ...
     compile 'com.google.firebase:firebase-core:9.6.1'
-}
-
-dependencies {
     compile 'com.google.android.gms:play-services-auth:9.6.1'
-}
-
-dependencies {
     compile 'com.google.firebase:firebase-database:9.6.1'
     compile 'com.google.firebase:firebase-auth:9.6.1'
-    compile 'com.android.support:design:23.1.1'  //25.3.1
-}
-
-
-apply plugin: 'com.google.gms.google-services'
-
-dependencies {
+    compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:+'
 }
 
-dependencies {                    //adição
-  compile support.appCompat
-
-  testCompile assertJCore
-  testCompile junit
-
-  androidTestCompile supportTest.espressoCore
-  androidTestCompile supportTest.rules
-}
-
-
-
-sonarqube {
-    properties {
-        property "sonar.projectName", "ExpoAgroBrasil"
-        property "sonar.projectKey", "com.expoagro.expoagrobrasil"//ID do projeto no sonarqube
-        property "sonar.projectVersion", "1.0.0"
-        property "sonar.junit.reportsPath", "${project.buildDir}/test-results/testDebugUnitTest, ${project.buildDir}/test-results/testReleaseUnitTest"
-        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/testDebugUnitTest.exec, ${project.buildDir}/jacoco/testReleaseUnitTest.exec"
-        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/testDebugUnitTest.exec, ${project.buildDir}/jacoco/testReleaseUnitTest.exec"//versao prior to 6.2
-        property "sonar.sourceEncoding", "UTF-8"
-    }
-}
+apply plugin: 'com.google.gms.google-services'
 
 sourceSets {
     unitTest {
