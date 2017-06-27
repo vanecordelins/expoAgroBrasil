@@ -10,7 +10,10 @@ buildscript {
     dependencies {
 
         classpath 'com.android.tools.build:gradle:2.3.3'
+<<<<<<< HEAD
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1"  //adição
+=======
+>>>>>>> 9063dee327a5e2f459c1b4feeaaf76152172798a
         classpath 'com.google.gms:google-services:3.1.0'
         classpath 'com.dicedmelon.gradle:jacoco-android:0.1.1'
 
