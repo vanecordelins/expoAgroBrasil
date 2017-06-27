@@ -91,7 +91,7 @@ public class LoginActivityTestEmailInvalido {
 
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.btnEntrar), withText("Entrar"),
-                        withParent(withId(R.id.email_login_form)),
+//                        withParent(withId(R.id.email_login_form)),
                         isDisplayed()));
         appCompatButton.perform(click());
 
