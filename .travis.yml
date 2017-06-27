@@ -24,7 +24,7 @@ cache:
     - $HOME/.sonar/cache
     - $HOME/.m2/repository
     - $HOME/.android/build-cache
-    #- '.gradle'
+   #- '.gradle'
     
 before_script:
     - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
@@ -34,10 +34,10 @@ before_script:
     
 script:
   # other script steps might be done before running the actual analysis
-   - ./gradlew build jacocoTestReport assembleAndroidTest
-  - ./gradlew connectedCheck
-  - ./gradlew sonarqube #adição
-  - ./gradlew build jacocoTestReport sonarqube connectedCheck -PdisablePreDex 
+    - ./gradlew build jacocoTestReport assembleAndroidTest
+    - ./gradlew connectedCheck
+    - ./gradlew sonarqube #adição
+    - ./gradlew build jacocoTestReport sonarqube connectedCheck -PdisablePreDex 
     
 
 before_install:
