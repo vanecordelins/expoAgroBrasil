@@ -104,8 +104,6 @@ public class LoginActivityTestEmailInvalido {
                         isDisplayed()));
         viewGroup.check(matches(isDisplayed()));
 
-
-
     }
 
     private static Matcher<View> childAtPosition(

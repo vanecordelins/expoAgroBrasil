@@ -51,7 +51,7 @@ public class LoginActivityTestSenhaInvalido {
         };
         activity.runOnUiThread(wakeUpDevice);
     }
-    
+
     @Test
     public void loginActivityTest() {
         // Added a sleep statement to match the app's execution delay.
