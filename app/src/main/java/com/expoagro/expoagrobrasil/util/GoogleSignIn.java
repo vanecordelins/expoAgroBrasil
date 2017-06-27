@@ -6,13 +6,14 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
-import com.expoagro.expoagrobrasil.view.AnunciosActivity;
-import com.expoagro.expoagrobrasil.view.LoginActivity;
+import com.expoagro.expoagrobrasil.controller.AnunciosActivity;
+import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -30,7 +31,7 @@ public class GoogleSignIn {
 
     private static final int RC_SIGN_IN = 9001;
 
-    public static void firebaseAuthWithGoogle(FirebaseAuth mAuth, final Activity activity, GoogleSignInAccount acct) {
+    public static void firebaseAuthWithGoogle(FirebaseAuth mAuth, final Activity activity, final GoogleSignInAccount acct) {
         System.out.println("firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -48,6 +49,7 @@ public class GoogleSignIn {
                         } else {
                             Intent it = new Intent(activity, AnunciosActivity.class);
                             activity.startActivity(it);
+                            activity.finish();
                         }
                         // ...
                     }
@@ -72,10 +74,24 @@ public class GoogleSignIn {
         activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    public static void signOut() {
-
-        FirebaseAuth.getInstance().signOut();
-        FirebaseAuth.getInstance().getCurrentUser().delete();
+    public static void signOut(final Activity activity, GoogleApiClient mGoogleApiClient) {
+        if(mGoogleApiClient.isConnected()) { // Conectado pelo Google
+            FirebaseAuth.getInstance().getCurrentUser().delete();
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+                            Intent it = new Intent(activity, LoginActivity.class);
+                            activity.startActivity(it);
+                            activity.finish();
+                        }
+                    });
+        } else { // Conectado pelo App
+            FirebaseAuth.getInstance().signOut();
+            Intent it = new Intent(activity, LoginActivity.class);
+            activity.startActivity(it);
+            activity.finish();
+        }
         System.out.println("saiu");
     }
 
