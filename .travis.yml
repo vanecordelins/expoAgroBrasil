@@ -38,6 +38,7 @@ script:
     - ./gradlew test
     - ./gradlew connectedCheck
     #- ./gradlew build connectedCheck -PdisablePreDex
+    - ./gradlew connectedAndroidTest
     - ./gradlew connectedDevDebugAndroidTest
 
 before_install:
