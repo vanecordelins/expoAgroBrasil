@@ -27,11 +27,10 @@ cache:
     - $HOME/.android/build-cache
     
 before_script:
-    - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+    - echo no | android create avd --force -n test -t android-26 --abi armeabi-v7a
     #- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
     - emulator -avd test -no-skin -no-audio -no-window &
     - android-wait-for-emulator
-    - adb shell am instrument -w -r   -e debug false -e class
     - adb shell input keyevent 82 &
     
 script: 
