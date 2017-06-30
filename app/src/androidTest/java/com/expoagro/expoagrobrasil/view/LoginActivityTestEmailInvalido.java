@@ -64,6 +64,7 @@ public class LoginActivityTestEmailInvalido {
 //            }
 //        });
 //    }
+
     @Before
     public void unlockScreen() {
         final LoginActivity activity = mActivityTestRule.getActivity();
