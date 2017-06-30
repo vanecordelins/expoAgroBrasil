@@ -8,12 +8,12 @@ android:
     - extra-android-m2repository
     - extra-android-support
     - extra-google-m2repository
-    - sys-img-armeabi-v7a-android-25
+    #- sys-img-armeabi-v7a-android-25
+    - sys-img-armeabi-v7a-android-22
   licenses:
     - android-sdk-preview-license-.+
     - android-sdk-license-.+
     - google-gdk-license-.+
-    - '.+'
     - sys-img-x86-android-25
 
 
@@ -28,6 +28,7 @@ cache:
     
 before_script:
     - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+    #- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
     - emulator -avd test -no-skin -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
@@ -38,7 +39,9 @@ script:
     - ./gradlew test
     - ./gradlew connectedCheck
     #- ./gradlew build connectedCheck -PdisablePreDex
+    #- ./gradlew :bamboo:connectedMockDebugAndroidTest
     - ./gradlew test
+    - ./gradlew connectedCheck --stacktrace
     - ./gradlew connectedAndroidTest
     - ./gradlew connectedDevDebugAndroidTest
 
