@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textInputLayout">
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
