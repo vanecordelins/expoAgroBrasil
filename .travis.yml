@@ -44,7 +44,7 @@ script:
     - ./gradlew jacocoTestReport
     #- ./gradlew test
     #- ./gradlew connectedCheck
-    #- ./gradlew build connectedCheck -PdisablePreDex
+    - ./gradlew build connectedCheck -PdisablePreDex
     #- ./gradlew :bamboo:connectedMockDebugAndroidTest
     - ./gradlew test
     - ./gradlew connectedCheck --stacktrace
