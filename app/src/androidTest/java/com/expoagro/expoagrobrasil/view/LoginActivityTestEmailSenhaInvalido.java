@@ -1,15 +1,9 @@
 package com.expoagro.expoagrobrasil.view;
 
-import android.app.Activity;
-import android.app.KeyguardManager;
-import android.content.Context;
-import android.support.test.annotation.UiThreadTest;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -26,9 +20,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Collection;
-
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -37,16 +28,14 @@ import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.support.test.runner.lifecycle.Stage.RESUMED;
 import static org.hamcrest.Matchers.allOf;
 
 
 @RunWith(AndroidJUnit4.class)
-public class LoginActivityTestEmailInvalido {
+public class LoginActivityTestEmailSenhaInvalido {
 
     @Rule
     public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
@@ -68,9 +57,9 @@ public class LoginActivityTestEmailInvalido {
 
     @Test
     public void loginActivityTest() throws Exception{
-        onView(withId(R.id.email)).perform(typeText("diego.tester@teste.co"));
+        onView(withId(R.id.email)).perform(typeText("didi@didi.com"));
         closeKeyboard();
-        onView(withId(R.id.password)).perform(typeText("123456"));
+        onView(withId(R.id.password)).perform(typeText("senhateste"));
         closeKeyboard();
         onView(withId(R.id.btnEntrar)).perform(click());
 
@@ -79,6 +68,7 @@ public class LoginActivityTestEmailInvalido {
 
     public void closeKeyboard() throws Exception {
         Espresso.closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(3000);
     }
+
 }

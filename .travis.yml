@@ -44,7 +44,6 @@ script:
     #- ./gradlew jacocoTestReport
     #- ./gradlew test
     #- ./gradlew connectedCheck
-    - datahora=`TZ=America/Recife date "+%A %d/%m/%Y %T"`' America/Recife'
     #- ./gradlew build connectedCheck -PdisablePreDex
     #- ./gradlew :bamboo:connectedMockDebugAndroidTest
     #- ./gradlew test
