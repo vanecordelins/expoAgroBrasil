@@ -84,47 +84,49 @@ public class LoginActivityTestEmailInvalido {
     public void loginActivityTest() {
         try {
             Thread.sleep(2000);
+            ViewInteraction appCompatAutoCompleteTextView = onView(
+                    allOf(withId(R.id.email), isDisplayed()));
+            appCompatAutoCompleteTextView.perform(click());
+
+            ViewInteraction appCompatAutoCompleteTextView2 = onView(
+                    allOf(withId(R.id.email), isDisplayed()));
+            appCompatAutoCompleteTextView2.perform(replaceText("diego.tester@teste.co"), closeSoftKeyboard());
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-//        ViewInteraction appCompatAutoCompleteTextView = onView(
-//                allOf(withId(R.id.email), isDisplayed()));
-//        appCompatAutoCompleteTextView.perform(click());
-
-        ViewInteraction appCompatAutoCompleteTextView2 = onView(
-                allOf(withId(R.id.email), isDisplayed()));
-        appCompatAutoCompleteTextView2.perform(replaceText("diego.tester@teste.co"), closeSoftKeyboard());
 
         try {
             Thread.sleep(2000);
+            ViewInteraction appCompatEditText = onView(
+                    allOf(withId(R.id.password), isDisplayed()));
+            appCompatEditText.perform(replaceText("senhateste"), closeSoftKeyboard());
+
+            ViewInteraction appCompatEditText2 = onView(
+                    allOf(withId(R.id.password), withText("senhateste"), isDisplayed()));
+            appCompatEditText2.perform(pressImeActionButton());
+
+            ViewInteraction appCompatButton = onView(
+                    allOf(withId(R.id.btnEntrar), withText("Entrar"),
+//                        withParent(withId(R.id.email_login_form)),
+                            isDisplayed()));
+            appCompatButton.perform(click());
+
+            ViewInteraction viewGroup = onView(
+                    allOf(childAtPosition(
+                            allOf(withId(android.R.id.content),
+                                    childAtPosition(
+                                            withId(R.id.decor_content_parent),
+                                            0)),
+                            0),
+                            isDisplayed()));
+            viewGroup.check(matches(isDisplayed()));
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.password), isDisplayed()));
-        appCompatEditText.perform(replaceText("senhateste"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.password), withText("senhateste"), isDisplayed()));
-        appCompatEditText2.perform(pressImeActionButton());
-
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.btnEntrar), withText("Entrar"),
-//                        withParent(withId(R.id.email_login_form)),
-                        isDisplayed()));
-        appCompatButton.perform(click());
-
-        ViewInteraction viewGroup = onView(
-                allOf(childAtPosition(
-                        allOf(withId(android.R.id.content),
-                                childAtPosition(
-                                        withId(R.id.decor_content_parent),
-                                        0)),
-                        0),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
 
     }
 
