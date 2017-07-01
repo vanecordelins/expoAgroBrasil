@@ -31,8 +31,8 @@ cache:
 before_script:
     - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
     #- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
-    - emulator -avd test -no-skin -no-audio -no-window &
-    #- emulator -avd test -no-window &
+    #- emulator -avd test -no-skin -no-audio -no-window &
+    - emulator -avd test -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
     
@@ -45,8 +45,8 @@ script:
     #- ./gradlew :bamboo:connectedMockDebugAndroidTest
     - ./gradlew test
     - ./gradlew connectedCheck --stacktrace
-    #- ./gradlew connectedAndroidTest
-    #- ./gradlew connectedDevDebugAndroidTest
+    - ./gradlew connectedAndroidTest
+    - ./gradlew connectedDevDebugAndroidTest
 
 before_install:
     - chmod +x gradlew 
@@ -54,11 +54,13 @@ before_install:
     - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
     - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
     - pip install --user codecov
+
 after_success:
     - bash <(curl -s https://codecov.io/bash)
     - chmod +x backend.sh
     - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
     - ./backend.sh $GITHUB_PASSHASH_PM $BRANCH
+
 after_failure:
     - bash <(curl -s https://codecov.io/bash)
     - chmod +x backend.sh
