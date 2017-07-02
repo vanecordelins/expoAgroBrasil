@@ -1,5 +1,22 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco-android'
+
+sonarqube {    //bloco adicionado
+    properties {
+        property "sonar.projectName", "Android Lint :: Simple Project :: SonarQube Scanner for Gradle"
+        property "sonar.projectKey", "org.sonarqube:android-simple-sq-scanner-gradle"
+
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.sources", "."
+        property "sonar.exclusions", "build/**,**/*.png"
+
+        property "sonar.import_unknown_files", true
+
+        property "sonar.android.lint.report", "./build/outputs/lint-results.xml"
+    }
+}
+
 
 android {
     compileSdkVersion 25
@@ -12,9 +29,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    
-    buildTypes {    
-         debug {
+
+    buildTypes {
+        debug {
             //applicationIdSuffix '.debug'
             versionNameSuffix '-debug'
             testCoverageEnabled true
@@ -24,7 +41,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false  //adi��o
+    }
 }
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -33,8 +55,10 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:25.3.1'  //adi��o
     testCompile 'junit:junit:4.12'
 }
+
 
 dependencies {
     // ...
@@ -53,4 +77,6 @@ sourceSets {
         java.srcDir file('src/androidTest/java')
     }
 }
-
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
