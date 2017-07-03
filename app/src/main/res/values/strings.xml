@@ -2,17 +2,32 @@
     <string name="app_name">ExpoAgro Brasil</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Senha</string>
+    <string name="campo_email">Email</string>
+    <string name="campo_senha">Senha</string>
+    <string name="campo_nome">Nome</string>
+    <string name="campo_telefone">Telefone</string>
+    <string name="campo_cidade">Cidade</string>
+    <string name="campo_repetirSenha">Repetir Senha</string>
+
     <string name="acao_login">Entrar</string>
     <string name="acao_voltar">Voltar</string>
     <string name="acao_login_curta">Entrar</string>
+    <string name="acao_cadastrar">Cadastrar</string>
+    <string name="acao_cancelar">Cancelar</string>
+
+    <string name="msg_cadastro_sucesso">Cadastro realizado com sucesso</string>
+
     <string name="error_email_invalido">Endereço de email inválido</string>
     <string name="error_senha_invalida">Senha inválida</string>
     <string name="error_incorrect_password">Senha incorreta</string>
     <string name="error_field_required">Campo obrigatório</string>
-    <string name="cadastre_se">Não é cadastrado? Cadastre-se</string>
+    <string name="error_cidade_nao_selecionada">Selecione uma cidade</string>
+    <string name="error_repetir_senha_invalida">As senhas não combinam! Verifique.</string>
+    <string name="error_login">Não foi possível realizar o Login. Tente Novamente</string>
+
+    <string name="cadastre_se">Não é cadastrado? <u>Cadastre-se</u></string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
 </resources>

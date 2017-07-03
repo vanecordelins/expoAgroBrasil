@@ -14,15 +14,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.FirebaseLogin;
-import com.expoagro.expoagrobrasil.util.GoogleApiClientHelper;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,8 +30,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.List;
-
 
 /**
  * A login screen that offers login via email/password.
@@ -43,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private SignInButton googleButton;
@@ -59,10 +54,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (EditText) findViewById(R.id.campoEmail);
         //populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = (EditText) findViewById(R.id.campoSenha);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -84,16 +79,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        GoogleApiClientHelper.getInstance().setGoogleApiClient(mGoogleApiClient);
-
         googleButton =  (SignInButton) findViewById(R.id.sign_in_button);
 
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //showProgress();
-                GoogleSignIn.signIn(GoogleApiClientHelper.getInstance().getGoogleApiClient(), LoginActivity.this); // Google Sign In
-                GoogleApiClientHelper.getInstance().getGoogleApiClient().connect();
+                GoogleSignIn.signIn(mGoogleApiClient, LoginActivity.this); // Google Sign In
             }
         });
 
@@ -101,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin(); //Aqui chamar o método para login *****************
+                attemptLogin(); //Aqui chamar o mÃ©todo para login *****************
             }
         });
 
@@ -111,10 +103,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mAuth = FirebaseAuth.getInstance();
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            // Usuario ja esta logado, não ir para a tela de login
+            // Usuario ja esta logado, nÃ£o ir para a tela de login
             Intent it = new Intent(LoginActivity.this, AnunciosActivity.class);
             startActivity(it);
+            finish();
         }
+
+        TextView t2 = (TextView) findViewById(R.id.textoNovoCadastro);
+        t2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaCadastro = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
+                startActivity(telaCadastro);
+                finish();
+            }
+        });
 
     }
 
@@ -124,13 +127,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 GoogleSignIn.firebaseAuthWithGoogle(mAuth, this, account);
 
+
             } else {
-                System.out.println("Não foi possível realizar o Login. Tente Novamente");
+                System.out.println("NÃ£o foi possÃ­vel realizar o Login. Tente Novamente");
                 // Google Sign In failed, update UI appropriately
                 // ...
             }
@@ -153,33 +158,33 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String email = mEmailView.getText().toString();
         String senha = mPasswordView.getText().toString();
 
-        boolean cancel = false;
+        boolean cancelar = false;
         View focusView = null;
 
-        // Verifica se o usuário digitou uma.
+        // Verifica se o usuÃ¡rio digitou uma.
         if (TextUtils.isEmpty(senha)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
-            cancel = true;
+            cancelar = true;
         } else if (!isPasswordValid(senha)) {
             mPasswordView.setError(getString(R.string.error_senha_invalida));
             focusView = mPasswordView;
-            cancel = true;
+            cancelar = true;
         }
 
-        // Verifica se é um email válido.
+        // Verifica se Ã© um email vÃ¡lido.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
-            cancel = true;
+            cancelar = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_email_invalido));
             focusView = mEmailView;
-            cancel = true;
+            cancelar = true;
         }
 
-        if (cancel) {
-            // Existe um erro; não é chamado o login
+        if (cancelar) {
+            // Existe um erro; nÃ£o Ã© chamado o login
             focusView.requestFocus(); //foco no primeiro campo com um erro
         } else {
             // Mostra um spinner de progresso, and kick off a background task to
@@ -193,11 +198,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private boolean isEmailValid(String email) {
+    public boolean isEmailValid(String email) {
         return email.contains("@");
     }
 
-    private boolean isPasswordValid(String password) {
+    public boolean isPasswordValid(String password) {
         return password.length() >= 6;
     }
 
@@ -205,31 +210,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
      * Shows the progress UI and hides the login form.
      */
 
-   // private void showProgress() {
-   //     if (mProgressDialog == null) {
-   //         mProgressDialog = new ProgressDialog(this);
-   //         mProgressDialog.setMessage("Verificando Dados...");
-   //         mProgressDialog.setIndeterminate(true);
-   //     }
-   //     mProgressDialog.show();
-   // }
+    // private void showProgress() {
+    //     if (mProgressDialog == null) {
+    //         mProgressDialog = new ProgressDialog(this);
+    //         mProgressDialog.setMessage("Verificando Dados...");
+    //         mProgressDialog.setIndeterminate(true);
+    //     }
+    //     mProgressDialog.show();
+    // }
 
-  //  @Override
-  //  public void onDestroy() {
-  //      super.onDestroy();
-  //      if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
-  //          mProgressDialog.cancel();
-  //      }
-  //  }
+    //  @Override
+    //  public void onDestroy() {
+    //      super.onDestroy();
+    //      if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
+    //          mProgressDialog.cancel();
+    //      }
+    //  }
 
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-    }
+//    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+//        ArrayAdapter<String> adapter =
+//                new ArrayAdapter<>(LoginActivity.this,
+//                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+//
+//        mEmailView.setAdapter(adapter);
+//    }
 
 
     public void onConnectionFailed(ConnectionResult connectionResult) {
