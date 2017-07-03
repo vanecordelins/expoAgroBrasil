@@ -60,10 +60,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        mEmailView = (EditText) findViewById(R.id.campoEmail);
+        mEmailView = (EditText) findViewById(R.id.email);
         //populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.campoSenha);
+        mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -117,15 +117,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             startActivity(it);
         }
 
-        TextView t2 = (TextView) findViewById(R.id.textoNovoCadastro);
-        t2.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent telaCadastro = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
-                startActivity(telaCadastro);
-            }
-        });
-
     }
 
     @Override
@@ -163,32 +154,32 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String email = mEmailView.getText().toString();
         String senha = mPasswordView.getText().toString();
 
-        boolean cancelar = false;
+        boolean cancel = false;
         View focusView = null;
 
         // Verifica se o usuário digitou uma.
         if (TextUtils.isEmpty(senha)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
-            cancelar = true;
+            cancel = true;
         } else if (!isPasswordValid(senha)) {
             mPasswordView.setError(getString(R.string.error_senha_invalida));
             focusView = mPasswordView;
-            cancelar = true;
+            cancel = true;
         }
 
         // Verifica se é um email válido.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
-            cancelar = true;
+            cancel = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_email_invalido));
             focusView = mEmailView;
-            cancelar = true;
+            cancel = true;
         }
 
-        if (cancelar) {
+        if (cancel) {
             // Existe um erro; não é chamado o login
             focusView.requestFocus(); //foco no primeiro campo com um erro
         } else {

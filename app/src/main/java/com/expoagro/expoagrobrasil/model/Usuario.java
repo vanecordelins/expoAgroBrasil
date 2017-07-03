@@ -12,18 +12,12 @@ public class Usuario {
         private String nome;
         private String email;
         private String telefone;
-        private String cidade;
         private String senha;
 
-        public Usuario() {
-
-        }
-
-        public Usuario(String nome, String email, String telefone, String cidade, String senha) {
+        public Usuario(String nome, String email, String telefone, String senha) {
             this.nome=nome;
             this.email=email;
             this.telefone=telefone;
-            this.cidade = cidade;
             this.senha=senha;
         }
 
@@ -47,10 +41,6 @@ public class Usuario {
             this.telefone = telefone;
         }
 
-        public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
         public  String getId() {
             return id;
         }
@@ -70,7 +60,5 @@ public class Usuario {
         public String getTelefone() {
             return telefone;
         }
-
-        public String getCidade() { return cidade; }
 
     }
