@@ -70,8 +70,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
 
-apply plugin: 'com.google.gms.google-services'
-
 sourceSets {
     unitTest {
         java.srcDir file('src/androidTest/java')
@@ -80,3 +78,7 @@ sourceSets {
 dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
+
+
+apply plugin: 'com.google.gms.google-services'
+
