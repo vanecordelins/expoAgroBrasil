@@ -33,7 +33,6 @@ public class FirebaseLogin {
                             System.out.println("Authentication failed." + task.getException());
                         } else {
                             System.out.println("Authentication sucessul.");
-                            activity.finish();
                         }
                     }
                 });

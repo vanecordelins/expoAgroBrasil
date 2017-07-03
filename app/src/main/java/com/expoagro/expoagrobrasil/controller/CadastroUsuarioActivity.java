@@ -19,6 +19,9 @@ import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private Spinner spinner;
@@ -64,6 +67,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent telaLogin = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
+                finish();
             }
         });
     }
@@ -145,21 +149,25 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             usuario.setCidade(cidade);
             usuario.setSenha(senha);
 
+            FirebaseLogin.createFirebaseUser(CadastroUsuarioActivity.this, FirebaseAuth.getInstance(), usuario);
+
             UserDAO userDAO = new UserDAO();
             userDAO.save(usuario);
 
-            FirebaseLogin.createFirebaseUser(CadastroUsuarioActivity.this, FirebaseAuth.getInstance(), usuario);
-
-            Toast.makeText(CadastroUsuarioActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_LONG).show();
+            Toast.makeText(CadastroUsuarioActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+            finish();
         }
 
     }
 
     private boolean isEmailValid(String email) {
-        return email.contains("@");
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() >= 6;
+        return password.length() >= 6 && password.length() <= 15;
     }
 }

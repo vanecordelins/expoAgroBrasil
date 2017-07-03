@@ -16,6 +16,8 @@ import java.util.List;
 
 public class UserDAO implements InterfaceDAO<Usuario> {
 
+    public UserDAO() { }
+
     private static DatabaseReference getReference() {
         return FirebaseDatabase.getInstance().getReference("Usuário");
     }

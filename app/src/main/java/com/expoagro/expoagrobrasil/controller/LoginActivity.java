@@ -1,6 +1,5 @@
 package com.expoagro.expoagrobrasil.controller;
 
-import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
@@ -15,15 +14,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.FirebaseLogin;
-import com.expoagro.expoagrobrasil.util.GoogleApiClientHelper;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,8 +29,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
 
 
 /**
@@ -85,16 +79,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        GoogleApiClientHelper.getInstance().setGoogleApiClient(mGoogleApiClient);
-
         googleButton =  (SignInButton) findViewById(R.id.sign_in_button);
 
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //showProgress();
-                GoogleSignIn.signIn(GoogleApiClientHelper.getInstance().getGoogleApiClient(), LoginActivity.this); // Google Sign In
-                GoogleApiClientHelper.getInstance().getGoogleApiClient().connect();
+                GoogleSignIn.signIn(mGoogleApiClient, LoginActivity.this); // Google Sign In
             }
         });
 
@@ -115,6 +106,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Usuario ja esta logado, nÃ£o ir para a tela de login
             Intent it = new Intent(LoginActivity.this, AnunciosActivity.class);
             startActivity(it);
+            finish();
         }
 
         TextView t2 = (TextView) findViewById(R.id.textoNovoCadastro);
@@ -123,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View view) {
                 Intent telaCadastro = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
                 startActivity(telaCadastro);
+                finish();
             }
         });
 
@@ -134,10 +127,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 GoogleSignIn.firebaseAuthWithGoogle(mAuth, this, account);
+
 
             } else {
                 System.out.println("NÃ£o foi possÃ­vel realizar o Login. Tente Novamente");
