@@ -76,17 +76,19 @@ public class GoogleSignIn {
 
     public static void signOut(final Activity activity, GoogleApiClient mGoogleApiClient) {
         if(mGoogleApiClient.isConnected()) { // Conectado pelo Google
-            FirebaseAuth.getInstance().getCurrentUser().delete();
+            System.out.println("desconectando google account");
             Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                     new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
+                            FirebaseAuth.getInstance().signOut();
                             Intent it = new Intent(activity, LoginActivity.class);
                             activity.startActivity(it);
                             activity.finish();
                         }
                     });
         } else { // Conectado pelo App
+            System.out.println("desconectando firebase account");
             FirebaseAuth.getInstance().signOut();
             Intent it = new Intent(activity, LoginActivity.class);
             activity.startActivity(it);
@@ -115,6 +117,22 @@ public class GoogleSignIn {
             }
         } else {
             System.out.println("O usuário não está logado.");
+        }
+    }
+
+    public static void deleteAccount() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            user.delete().addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        System.out.println("Profile is deleted");
+                    } else {
+                        System.out.println("Failed to delete account!");
+                    }
+                }
+            });
         }
     }
 }
