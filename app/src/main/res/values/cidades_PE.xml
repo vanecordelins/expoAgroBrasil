@@ -1,0 +1,197 @@
+<!--
+    Conteúdo derivado de https://gist.github.com/letanure/3012978
+    Cidades do Brasil em Android Resource String-Array
+    Brazil's Cities in Android String-Array Resource format
+    
+    Free for use, no attribution required
+-->
+<resources>
+    <string-array name="cidades_PE">
+        <item>Selecione uma cidade...</item>
+        <item>Abreu e Lima</item>
+        <item>Afogados da Ingazeira</item>
+        <item>Afrânio</item>
+        <item>Agrestina</item>
+        <item>Água Preta</item>
+        <item>Águas Belas</item>
+        <item>Alagoinha</item>
+        <item>Aliança</item>
+        <item>Altinho</item>
+        <item>Amaraji</item>
+        <item>Angelim</item>
+        <item>Araçoiaba</item>
+        <item>Araripina</item>
+        <item>Arcoverde</item>
+        <item>Barra de Guabiraba</item>
+        <item>Barreiros</item>
+        <item>Belém de Maria</item>
+        <item>Belém de São Francisco</item>
+        <item>Belo Jardim</item>
+        <item>Betânia</item>
+        <item>Bezerros</item>
+        <item>Bodocó</item>
+        <item>Bom Conselho</item>
+        <item>Bom Jardim</item>
+        <item>Bonito</item>
+        <item>Brejão</item>
+        <item>Brejinho</item>
+        <item>Brejo da Madre de Deus</item>
+        <item>Buenos Aires</item>
+        <item>Buíque</item>
+        <item>Cabo de Santo Agostinho</item>
+        <item>Cabrobó</item>
+        <item>Cachoeirinha</item>
+        <item>Caetés</item>
+        <item>Calçado</item>
+        <item>Calumbi</item>
+        <item>Camaragibe</item>
+        <item>Camocim de São Félix</item>
+        <item>Camutanga</item>
+        <item>Canhotinho</item>
+        <item>Capoeiras</item>
+        <item>Carnaíba</item>
+        <item>Carnaubeira da Penha</item>
+        <item>Carpina</item>
+        <item>Caruaru</item>
+        <item>Casinhas</item>
+        <item>Catende</item>
+        <item>Cedro</item>
+        <item>Chã de Alegria</item>
+        <item>Chã Grande</item>
+        <item>Condado</item>
+        <item>Correntes</item>
+        <item>Cortês</item>
+        <item>Cumaru</item>
+        <item>Cupira</item>
+        <item>Custódia</item>
+        <item>Dormentes</item>
+        <item>Escada</item>
+        <item>Exu</item>
+        <item>Feira Nova</item>
+        <item>Fernando de Noronha</item>
+        <item>Ferreiros</item>
+        <item>Flores</item>
+        <item>Floresta</item>
+        <item>Frei Miguelinho</item>
+        <item>Gameleira</item>
+        <item>Garanhuns</item>
+        <item>Glória do Goitá</item>
+        <item>Goiana</item>
+        <item>Granito</item>
+        <item>Gravatá</item>
+        <item>Iati</item>
+        <item>Ibimirim</item>
+        <item>Ibirajuba</item>
+        <item>Igarassu</item>
+        <item>Iguaraci</item>
+        <item>Inajá</item>
+        <item>Ingazeira</item>
+        <item>Ipojuca</item>
+        <item>Ipubi</item>
+        <item>Itacuruba</item>
+        <item>Itaíba</item>
+        <item>Itamaracá</item>
+        <item>Itambé</item>
+        <item>Itapetim</item>
+        <item>Itapissuma</item>
+        <item>Itaquitinga</item>
+        <item>Jaboatão dos Guararapes</item>
+        <item>Jaqueira</item>
+        <item>Jataúba</item>
+        <item>Jatobá</item>
+        <item>João Alfredo</item>
+        <item>Joaquim Nabuco</item>
+        <item>Jucati</item>
+        <item>Jupi</item>
+        <item>Jurema</item>
+        <item>Lagoa do Carro</item>
+        <item>Lagoa do Itaenga</item>
+        <item>Lagoa do Ouro</item>
+        <item>Lagoa dos Gatos</item>
+        <item>Lagoa Grande</item>
+        <item>Lajedo</item>
+        <item>Limoeiro</item>
+        <item>Macaparana</item>
+        <item>Machados</item>
+        <item>Manari</item>
+        <item>Maraial</item>
+        <item>Mirandiba</item>
+        <item>Moreilândia</item>
+        <item>Moreno</item>
+        <item>Nazaré da Mata</item>
+        <item>Olinda</item>
+        <item>Orobó</item>
+        <item>Orocó</item>
+        <item>Ouricuri</item>
+        <item>Palmares</item>
+        <item>Palmeirina</item>
+        <item>Panelas</item>
+        <item>Paranatama</item>
+        <item>Parnamirim</item>
+        <item>Passira</item>
+        <item>Paudalho</item>
+        <item>Paulista</item>
+        <item>Pedra</item>
+        <item>Pesqueira</item>
+        <item>Petrolândia</item>
+        <item>Petrolina</item>
+        <item>Poção</item>
+        <item>Pombos</item>
+        <item>Primavera</item>
+        <item>Quipapá</item>
+        <item>Quixaba</item>
+        <item>Recife</item>
+        <item>Riacho das Almas</item>
+        <item>Ribeirão</item>
+        <item>Rio Formoso</item>
+        <item>Sairé</item>
+        <item>Salgadinho</item>
+        <item>Salgueiro</item>
+        <item>Saloá</item>
+        <item>Sanharó</item>
+        <item>Santa Cruz</item>
+        <item>Santa Cruz da Baixa Verde</item>
+        <item>Santa Cruz do Capibaribe</item>
+        <item>Santa Filomena</item>
+        <item>Santa Maria da Boa Vista</item>
+        <item>Santa Maria do Cambucá</item>
+        <item>Santa Terezinha</item>
+        <item>São Benedito do Sul</item>
+        <item>São Bento do Una</item>
+        <item>São Caitano</item>
+        <item>São João</item>
+        <item>São Joaquim do Monte</item>
+        <item>São José da Coroa Grande</item>
+        <item>São José do Belmonte</item>
+        <item>São José do Egito</item>
+        <item>São Lourenço da Mata</item>
+        <item>São Vicente Ferrer</item>
+        <item>Serra Talhada</item>
+        <item>Serrita</item>
+        <item>Sertânia</item>
+        <item>Sirinhaém</item>
+        <item>Solidão</item>
+        <item>Surubim</item>
+        <item>Tabira</item>
+        <item>Tacaimbó</item>
+        <item>Tacaratu</item>
+        <item>Tamandaré</item>
+        <item>Taquaritinga do Norte</item>
+        <item>Terezinha</item>
+        <item>Terra Nova</item>
+        <item>Timbaúba</item>
+        <item>Toritama</item>
+        <item>Tracunhaém</item>
+        <item>Trindade</item>
+        <item>Triunfo</item>
+        <item>Tupanatinga</item>
+        <item>Tuparetama</item>
+        <item>Venturosa</item>
+        <item>Verdejante</item>
+        <item>Vertente do Lério</item>
+        <item>Vertentes</item>
+        <item>Vicência</item>
+        <item>Vitória de Santo Antão</item>
+        <item>Xexé</item>
+    </string-array>
+</resources>
