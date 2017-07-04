@@ -66,7 +66,7 @@ dependencies {
     sonarqube {
          properties {
               property "sonar.projectName", "ExpoAgroBrasil"
-              property "sonar.projectKey", "com.expoagrobrasil.app"
+              property "sonar.projectKey", "expoagrobrasil"
               property "sonar.projectVersion", "1.0"
               /*property "sonar.junit.reportsPath", "${project.buildDir}/test-results/testDebugUnitTest/TEST-*.xml, " +
                       "${project.buildDir}/test-results/testReleaseUnitTest/TEST-*.xml , " +
