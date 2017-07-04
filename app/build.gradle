@@ -1,32 +1,10 @@
-buildscript {                 //adição de bloco
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'        
-    }
+plugins {
+    id "org.sonarqube" version "2.5"
 }
 
 
 apply plugin: 'com.android.application'
-apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco-android'
-
-sonarqube {    //bloco adicionado
-    properties {
-        property "sonar.projectName", "Android Lint :: Simple Project :: SonarQube Scanner for Gradle"
-        property "sonar.projectKey", "org.sonarqube:android-simple-sq-scanner-gradle"
-        property "sonar.sourceEncoding","UTF-8"
-        property "sonar.sources","."
-        property "sonar.exclusions","build/**,**/*.png"
-        property "sonar.sourceEncoding", "UTF-8"
-        property "sonar.sources", "."
-        property "sonar.exclusions", "build/**,**/*.png"
-        property "sonar.import_unknown_files", true
-        property "sonar.android.lint.report", "./build/outputs/lint-results.xml"
-    }
-}
 
 
 android {
@@ -49,26 +27,27 @@ android {
         }
         release {
             minifyEnabled false
+            testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     
-    jacoco {         // adição de bloco
-        version "0.7.1.201405082137"
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
     }
-
     
     testOptions {               //adicao de bloco
         unitTests.returnDefaultValues = true
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
     }
 
     lintOptions {
         abortOnError false  //adicao
+    }
+     
+     testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -82,6 +61,26 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:25.3.1'  
     testCompile 'junit:junit:4.12'
+    
+    
+    sonarqube {
+         properties {
+              property "sonar.projectName", "ExpoAgroBrasil"
+              property "sonar.projectKey", "com.expoagrobrasil.app"
+              property "sonar.projectVersion", "1.0"
+              /*property "sonar.junit.reportsPath", "${project.buildDir}/test-results/testDebugUnitTest/TEST-*.xml, " +
+                      "${project.buildDir}/test-results/testReleaseUnitTest/TEST-*.xml , " +
+                      "${project.buildDir}/outputs/androidTest-results/connected/TEST-*.xml "
+              property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/testDebugUnitTest.exec, " +
+                      "${project.buildDir}/jacoco/testReleaseUnitTest.exec"*/
+              property "sonar.sourceEncoding", "UTF-8"
+          }
+   }
+    sourceSets {
+        unitTest {
+            java.srcDir file('src/androidTest/java')
+        }
+    }
 }
 
 
@@ -96,42 +95,6 @@ dependencies {
 }
 
 
-jacoco {   //adição de bloco
-    toolVersion "0.7.1.201405082137"
-}
-
-task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {    //adição de bloco
-    group = "Reporting"
-
-    description = "Generate Jacoco coverage reports"
-
-   // exclude auto-generated classes and tests
-    def fileFilter = ['**/R.class', '**/R$*.class', 
-    '**/BuildConfig.*', '**/Manifest*.*',           
-     'android/**/*.*']
-    def debugTree = fileTree(dir:   
-    "${project.buildDir}/intermediates/classes/debug", 
-    excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    additionalSourceDirs = files([
-            "${buildDir}/generated/source/buildConfig/debug",
-            "${buildDir}/generated/source/r/debug"
-    ])
-    executionData = fileTree(dir: project.projectDir, includes: 
-                    ['**/*.exec', '**/*.ec'])
-
-    reports {
-        xml.enabled = true
-        xml.destination = "${buildDir}/jacocoTestReport.xml"
-        csv.enabled = false
-        html.enabled = true
-        html.destination = "${buildDir}/reports/jacoco"
-    }
-}
-
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -141,11 +104,7 @@ dependencies {
 }
 apply plugin: 'com.google.gms.google-services'
 
-sourceSets {
-    unitTest {
-        java.srcDir file('src/androidTest/java')
-    }
-}
+
 dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
