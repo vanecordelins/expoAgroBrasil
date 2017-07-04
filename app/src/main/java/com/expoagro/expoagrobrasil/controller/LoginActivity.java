@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.FirebaseLogin;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
+import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -166,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancelar = true;
-        } else if (!isPasswordValid(senha)) {
+        } else if (!Regex.isPasswordValid(senha)) {
             mPasswordView.setError(getString(R.string.error_senha_invalida));
             focusView = mPasswordView;
             cancelar = true;
@@ -177,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancelar = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!Regex.isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_email_invalido));
             focusView = mEmailView;
             cancelar = true;
@@ -196,14 +197,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             FirebaseLogin.firebaseAuthentication(LoginActivity.this, mAuth, email, senha);
 
         }
-    }
-
-    public boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    public boolean isPasswordValid(String password) {
-        return password.length() >= 6;
     }
 
     /**

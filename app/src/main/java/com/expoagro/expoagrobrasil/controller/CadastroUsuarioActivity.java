@@ -17,10 +17,8 @@ import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.FirebaseLogin;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
+import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
@@ -96,13 +94,17 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             mNomeView.setError(getString(R.string.error_field_required));
             focusView = mNomeView;
             cancelar = true;
+        } else if (!Regex.isNameValid(nome)) {
+            mNomeView.setError(getString(R.string.error_nome_invalido));
+            focusView = mNomeView;
+            cancelar = true;
         }
 
         if ( TextUtils.isEmpty(email) ) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancelar = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!Regex.isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_email_invalido));
             focusView = mEmailView;
             cancelar = true;
@@ -110,6 +112,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
         if ( TextUtils.isEmpty(telefone) ) {
             mTelefoneView.setError(getString(R.string.error_field_required));
+            focusView = mTelefoneView;
+            cancelar = true;
+        } else if(!Regex.isTelephoneValid(telefone)) {
+            mTelefoneView.setError(getString(R.string.error_telefone_invalido));
             focusView = mTelefoneView;
             cancelar = true;
         }
@@ -123,7 +129,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             mSenhaView.setError(getString(R.string.error_field_required));
             focusView = mSenhaView;
             cancelar = true;
-        } else if (!isPasswordValid(senha)) {
+        } else if (!Regex.isPasswordValid(senha)) {
             mSenhaView.setError(getString(R.string.error_senha_invalida));
             focusView = mSenhaView;
             cancelar = true;
@@ -155,19 +161,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             userDAO.save(usuario);
 
             Toast.makeText(CadastroUsuarioActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+
+            Intent it = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
+            startActivity(it);
             finish();
+
         }
 
     }
 
-    private boolean isEmailValid(String email) {
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() >= 6 && password.length() <= 15;
-    }
 }
