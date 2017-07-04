@@ -62,11 +62,11 @@ after_success:
 after_failure:
     - bash <(curl -s https://codecov.io/bash)
 
-#addons:
-#    sonarcloud:
-#        organization: "ExpoAgroBrasil"
-#        token:
-#            secure: $expoAgroBrasil    
+addons:
+    sonarcloud:
+        organization: "ExpoAgroBrasil"
+        token:
+            secure: $expoAgroBrasil    
 
 
 env:
