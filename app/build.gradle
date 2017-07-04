@@ -1,3 +1,14 @@
+buildscript {                 //adição de bloco
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'        
+    }
+}
+
+
 apply plugin: 'com.android.application'
 apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco-android'
@@ -42,6 +53,11 @@ android {
         }
     }
     
+    jacoco {         // adição de bloco
+        version "0.7.1.201405082137"
+    }
+
+    
     testOptions {               //adicao de bloco
         unitTests.returnDefaultValues = true
         unitTests.all {
@@ -79,6 +95,50 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
 
+
+jacoco {   //adição de bloco
+    toolVersion "0.7.1.201405082137"
+}
+
+task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {    //adição de bloco
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+   // exclude auto-generated classes and tests
+    def fileFilter = ['**/R.class', '**/R$*.class', 
+    '**/BuildConfig.*', '**/Manifest*.*',           
+     'android/**/*.*']
+    def debugTree = fileTree(dir:   
+    "${project.buildDir}/intermediates/classes/debug", 
+    excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    additionalSourceDirs = files([
+            "${buildDir}/generated/source/buildConfig/debug",
+            "${buildDir}/generated/source/r/debug"
+    ])
+    executionData = fileTree(dir: project.projectDir, includes: 
+                    ['**/*.exec', '**/*.ec'])
+
+    reports {
+        xml.enabled = true
+        xml.destination = "${buildDir}/jacocoTestReport.xml"
+        csv.enabled = false
+        html.enabled = true
+        html.destination = "${buildDir}/reports/jacoco"
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('junit:junit:4.11') {
+        exclude module: 'hamcrest-core'
+    }
+}
 apply plugin: 'com.google.gms.google-services'
 
 sourceSets {
