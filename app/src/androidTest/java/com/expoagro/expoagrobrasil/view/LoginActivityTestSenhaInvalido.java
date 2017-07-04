@@ -58,9 +58,9 @@ public class LoginActivityTestSenhaInvalido {
 
     @Test
     public void loginActivityTest() throws Exception{
-        onView(withId(R.id.email)).perform(typeText("diego.tester@teste.com"));
+        onView(withId(R.id.campoEmail)).perform(typeText("diego.tester@teste.com"));
         closeKeyboard();
-        onView(withId(R.id.password)).perform(typeText("senhaTeste"));
+        onView(withId(R.id.campoSenha)).perform(typeText("senhaTeste"));
         closeKeyboard();
         onView(withId(R.id.btnEntrar)).perform(click());
 

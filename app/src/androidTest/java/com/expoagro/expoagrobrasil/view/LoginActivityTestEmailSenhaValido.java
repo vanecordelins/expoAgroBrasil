@@ -59,9 +59,9 @@ public class LoginActivityTestEmailSenhaValido {
     @Test
     public void loginActivityTest() throws Exception{
 
-        onView(withId(R.id.email)).perform(typeText("diego.tester@teste.com"));
+        onView(withId(R.id.campoEmail)).perform(typeText("diego.tester@teste.com"));
         closeKeyboard();
-        onView(withId(R.id.password)).perform(typeText("senhateste"));
+        onView(withId(R.id.campoSenha)).perform(typeText("senhateste"));
         closeKeyboard();
         onView(withId(R.id.btnEntrar)).perform(click());
 
