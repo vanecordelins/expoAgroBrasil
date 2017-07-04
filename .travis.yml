@@ -40,11 +40,11 @@ before_script:
     - adb shell input keyevent 82 &
     
 script:
-    #- ./gradlew build jacocoTestReport assembleAndroidTest
     - datahora=`TZ=America/Recife date "+%A %d/%m/%Y %T"`' America/Recife'
+    #- ./gradlew build jacocoTestReport assembleAndroidTest
     #- ./gradlew jacocoTestReport
     #- ./gradlew connectedCheck
-    #- ./gradlew build connectedCheck -PdisablePreDex
+    - ./gradlew build jacocoTestReport sonarqube connectedCheck -PdisablePreDex --stacktrace
     #- ./gradlew :bamboo:connectedMockDebugAndroidTest
     #- ./gradlew test
     #- ./gradlew connectedCheck --stacktrace
@@ -57,28 +57,13 @@ before_install:
     - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
     - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
     - pip install --user codecov
-
 after_success:
     - bash <(curl -s https://codecov.io/bash)
-    - chmod +x backend.sh
-    - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-    - ./backend.sh $GITHUB_PASSHASH_PM $BRANCH
-
 after_failure:
     - bash <(curl -s https://codecov.io/bash)
-    - chmod +x backend.sh
-    - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-    - ./backend.sh $GITHUB_PASSHASH_PM $BRANCH
+
     
 
-#install:
-  #- echo y | android update sdk -u -a -t tools
-  #- echo y | android update sdk -u -a -t platform-tools
-  #- echo y | android update sdk -u -a -t build-tools-26.0.0
-  #- echo y | android update sdk -u -a -t android-26
-  #- echo y | android update sdk -u -a -t extra-android-support
-  #- echo y | android update sdk -u -a -t extra-google-m2repository
-  #- echo y | android update sdk -u -a -t extra-android-m2repository
 
 env:
   global:
