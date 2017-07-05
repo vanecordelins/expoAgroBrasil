@@ -7,7 +7,7 @@
 -->
 <resources>
     <string-array name="cidades_PE">
-        <item>Selecione uma cidade...</item>
+        <item>Selecione...</item>
         <item>Abreu e Lima</item>
         <item>Afogados da Ingazeira</item>
         <item>Afrânio</item>

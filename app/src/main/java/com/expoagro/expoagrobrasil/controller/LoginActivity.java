@@ -188,13 +188,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Existe um erro; nÃ£o Ã© chamado o login
             focusView.requestFocus(); //foco no primeiro campo com um erro
         } else {
+
+
             // Mostra um spinner de progresso, and kick off a background task to
             // perform the user login attempt.
-            //showProgress();
-
+            showProgress();
 
             //authenticate user pelo firebase
-            FirebaseLogin.firebaseAuthentication(LoginActivity.this, mAuth, email, senha);
+            FirebaseLogin.firebaseAuthentication(LoginActivity.this, mAuth, email, senha, mProgressDialog);
 
         }
     }
@@ -203,22 +204,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
      * Shows the progress UI and hides the login form.
      */
 
-    // private void showProgress() {
-    //     if (mProgressDialog == null) {
-    //         mProgressDialog = new ProgressDialog(this);
-    //         mProgressDialog.setMessage("Verificando Dados...");
-    //         mProgressDialog.setIndeterminate(true);
-    //     }
-    //     mProgressDialog.show();
-    // }
+     private void showProgress() {
+         if (mProgressDialog == null) {
+             mProgressDialog = new ProgressDialog(this);
+             mProgressDialog.setMessage("Verificando Dados...");
+             mProgressDialog.setIndeterminate(true);
+         }
+         mProgressDialog.show();
+     }
 
-    //  @Override
-    //  public void onDestroy() {
-    //      super.onDestroy();
-    //      if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
-    //          mProgressDialog.cancel();
-    //      }
-    //  }
+      @Override
+      public void onDestroy() {
+          super.onDestroy();
+          if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
+              mProgressDialog.hide();
+          }
+      }
 
 //    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
 //        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.

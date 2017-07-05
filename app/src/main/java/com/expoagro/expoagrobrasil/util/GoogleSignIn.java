@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.controller.AnunciosActivity;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
+import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -114,25 +115,11 @@ public class GoogleSignIn {
                 Uri photoUrl = profile.getPhotoUrl();
 
                 System.out.println(email);
+                break;
             }
         } else {
             System.out.println("O usuário não está logado.");
         }
     }
 
-    public static void deleteAccount() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            user.delete().addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        System.out.println("Profile is deleted");
-                    } else {
-                        System.out.println("Failed to delete account!");
-                    }
-                }
-            });
-        }
-    }
 }

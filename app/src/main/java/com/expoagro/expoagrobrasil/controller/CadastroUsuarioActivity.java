@@ -1,6 +1,8 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,11 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
-import com.expoagro.expoagrobrasil.dao.FirebaseLogin;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.Regex;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
@@ -28,6 +33,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private AutoCompleteTextView mTelefoneView;
     private TextView mSenhaView;
     private TextView mRepetirSenhaView;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         mTelefoneView = (AutoCompleteTextView) findViewById(R.id.campoTelefone);
         mSenhaView = (EditText) findViewById(R.id.campoSenha);
         mRepetirSenhaView = (EditText) findViewById(R.id.campoRepetir);
+
+        progress = new ProgressDialog(this);
 
         // Cria um ArrayAdapter usando um array de string e um layout default do spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -148,23 +156,62 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         if (cancelar) {
             focusView.requestFocus();
         } else {
-            Usuario usuario = new Usuario();
+            progress.setMessage("Cadastrando Dados");
+            progress.show();
+            final Usuario usuario = new Usuario();
             usuario.setNome(nome);
             usuario.setEmail(email);
             usuario.setTelefone(telefone);
             usuario.setCidade(cidade);
             usuario.setSenha(senha);
 
-            FirebaseLogin.createFirebaseUser(CadastroUsuarioActivity.this, FirebaseAuth.getInstance(), usuario);
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            System.out.println("createUserWithEmail:onComplete:" + task.isSuccessful());
 
-            UserDAO userDAO = new UserDAO();
-            userDAO.save(usuario);
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                    Toast.makeText(CadastroUsuarioActivity.this, "E-mail já cadastrado.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(CadastroUsuarioActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    System.out.println(task.getException().getMessage());
+                                }
+                            } else {
+                                System.out.println("Authentication sucessul.");
 
-            Toast.makeText(CadastroUsuarioActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+                                usuario.setId(task.getResult().getUser().getUid());
 
-            Intent it = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
-            startActivity(it);
-            finish();
+                                FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    System.out.println("E-mail Verification Sent.");
+                                                    UserDAO userDAO = new UserDAO();
+                                                    userDAO.save(usuario);
+                                                    progress.hide();
+                                                    Toast.makeText(CadastroUsuarioActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+                                                    FirebaseAuth.getInstance().signOut();
+
+                                                    Intent it = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
+                                                    startActivity(it);
+                                                    finish();
+                                                } else {
+                                                    Toast.makeText(CadastroUsuarioActivity.this, "E-mail inválido", Toast.LENGTH_SHORT);
+
+                                                }
+                                            }
+                                        });
+
+
+                            }
+                        }
+                    });
 
         }
 

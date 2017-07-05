@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class AnunciosActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private Button btn_sair;
+    private Button btn_alterar;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -23,6 +25,7 @@ public class AnunciosActivity extends AppCompatActivity implements GoogleApiClie
         setContentView(R.layout.activity_anuncios);
 
         btn_sair = (Button) findViewById(R.id.btn_sair);
+        btn_alterar = (Button) findViewById(R.id.alterar);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -39,6 +42,15 @@ public class AnunciosActivity extends AppCompatActivity implements GoogleApiClie
             @Override
             public void onClick(View v) {
                 GoogleSignIn.signOut(AnunciosActivity.this, mGoogleApiClient);
+            }
+        });
+
+        btn_alterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(AnunciosActivity.this, AlterarUsuarioActivity.class);
+                startActivity(it);
+                finish();
             }
         });
     }

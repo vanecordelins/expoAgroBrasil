@@ -29,7 +29,12 @@
         <activity android:name=".controller.AnunciosActivity" />
         <activity
             android:name=".controller.CadastroUsuarioActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".controller.AlterarUsuarioActivity"
+            android:label="@string/title_activity_alterar_usuario"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

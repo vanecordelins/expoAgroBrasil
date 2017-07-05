@@ -18,7 +18,7 @@ public class UserDAO implements InterfaceDAO<Usuario> {
 
     public UserDAO() { }
 
-    private static DatabaseReference getReference() {
+    public static DatabaseReference getReference() {
         return FirebaseDatabase.getInstance().getReference("Usuário");
     }
 
@@ -27,7 +27,6 @@ public class UserDAO implements InterfaceDAO<Usuario> {
             return;
         }
         DatabaseReference mDatabase = getReference();
-        user.setId(mDatabase.push().getKey());
         mDatabase.child(user.getId()).setValue(user);
     }
 
