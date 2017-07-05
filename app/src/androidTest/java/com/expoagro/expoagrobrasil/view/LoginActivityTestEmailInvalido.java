@@ -70,7 +70,7 @@ public class LoginActivityTestEmailInvalido {
     public void loginActivityTest() throws Exception{
         onView(withId(R.id.campoEmail)).perform(typeText("diego.tester@teste.co"));
         closeKeyboard();
-        onView(withId(R.id.campoSenha)).perform(typeText("123456"));
+        onView(withId(R.id.campoSenha)).perform(typeText("senhateste"));
         closeKeyboard();
         onView(withId(R.id.btnEntrar)).perform(click());
 
@@ -79,6 +79,6 @@ public class LoginActivityTestEmailInvalido {
 
     public void closeKeyboard() throws Exception {
         Espresso.closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
     }
 }
