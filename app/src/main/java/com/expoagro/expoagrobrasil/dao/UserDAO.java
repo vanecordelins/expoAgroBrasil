@@ -34,56 +34,13 @@ public class UserDAO implements InterfaceDAO<Usuario> {
         if (user == null) {
             return;
         }
-        getReference().child(user.getId()).setValue(user);
+        DatabaseReference mDatabase = getReference();
+        mDatabase.child(user.getId()).setValue(user);
     }
 
     public void delete(String id) {
 
         getReference().child(id).removeValue();
-    }
-
-    public void read(final String uid) {
-        final List<Usuario> users = new ArrayList<>();
-        getReference().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot user : dataSnapshot.getChildren()) {
-                    if (user.getKey().equals(uid)) {
-                        Usuario target = user.getValue(Usuario.class);
-                        users.add(target);
-                        break;
-                    }
-                }
-                // found, update GUI here
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getMessage());
-            }
-        });
-    }
-
-    public void readAll() {
-        final List<Usuario> users = new ArrayList<>();
-
-        getReference().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot user : dataSnapshot.getChildren()) {
-                    Usuario target = user.getValue(Usuario.class);
-                    users.add(target);
-                }
-
-                // all data retrieved, update GUI here if needed. Assynchronous method
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getMessage());
-            }
-        });
     }
 
 }

@@ -68,9 +68,9 @@ public class LoginActivityTestEmailInvalido {
 
     @Test
     public void loginActivityTest() throws Exception{
-        onView(withId(R.id.email)).perform(typeText("diego.tester@teste.co"));
+        onView(withId(R.id.campoEmail)).perform(typeText("diego.tester@teste.co"));
         closeKeyboard();
-        onView(withId(R.id.password)).perform(typeText("123456"));
+        onView(withId(R.id.campoSenha)).perform(typeText("123456"));
         closeKeyboard();
         onView(withId(R.id.btnEntrar)).perform(click());
 

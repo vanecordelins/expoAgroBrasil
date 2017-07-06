@@ -1,12 +1,14 @@
 package com.expoagro.expoagrobrasil.util;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.controller.AnunciosActivity;
+import com.expoagro.expoagrobrasil.controller.CompletarCadastroActivity;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.google.android.gms.auth.api.Auth;
@@ -23,6 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Fabricio on 6/21/2017.
@@ -32,7 +37,7 @@ public class GoogleSignIn {
 
     private static final int RC_SIGN_IN = 9001;
 
-    public static void firebaseAuthWithGoogle(FirebaseAuth mAuth, final Activity activity, final GoogleSignInAccount acct) {
+    public static void firebaseAuthWithGoogle(FirebaseAuth mAuth, final Activity activity, final GoogleSignInAccount acct, final ProgressDialog dialog) {
         System.out.println("firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -47,10 +52,32 @@ public class GoogleSignIn {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             System.out.println("signInWithCredential. " + "Not Successful." );
+                            dialog.hide();
                         } else {
-                            Intent it = new Intent(activity, AnunciosActivity.class);
-                            activity.startActivity(it);
-                            activity.finish();
+                            final String uid = task.getResult().getUser().getUid();
+
+                            UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    System.out.println("The read failed: " + databaseError.getMessage());
+                                    dialog.hide();
+                                }
+
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                        if (user.getKey().equals(uid)) {
+                                            Intent it = new Intent(activity, AnunciosActivity.class);
+                                            activity.startActivity(it);
+                                            activity.finish();
+                                            return;
+                                        }
+                                    }
+                                    Intent it = new Intent(activity, CompletarCadastroActivity.class);
+                                    activity.startActivity(it);
+                                    activity.finish();
+                                }
+                            });
                         }
                         // ...
                     }
@@ -96,30 +123,6 @@ public class GoogleSignIn {
             activity.finish();
         }
         System.out.println("saiu");
-    }
-
-    public static void getInfo() {
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            for (UserInfo profile : user.getProviderData()) {
-                // Id of the provider (ex: google.com)
-                String providerId = profile.getProviderId();
-
-                // UID specific to the provider
-                String uid = profile.getUid();
-
-                // Name, email address, and profile photo Url
-                String name = profile.getDisplayName();
-                String email = profile.getEmail();
-                Uri photoUrl = profile.getPhotoUrl();
-
-                System.out.println(email);
-                break;
-            }
-        } else {
-            System.out.println("O usuário não está logado.");
-        }
     }
 
 }

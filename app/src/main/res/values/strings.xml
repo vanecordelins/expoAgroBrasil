@@ -32,5 +32,6 @@
         completions."
     </string>
     <string name="title_activity_alterar_usuario">AlterarUsuarioActivity</string>
+    <string name="title_activity_completar_cadastro">CompletarCadastroActivity</string>
 
 </resources>

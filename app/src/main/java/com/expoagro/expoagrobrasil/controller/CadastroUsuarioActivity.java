@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -128,8 +129,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             cancelar = true;
         }
 
-        if ( cidade.equals("Selecione uma cidade...") ) {
-            Toast.makeText(CadastroUsuarioActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_LONG).show();
+        if ( cidade.equals("Selecione...") ) {
+            Toast.makeText(CadastroUsuarioActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_SHORT).show();
             cancelar = true;
         }
 
@@ -154,7 +155,9 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         }
 
         if (cancelar) {
-            focusView.requestFocus();
+            if (focusView != null) {
+                focusView.requestFocus();
+            }
         } else {
             progress.setMessage("Cadastrando Dados");
             progress.show();
@@ -177,9 +180,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                     Toast.makeText(CadastroUsuarioActivity.this, "E-mail já cadastrado.", Toast.LENGTH_SHORT).show();
+                                    progress.dismiss();
                                 } else {
                                     Toast.makeText(CadastroUsuarioActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     System.out.println(task.getException().getMessage());
+                                    progress.dismiss();
                                 }
                             } else {
                                 System.out.println("Authentication sucessul.");
@@ -194,7 +199,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                                                     System.out.println("E-mail Verification Sent.");
                                                     UserDAO userDAO = new UserDAO();
                                                     userDAO.save(usuario);
-                                                    progress.hide();
+                                                    progress.dismiss();
                                                     Toast.makeText(CadastroUsuarioActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
                                                     FirebaseAuth.getInstance().signOut();
 
@@ -203,12 +208,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                                                     finish();
                                                 } else {
                                                     Toast.makeText(CadastroUsuarioActivity.this, "E-mail inválido", Toast.LENGTH_SHORT);
-
+                                                    progress.dismiss();
                                                 }
                                             }
                                         });
-
-
                             }
                         }
                     });

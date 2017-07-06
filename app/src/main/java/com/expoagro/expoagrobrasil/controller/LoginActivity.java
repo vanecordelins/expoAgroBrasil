@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
-import com.expoagro.expoagrobrasil.dao.FirebaseLogin;
+import com.expoagro.expoagrobrasil.util.FirebaseLogin;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.auth.api.Auth;
@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
     private SignInButton googleButton;
     private static GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
@@ -85,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showProgress();
+                showProgress();
                 GoogleSignIn.signIn(mGoogleApiClient, LoginActivity.this); // Google Sign In
             }
         });
@@ -94,11 +93,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin(); //Aqui chamar o mÃ©todo para login *****************
+                attemptLogin(); //Aqui chamar o metodo para login *****************
             }
         });
 
-        mProgressView = findViewById(R.id.login_progress);
 
         //Get Firebase auth instance
         mAuth = FirebaseAuth.getInstance();
@@ -132,11 +130,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-                GoogleSignIn.firebaseAuthWithGoogle(mAuth, this, account);
-
+                GoogleSignIn.firebaseAuthWithGoogle(mAuth, this, account, mProgressDialog);
 
             } else {
-                System.out.println("NÃ£o foi possÃ­vel realizar o Login. Tente Novamente");
+                mProgressDialog.dismiss();
+                System.out.println("Não foi possível realizar o Login. Tente Novamente");
                 // Google Sign In failed, update UI appropriately
                 // ...
             }
@@ -217,7 +215,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
       public void onDestroy() {
           super.onDestroy();
           if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
-              mProgressDialog.hide();
+              mProgressDialog.dismiss();
           }
       }
 

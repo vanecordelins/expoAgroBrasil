@@ -1,4 +1,4 @@
-package com.expoagro.expoagrobrasil.dao;
+package com.expoagro.expoagrobrasil.util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
+import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.controller.AnunciosActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,6 +72,7 @@ public class FirebaseLogin {
                         if (!task.isSuccessful()) {
                             // there was an error
                             Toast.makeText(activity, R.string.error_login, Toast.LENGTH_LONG).show();
+                            progress.dismiss();
                         } else {
                             if (task.getResult().getUser().isEmailVerified()) {
                                 System.out.println("Autorizado.");
@@ -78,8 +80,9 @@ public class FirebaseLogin {
                                 activity.startActivity(it);
                                 activity.finish();
                             } else {
-                                Toast.makeText(activity, "Verifique seu e-mail antes de realizar o Login.", Toast.LENGTH_LONG).show();
-                                progress.hide();
+                                Toast.makeText(activity, "Confirme seu e-mail em seu provedor antes de realizar o login.", Toast.LENGTH_LONG).show();
+                                FirebaseAuth.getInstance().signOut();
+                                progress.dismiss();
                             }
                         }
                     }

@@ -34,7 +34,9 @@
             android:name=".controller.AlterarUsuarioActivity"
             android:label="@string/title_activity_alterar_usuario"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".controller.CompletarCadastroActivity" />
+        <activity android:name=".controller.RecuperarSenhaActivity"></activity>
     </application>
 
 </manifest>
