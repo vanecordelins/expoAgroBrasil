@@ -19,10 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AnunciosActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private Button btn_sair;
-    private Button btn_alterar;
-    private Button btn_delete;
-    private Button btn_alterar_senha;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -30,10 +26,10 @@ public class AnunciosActivity extends AppCompatActivity implements GoogleApiClie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anuncios);
 
-        btn_sair = (Button) findViewById(R.id.btn_sair);
-        btn_alterar = (Button) findViewById(R.id.alterar);
-        btn_delete = (Button) findViewById(R.id.btn_delete);
-        btn_alterar_senha = (Button) findViewById(R.id.alterar_senha);
+        Button btn_sair = (Button) findViewById(R.id.btn_sair);
+        Button btn_alterar = (Button) findViewById(R.id.alterar);
+        Button btn_delete = (Button) findViewById(R.id.btn_delete);
+        Button btn_alterar_senha = (Button) findViewById(R.id.alterar_senha);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))

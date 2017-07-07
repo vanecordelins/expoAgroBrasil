@@ -29,8 +29,6 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
 
     private Spinner spinner;
     private ProgressDialog progress;
-    private Button mCancelarButton;
-    private Button mAtualizarButton;
     private AutoCompleteTextView mNomeView;
     private PhoneEditText mTelefoneView;
 
@@ -61,7 +59,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
 
         fillForm();
 
-        mAtualizarButton = (Button) findViewById(R.id.btn_confirm);
+        Button mAtualizarButton = (Button) findViewById(R.id.btn_confirm);
         mAtualizarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +69,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
             }
         });
 
-        mCancelarButton = (Button) findViewById(R.id.btn_cancel);
+        Button mCancelarButton = (Button) findViewById(R.id.btn_cancel);
         mCancelarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,7 +144,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
             cancelar = true;
         }
 
-        if ( cidade.equals("Selecione...") ) {
+        if ( "Selecione...".equals(cidade) ) {
             Toast.makeText(AlterarUsuarioActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_SHORT).show();
             cancelar = true;
         }

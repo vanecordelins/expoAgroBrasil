@@ -25,8 +25,6 @@ public class AlterarSenhaActivity extends AppCompatActivity {
     private TextView mSenhaAtual;
     private TextView mNovaSenha;
     private TextView mConfirmaNovaSenha;
-    private Button btn_confirm;
-    private Button btn_cancel;
     private ProgressDialog progress;
 
     @Override
@@ -37,8 +35,8 @@ public class AlterarSenhaActivity extends AppCompatActivity {
         mSenhaAtual = (EditText) findViewById(R.id.campoSenha);
         mNovaSenha = (EditText) findViewById(R.id.campoNovaSenha);
         mConfirmaNovaSenha = (EditText) findViewById(R.id.campoConfirmaNovaSenha);
-        btn_confirm = (Button) findViewById(R.id.btn_confirm);
-        btn_cancel = (Button) findViewById(R.id.btn_cancelar);
+        Button btn_confirm = (Button) findViewById(R.id.btn_confirm);
+        Button btn_cancel = (Button) findViewById(R.id.btn_cancelar);
 
         progress = new ProgressDialog(this);
         progress.setCancelable(false);

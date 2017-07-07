@@ -34,8 +34,6 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
     private AutoCompleteTextView mNomeView;
     private AutoCompleteTextView mEmailView;
     private PhoneEditText mTelefoneView;
-    private Button mCancelarButton;
-    private Button mCadastrarButton;
     private Spinner spinner;
     private ProgressDialog progress;
     private GoogleApiClient mGoogleApiClient;
@@ -77,21 +75,16 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
 
         if (user != null) {
             for (UserInfo profile : user.getProviderData()) {
-                // Id of the provider (ex: google.com)
-                String providerId = profile.getProviderId();
-
-                // UID specific to the provider
-                String uid = profile.getUid();
-
                 mNomeView.setText(profile.getDisplayName());
                 mEmailView.setText(profile.getEmail());
-
-                break;
+                if(user.getProviderData().size() > 1) {
+                    break;
+                }
             }
             progress.dismiss();
         }
 
-        mCadastrarButton = (Button) findViewById(R.id.btn_confirm);
+        Button mCadastrarButton = (Button) findViewById(R.id.btn_confirm);
         mCadastrarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +92,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
             }
         });
 
-        mCancelarButton = (Button) findViewById(R.id.btn_cancel);
+        Button mCancelarButton = (Button) findViewById(R.id.btn_cancel);
         mCancelarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,7 +135,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
             cancelar = true;
         }
 
-        if ( cidade.equals("Selecione...") ) {
+        if ( "Selecione...".equals(cidade) ) {
             Toast.makeText(CompletarCadastroActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_LONG).show();
             cancelar = true;
         }

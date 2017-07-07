@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RecuperarSenhaActivity extends AppCompatActivity {
 
-    private Button btn_recuperar;
-    private Button btn_voltar;
     private ProgressDialog dialog;
     private EditText mEmailView;
 
@@ -30,8 +27,8 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recuperar_senha);
 
-        btn_recuperar = (Button) findViewById(R.id.btn_recuperar);
-        btn_voltar = (Button) findViewById(R.id.btn_voltar);
+        Button btn_recuperar = (Button) findViewById(R.id.btn_recuperar);
+        Button btn_voltar = (Button) findViewById(R.id.btn_voltar);
         mEmailView = (EditText) findViewById(R.id.campoEmail);
 
         dialog = new ProgressDialog(this);
@@ -98,7 +95,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                                 startActivity(it);
                                 finish();
                             } else {
-                                Toast.makeText(RecuperarSenhaActivity.this, "Falha ao enviar e-mail. Tente Novamente", Toast.LENGTH_SHORT).show();;
+                                Toast.makeText(RecuperarSenhaActivity.this, "Falha ao enviar e-mail. Tente Novamente", Toast.LENGTH_SHORT).show();
                             }
                             dialog.dismiss();
                         }

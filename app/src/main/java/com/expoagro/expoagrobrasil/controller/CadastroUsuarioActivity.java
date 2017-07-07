@@ -87,7 +87,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         finish();
     }
 
-    public void cadastrar(){
+    public boolean validateInfo(String nome,String email, String telefone, String cidade, String senha, String repetirSenha) {
 
         // Reseta os erros.
         mNomeView.setError(null);
@@ -95,14 +95,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         mTelefoneView.setError(null);
         mSenhaView.setError(null);
         mRepetirSenhaView.setError(null);
-
-        // Armazena os valores no momento da chamada do cadastro.
-        String nome = mNomeView.getText().toString();
-        String email = mEmailView.getText().toString();
-        String telefone = mTelefoneView.getText().toString();
-        String cidade = spinner.getSelectedItem().toString();
-        String senha = mSenhaView.getText().toString();
-        String repetirSenha = mRepetirSenhaView.getText().toString();
 
         boolean cancelar = false;
         View focusView = null;
@@ -137,7 +129,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             cancelar = true;
         }
 
-        if ( cidade.equals("Selecione...") ) {
+        if ( "Selecione...".equals(cidade) ) {
             Toast.makeText(CadastroUsuarioActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_SHORT).show();
             cancelar = true;
         }
@@ -166,6 +158,25 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             if (focusView != null) {
                 focusView.requestFocus();
             }
+            return true;
+        }
+        return false;
+    }
+
+    public void cadastrar(){
+
+        // Armazena os valores no momento da chamada do cadastro.
+        String nome = mNomeView.getText().toString();
+        String email = mEmailView.getText().toString();
+        String telefone = mTelefoneView.getText().toString();
+        String cidade = spinner.getSelectedItem().toString();
+        String senha = mSenhaView.getText().toString();
+        String repetirSenha = mRepetirSenhaView.getText().toString();
+
+        boolean cancelar = validateInfo(nome,email,telefone, cidade, senha, repetirSenha);
+
+        if(cancelar) {
+            return;
         } else {
             progress.setMessage("Cadastrando Dados");
             progress.show();

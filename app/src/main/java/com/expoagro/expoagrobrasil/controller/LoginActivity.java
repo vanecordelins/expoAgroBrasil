@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-    private SignInButton googleButton;
     private static GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private ProgressDialog mProgressDialog;
@@ -77,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        googleButton =  (SignInButton) findViewById(R.id.sign_in_button);
+        SignInButton googleButton =  (SignInButton) findViewById(R.id.sign_in_button);
 
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override

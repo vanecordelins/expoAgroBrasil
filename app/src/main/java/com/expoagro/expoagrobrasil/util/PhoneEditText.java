@@ -12,6 +12,8 @@ import android.util.AttributeSet;
  */
 
 public class PhoneEditText extends android.support.v7.widget.AppCompatEditText {
+
+    private final KeylistenerNumber keylistenerNumber = new KeylistenerNumber();
     private boolean isUpdating;
 
     /*
@@ -98,27 +100,23 @@ public class PhoneEditText extends android.support.v7.widget.AppCompatEditText {
 
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
             }
 
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // do nothing
             }
         });
     }
 
     protected String padNumber(String number, int maxLength) {
-        String padded = new String(number);
+        String padded = number;
         for (int i = 0; i < maxLength - number.length(); i++)
             padded += " ";
         return padded;
 
     }
-
-    private final KeylistenerNumber keylistenerNumber = new KeylistenerNumber();
 
     private class KeylistenerNumber extends NumberKeyListener {
 
