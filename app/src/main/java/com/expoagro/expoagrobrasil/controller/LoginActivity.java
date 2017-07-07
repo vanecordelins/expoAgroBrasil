@@ -37,7 +37,6 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
@@ -114,10 +113,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View view) {
                 Intent telaCadastro = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
                 startActivity(telaCadastro);
-                finish();
             }
         });
 
+        TextView t3 = (TextView) findViewById(R.id.textoRecuperarSenha);
+        t3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(LoginActivity.this, RecuperarSenhaActivity.class);
+                startActivity(it);
+            }
+        });
     }
 
     @Override
@@ -205,6 +211,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
      private void showProgress() {
          if (mProgressDialog == null) {
              mProgressDialog = new ProgressDialog(this);
+             mProgressDialog.setCancelable(false);
              mProgressDialog.setMessage("Verificando Dados...");
              mProgressDialog.setIndeterminate(true);
          }

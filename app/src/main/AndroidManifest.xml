@@ -36,7 +36,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".controller.CompletarCadastroActivity" />
-        <activity android:name=".controller.RecuperarSenhaActivity"></activity>
+        <activity android:name=".controller.RecuperarSenhaActivity" />
+        <activity android:name=".controller.AlterarSenhaActivity"></activity>
     </application>
 
 </manifest>

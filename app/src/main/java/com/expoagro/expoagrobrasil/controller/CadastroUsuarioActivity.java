@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
+import com.expoagro.expoagrobrasil.util.PhoneEditText;
 import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +31,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private Spinner spinner;
     private AutoCompleteTextView mNomeView;
     private AutoCompleteTextView mEmailView;
-    private AutoCompleteTextView mTelefoneView;
+    private PhoneEditText mTelefoneView;
     private TextView mSenhaView;
     private TextView mRepetirSenhaView;
     private ProgressDialog progress;
@@ -44,11 +44,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
         mNomeView = (AutoCompleteTextView) findViewById(R.id.campoNome);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.campoEmail);
-        mTelefoneView = (AutoCompleteTextView) findViewById(R.id.campoTelefone);
+        mTelefoneView = (PhoneEditText) findViewById(R.id.campoTelefone);
         mSenhaView = (EditText) findViewById(R.id.campoSenha);
         mRepetirSenhaView = (EditText) findViewById(R.id.campoRepetir);
 
         progress = new ProgressDialog(this);
+        progress.setCancelable(false);
 
         // Cria um ArrayAdapter usando um array de string e um layout default do spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -74,9 +75,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent telaLogin = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
-                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     public void cadastrar(){

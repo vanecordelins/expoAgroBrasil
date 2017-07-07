@@ -88,12 +88,12 @@
         app:layout_constraintRight_toRightOf="@+id/textInputNome"
         app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
 
-        <AutoCompleteTextView
+        <com.expoagro.expoagrobrasil.util.PhoneEditText
             android:id="@+id/campoTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/campo_telefone"
-            android:inputType="phone" />
+            android:hint="@string/campo_telefone" />
+
     </android.support.design.widget.TextInputLayout>
 
     <Spinner

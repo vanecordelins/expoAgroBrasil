@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
+import com.expoagro.expoagrobrasil.util.PhoneEditText;
 import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,7 +34,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
     private Button mAtualizarButton;
     private AutoCompleteTextView mNomeView;
     private AutoCompleteTextView mEmailView;
-    private AutoCompleteTextView mTelefoneView;
+    private PhoneEditText mTelefoneView;
     private TextView mSenhaView;
 
     @Override
@@ -48,7 +49,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
 
         mNomeView = (AutoCompleteTextView) findViewById(R.id.campoNome);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.campoEmail);
-        mTelefoneView = (AutoCompleteTextView) findViewById(R.id.campoTelefone);
+        mTelefoneView = (PhoneEditText) findViewById(R.id.campoTelefone);
 
 
         // Cria um ArrayAdapter usando um array de string e um layout default do spinner

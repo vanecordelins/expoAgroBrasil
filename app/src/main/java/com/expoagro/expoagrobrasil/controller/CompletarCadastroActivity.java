@@ -17,6 +17,7 @@ import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
+import com.expoagro.expoagrobrasil.util.PhoneEditText;
 import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -32,7 +33,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
 
     private AutoCompleteTextView mNomeView;
     private AutoCompleteTextView mEmailView;
-    private AutoCompleteTextView mTelefoneView;
+    private PhoneEditText mTelefoneView;
     private Button mCancelarButton;
     private Button mCadastrarButton;
     private Spinner spinner;
@@ -46,7 +47,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
 
         mNomeView = (AutoCompleteTextView) findViewById(R.id.campoNome);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.campoEmail);
-        mTelefoneView = (AutoCompleteTextView) findViewById(R.id.campoTelefone);
+        mTelefoneView = (PhoneEditText) findViewById(R.id.campoTelefone);
 
         progress = new ProgressDialog(this);
         progress.setMessage("Carregando Dados...");

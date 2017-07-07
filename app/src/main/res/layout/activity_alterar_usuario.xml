@@ -152,7 +152,7 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent">
 
-        <AutoCompleteTextView
+        <com.expoagro.expoagrobrasil.util.PhoneEditText
             android:id="@+id/campoTelefone"
             android:layout_width="match_parent"
             android:layout_height="41dp"
