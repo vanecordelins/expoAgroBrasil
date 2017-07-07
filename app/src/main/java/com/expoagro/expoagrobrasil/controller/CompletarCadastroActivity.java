@@ -51,6 +51,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
 
         progress = new ProgressDialog(this);
         progress.setMessage("Carregando Dados...");
+        progress.setCancelable(false);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -87,7 +88,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
 
                 break;
             }
-            progress.hide();
+            progress.dismiss();
         }
 
         mCadastrarButton = (Button) findViewById(R.id.btn_confirm);
@@ -108,6 +109,14 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        GoogleSignIn.signOut(CompletarCadastroActivity.this, mGoogleApiClient);
+        Intent telaLogin = new Intent(CompletarCadastroActivity.this, LoginActivity.class);
+        startActivity(telaLogin);
+        finish();
     }
 
     private void confirmar() {

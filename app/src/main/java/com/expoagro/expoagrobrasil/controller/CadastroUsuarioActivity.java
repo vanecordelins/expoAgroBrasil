@@ -75,12 +75,15 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent telaLogin = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
+                finish();
             }
         });
     }
 
     @Override
     public void onBackPressed() {
+        Intent it = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
+        startActivity(it);
         finish();
     }
 

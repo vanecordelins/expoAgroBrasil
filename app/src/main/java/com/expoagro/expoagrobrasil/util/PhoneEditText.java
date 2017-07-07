@@ -1,7 +1,6 @@
 package com.expoagro.expoagrobrasil.util;
 
 import android.content.Context;
-import android.preference.EditTextPreference;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;

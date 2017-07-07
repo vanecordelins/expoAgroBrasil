@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.campoEmail);
-        //populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.campoSenha);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -96,7 +95,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-
         //Get Firebase auth instance
         mAuth = FirebaseAuth.getInstance();
 
@@ -113,6 +111,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View view) {
                 Intent telaCadastro = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
                 startActivity(telaCadastro);
+                finish();
             }
         });
 
@@ -122,6 +121,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View v) {
                 Intent it = new Intent(LoginActivity.this, RecuperarSenhaActivity.class);
                 startActivity(it);
+                finish();
             }
         });
     }
@@ -141,8 +141,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             } else {
                 mProgressDialog.dismiss();
                 System.out.println("Não foi possível realizar o Login. Tente Novamente");
-                // Google Sign In failed, update UI appropriately
-                // ...
             }
         }
     }
@@ -226,25 +224,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
           }
       }
 
-//    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<>(LoginActivity.this,
-//                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-//
-//        mEmailView.setAdapter(adapter);
-//    }
-
-
     public void onConnectionFailed(ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         System.out.println("onConnectionFailed:" + connectionResult);
     }
-
-
-
-
 
 }
 

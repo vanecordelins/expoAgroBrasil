@@ -41,6 +41,7 @@ public class AlterarSenhaActivity extends AppCompatActivity {
         btn_cancel = (Button) findViewById(R.id.btn_cancelar);
 
         progress = new ProgressDialog(this);
+        progress.setCancelable(false);
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +59,13 @@ public class AlterarSenhaActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent it = new Intent(AlterarSenhaActivity.this, AnunciosActivity.class);
+        startActivity(it);
+        finish();
     }
 
     public void confirma() {

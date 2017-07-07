@@ -11,7 +11,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
@@ -33,22 +32,20 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
     private Button mCancelarButton;
     private Button mAtualizarButton;
     private AutoCompleteTextView mNomeView;
-    private AutoCompleteTextView mEmailView;
     private PhoneEditText mTelefoneView;
-    private TextView mSenhaView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         progress = new ProgressDialog(this);
+        progress.setCancelable(false);
         progress.setMessage("Recuperando Dados");
         progress.show();
 
         setContentView(R.layout.activity_alterar_usuario);
 
         mNomeView = (AutoCompleteTextView) findViewById(R.id.campoNome);
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.campoEmail);
         mTelefoneView = (PhoneEditText) findViewById(R.id.campoTelefone);
 
 
@@ -192,6 +189,13 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
             });
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent it = new Intent(AlterarUsuarioActivity.this, AnunciosActivity.class);
+        startActivity(it);
+        finish();
     }
 
     public void onConnectionFailed(ConnectionResult connectionResult) {

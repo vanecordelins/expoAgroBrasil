@@ -3,9 +3,8 @@ package com.expoagro.expoagrobrasil.util;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.controller.AnunciosActivity;
 import com.expoagro.expoagrobrasil.controller.CompletarCadastroActivity;
@@ -13,7 +12,6 @@ import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -22,9 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -47,12 +43,10 @@ public class GoogleSignIn {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         System.out.println("signInWithCredential:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
+                            Toast.makeText(activity, "Sem conexão à internet.", Toast.LENGTH_SHORT).show();
                             System.out.println("signInWithCredential. " + "Not Successful." );
-                            dialog.hide();
+                            dialog.dismiss();
                         } else {
                             final String uid = task.getResult().getUser().getUid();
 
@@ -60,7 +54,7 @@ public class GoogleSignIn {
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
                                     System.out.println("The read failed: " + databaseError.getMessage());
-                                    dialog.hide();
+                                    dialog.dismiss();
                                 }
 
                                 @Override
@@ -79,22 +73,8 @@ public class GoogleSignIn {
                                 }
                             });
                         }
-                        // ...
                     }
                 });
-    }
-
-    public static void handleSignInResult(TextView mStatusTextView, Activity activity, GoogleSignInResult result) {
-        System.out.println("handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-       //     mStatusTextView.setText(activity.getString(R.string.signed_in_fmt, acct.getDisplayName()));
-            System.out.println("Google Sign In:Success");
-        } else {
-            // Signed out, show unauthenticated UI.
-            System.out.println("false");
-        }
     }
 
     public static void signIn(GoogleApiClient mGoogleApiClient, Activity activity) {

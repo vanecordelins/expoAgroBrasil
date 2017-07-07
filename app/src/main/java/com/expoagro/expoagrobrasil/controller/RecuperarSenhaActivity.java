@@ -6,11 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
@@ -48,6 +47,8 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         btn_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent it = new Intent(RecuperarSenhaActivity.this, LoginActivity.class);
+                startActivity(it);
                 finish();
             }
         });
@@ -55,6 +56,8 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent it = new Intent(RecuperarSenhaActivity.this, LoginActivity.class);
+        startActivity(it);
         finish();
     }
 
@@ -91,6 +94,8 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()) {
                                 Toast.makeText(RecuperarSenhaActivity.this, "E-mail enviado com sucesso.", Toast.LENGTH_SHORT).show();
+                                Intent it = new Intent(RecuperarSenhaActivity.this, LoginActivity.class);
+                                startActivity(it);
                                 finish();
                             } else {
                                 Toast.makeText(RecuperarSenhaActivity.this, "Falha ao enviar e-mail. Tente Novamente", Toast.LENGTH_SHORT).show();;
