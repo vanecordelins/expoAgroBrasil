@@ -18,7 +18,6 @@
             android:name=".controller.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
-
             <!-- android:theme="@android:style/Theme.NoTitleBar"> -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,10 +25,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.AnunciosActivity" />
+        <activity
+            android:name=".controller.AnunciosActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <activity
             android:name=".controller.CadastroUsuarioActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".controller.AlterarUsuarioActivity"
+            android:label="@string/title_activity_alterar_usuario"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".controller.CompletarCadastroActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".controller.RecuperarSenhaActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".controller.AlterarSenhaActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

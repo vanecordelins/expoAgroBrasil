@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
-import com.expoagro.expoagrobrasil.dao.FirebaseLogin;
+import com.expoagro.expoagrobrasil.util.FirebaseLogin;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.auth.api.Auth;
@@ -37,12 +37,9 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private SignInButton googleButton;
     private static GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private ProgressDialog mProgressDialog;
@@ -56,7 +53,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.campoEmail);
-        //populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.campoSenha);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -80,12 +76,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        googleButton =  (SignInButton) findViewById(R.id.sign_in_button);
+        SignInButton googleButton =  (SignInButton) findViewById(R.id.sign_in_button);
 
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showProgress();
+                showProgress();
                 GoogleSignIn.signIn(mGoogleApiClient, LoginActivity.this); // Google Sign In
             }
         });
@@ -94,11 +90,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin(); //Aqui chamar o mÃ©todo para login *****************
+                attemptLogin(); //Aqui chamar o metodo para login *****************
             }
         });
-
-        mProgressView = findViewById(R.id.login_progress);
 
         //Get Firebase auth instance
         mAuth = FirebaseAuth.getInstance();
@@ -120,6 +114,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
+        TextView t3 = (TextView) findViewById(R.id.textoRecuperarSenha);
+        t3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(LoginActivity.this, RecuperarSenhaActivity.class);
+                startActivity(it);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -132,13 +135,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-                GoogleSignIn.firebaseAuthWithGoogle(mAuth, this, account);
-
+                GoogleSignIn.firebaseAuthWithGoogle(mAuth, this, account, mProgressDialog);
 
             } else {
-                System.out.println("NÃ£o foi possÃ­vel realizar o Login. Tente Novamente");
-                // Google Sign In failed, update UI appropriately
-                // ...
+                mProgressDialog.dismiss();
+                System.out.println("Não foi possível realizar o Login. Tente Novamente");
             }
         }
     }
@@ -188,13 +189,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Existe um erro; nÃ£o Ã© chamado o login
             focusView.requestFocus(); //foco no primeiro campo com um erro
         } else {
+
+
             // Mostra um spinner de progresso, and kick off a background task to
             // perform the user login attempt.
-            //showProgress();
-
+            showProgress();
 
             //authenticate user pelo firebase
-            FirebaseLogin.firebaseAuthentication(LoginActivity.this, mAuth, email, senha);
+            FirebaseLogin.firebaseAuthentication(LoginActivity.this, mAuth, email, senha, mProgressDialog);
 
         }
     }
@@ -203,42 +205,29 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
      * Shows the progress UI and hides the login form.
      */
 
-    // private void showProgress() {
-    //     if (mProgressDialog == null) {
-    //         mProgressDialog = new ProgressDialog(this);
-    //         mProgressDialog.setMessage("Verificando Dados...");
-    //         mProgressDialog.setIndeterminate(true);
-    //     }
-    //     mProgressDialog.show();
-    // }
+     private void showProgress() {
+         if (mProgressDialog == null) {
+             mProgressDialog = new ProgressDialog(this);
+             mProgressDialog.setCancelable(false);
+             mProgressDialog.setMessage("Verificando Dados...");
+             mProgressDialog.setIndeterminate(true);
+         }
+         mProgressDialog.show();
+     }
 
-    //  @Override
-    //  public void onDestroy() {
-    //      super.onDestroy();
-    //      if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
-    //          mProgressDialog.cancel();
-    //      }
-    //  }
-
-//    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<>(LoginActivity.this,
-//                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-//
-//        mEmailView.setAdapter(adapter);
-//    }
-
+      @Override
+      public void onDestroy() {
+          super.onDestroy();
+          if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
+              mProgressDialog.dismiss();
+          }
+      }
 
     public void onConnectionFailed(ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         System.out.println("onConnectionFailed:" + connectionResult);
     }
-
-
-
-
 
 }
 
