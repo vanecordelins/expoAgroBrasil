@@ -4,7 +4,6 @@ package com.expoagro.expoagrobrasil.controller;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -19,12 +18,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -66,11 +63,11 @@ public class CadastroUsuarioActivityTesteNovo {
 
         ViewInteraction appCompatAutoCompleteTextView2 = onView(
                 allOf(withId(R.id.campoNome), isDisplayed()));
-        appCompatAutoCompleteTextView2.perform(replaceText("diego"), closeSoftKeyboard());
+        appCompatAutoCompleteTextView2.perform(replaceText("zcqayptc"), closeSoftKeyboard());
 
         ViewInteraction appCompatAutoCompleteTextView3 = onView(
                 allOf(withId(R.id.campoEmail), isDisplayed()));
-        appCompatAutoCompleteTextView3.perform(replaceText("diego2.tester@teste.com"), closeSoftKeyboard());
+        appCompatAutoCompleteTextView3.perform(replaceText("zcqayptc@imgof.com"), closeSoftKeyboard());
 
         try {
             Thread.sleep(1000);
@@ -109,7 +106,7 @@ public class CadastroUsuarioActivityTesteNovo {
 
         ViewInteraction appCompatEditText = onView(
                 allOf(withId(R.id.campoSenha), isDisplayed()));
-        appCompatEditText.perform(replaceText("senha1"), closeSoftKeyboard());
+        appCompatEditText.perform(replaceText("senha123"), closeSoftKeyboard());
 
         try {
             Thread.sleep(1000);
@@ -119,7 +116,7 @@ public class CadastroUsuarioActivityTesteNovo {
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.campoRepetir), isDisplayed()));
-        appCompatEditText2.perform(replaceText("senha1"), closeSoftKeyboard());
+        appCompatEditText2.perform(replaceText("senha123"), closeSoftKeyboard());
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -127,7 +124,7 @@ public class CadastroUsuarioActivityTesteNovo {
         }
 
         ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.campoRepetir), withText("senha1"), isDisplayed()));
+                allOf(withId(R.id.campoRepetir), withText("senha123"), isDisplayed()));
         appCompatEditText3.perform(pressImeActionButton());
         try {
             Thread.sleep(1000);
