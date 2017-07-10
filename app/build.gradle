@@ -61,7 +61,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-v4:25.3.1'  //adi��o
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }
 
@@ -76,13 +76,13 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
 
-apply plugin: 'com.google.gms.google-services'
-
 sourceSets {
     unitTest {
         java.srcDir file('src/androidTest/java')
     }
 }
+
 dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
+apply plugin: 'com.google.gms.google-services'

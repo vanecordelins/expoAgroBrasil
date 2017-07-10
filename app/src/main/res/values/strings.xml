@@ -17,17 +17,23 @@
 
     <string name="msg_cadastro_sucesso">Cadastro realizado com sucesso</string>
 
+    <string name="error_nome_invalido">Nome inválido</string>
+    <string name="error_telefone_invalido">Formato: (XX) 9XXXX-XXXX</string>
     <string name="error_email_invalido">Endereço de email inválido</string>
-    <string name="error_senha_invalida">Senha inválida</string>
+    <string name="error_senha_invalida">Digite entre 6 e 15 caracteres</string>
     <string name="error_incorrect_password">Senha incorreta</string>
     <string name="error_field_required">Campo obrigatório</string>
     <string name="error_cidade_nao_selecionada">Selecione uma cidade</string>
     <string name="error_repetir_senha_invalida">As senhas não combinam! Verifique.</string>
     <string name="error_login">Não foi possível realizar o Login. Tente Novamente</string>
 
-    <string name="cadastre_se">Não é cadastrado? <u>Cadastre-se</u></string>
+    <string name="cadastre_se">NÃO É CADASTRADO? <u>CADASTRE-SE</u></string>
+    <string name="esqueceu_senha"><u>ESQUECEU SUA SENHA?</u></string>
+
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_alterar_usuario">AlterarUsuarioActivity</string>
+    <string name="title_activity_completar_cadastro">CompletarCadastroActivity</string>
 
 </resources>
