@@ -67,6 +67,10 @@ public class LoginActivityTestEmailSenhaValido {
 
         Thread.sleep(3000);
 
+        ViewInteraction textView = onView(allOf(withText("ExpoAgro Brasil"),childAtPosition(allOf(withId(R.id.action_bar),
+                childAtPosition(withId(R.id.action_bar_container),0)),0),isDisplayed()));
+        textView.check(matches(withText("ExpoAgro Brasil")));
+
     }
 
     public void closeKeyboard() throws Exception {
@@ -74,5 +78,23 @@ public class LoginActivityTestEmailSenhaValido {
         Thread.sleep(1000);
     }
 
+    private static Matcher<View> childAtPosition(
+            final Matcher<View> parentMatcher, final int position) {
+
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Child at position " + position + " in parent ");
+                parentMatcher.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup && parentMatcher.matches(parent)
+                        && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
+    }
 
 }
