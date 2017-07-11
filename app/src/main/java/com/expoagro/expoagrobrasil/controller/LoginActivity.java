@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             // Usuario ja esta logado, nÃ£o ir para a tela de login
-            Intent it = new Intent(LoginActivity.this, AnunciosActivity.class);
+            Intent it = new Intent(LoginActivity.this, MenuActivity.class);
             startActivity(it);
             finish();
         }

@@ -25,11 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".controller.AnunciosActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
 
         <activity
             android:name=".controller.CadastroUsuarioActivity"
@@ -57,6 +52,25 @@
         <activity android:name=".controller.AlterarSenhaActivity"
             android:screenOrientation="portrait">
         </activity>
-    </application>
 
+        <activity
+            android:name=".controller.VisualizarUsuarioActivity"
+            android:parentActivityName=".controller.MenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
+        </activity>
+
+        <activity
+            android:name=".controller.MenuActivity"
+            android:parentActivityName=".controller.MenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
+        </activity>
+    </application>
 </manifest>
