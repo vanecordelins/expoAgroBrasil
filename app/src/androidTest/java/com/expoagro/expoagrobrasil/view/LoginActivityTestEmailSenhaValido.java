@@ -69,6 +69,10 @@ public class LoginActivityTestEmailSenhaValido {
                 childAtPosition(withId(R.id.action_bar_container),0)),0),isDisplayed()));
         ViewInteraction result = textView.check(matches(withText("ExpoAgro Brasil")));
 
+        Thread.sleep(3000);
+
+        onView(withId(R.id.btn_sair)).perform(click());
+
         Assert.assertNotNull(result); //textView.check(matches(withText("ExpoAgro Brasil")));
 
     }
