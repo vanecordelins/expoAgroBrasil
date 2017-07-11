@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/valorNacionalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Nacional"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout2"
+        app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="48dp"
+        android:layout_above="@+id/textCotacaoDoBoi"
+        android:layout_alignRight="@+id/buttonAnuncios"
+        android:layout_alignEnd="@+id/buttonAnuncios"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.568"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout2" />
+
+    <Button
+        android:id="@+id/buttonAnuncios"
+        android:layout_width="304dp"
+        android:layout_height="44dp"
+        android:text="Ver Anúncios"
+        android:onClick="onAnuncios"
+        android:layout_below="@+id/logoInicial"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textData"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/logoInicial" />
+
+    <TextView
+        android:id="@+id/textCotacaoDoBoi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:onClick="onArrobaDoBoi"
+        android:text="@string/cotacao_do_boi"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.651"
+        app:layout_constraintRight_toRightOf="@+id/frameLayout"
+        app:layout_constraintLeft_toLeftOf="@+id/frameLayout"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/valorNacionalText"
+        android:layout_alignEnd="@+id/valorNacionalText"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
+
+    <TextView
+        android:id="@+id/textData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        android:text="data"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout2" />
+
+    <TextView
+        android:id="@+id/textArrobaPE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        android:text="\@Regional R$150,00"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/frameLayout3"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/frameLayout3"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout3"
+        android:layout_marginBottom="8dp" />
+
+    <ImageView
+        android:id="@+id/logoInicial"
+        android:layout_width="223dp"
+        android:layout_height="211dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/eab_logocnome"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.028" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout3"
+        android:layout_width="304dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="41dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/contorno"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textCotacaoDoBoi">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="305dp"
+        android:layout_height="42dp"
+        android:layout_above="@+id/textCotacaoDoBoi"
+        android:layout_alignEnd="@+id/buttonAnuncios"
+        android:layout_alignLeft="@+id/buttonAnuncios"
+        android:layout_alignRight="@+id/buttonAnuncios"
+        android:layout_alignStart="@+id/buttonAnuncios"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/contorno"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="304dp"
+        android:layout_height="44dp"
+        android:layout_alignEnd="@+id/frameLayout"
+        android:layout_alignLeft="@+id/frameLayout"
+        android:layout_alignRight="@+id/frameLayout"
+        android:layout_alignStart="@+id/frameLayout"
+        android:layout_marginBottom="9dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/contorno"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
