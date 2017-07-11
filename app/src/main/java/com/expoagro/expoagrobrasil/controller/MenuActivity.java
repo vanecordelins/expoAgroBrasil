@@ -26,7 +26,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;;import org.w3c.dom.Text;
+import com.google.firebase.database.ValueEventListener;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
@@ -122,7 +122,7 @@ public class MenuActivity extends AppCompatActivity
         if (id == R.id.menu_meu_perfil) {
             Intent telaVisualizar = new Intent(MenuActivity.this, VisualizarUsuarioActivity.class);
             startActivity(telaVisualizar);
-        } else if (id == R.id.menu_novo_anuncio) {
+        } /*else if (id == R.id.menu_novo_anuncio) {
 
         } else if (id == R.id.menu_meus_anuncios) {
 
@@ -132,7 +132,7 @@ public class MenuActivity extends AppCompatActivity
 
         } else if (id == R.id.menu_sobre) {
 
-        }
+        } */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -122,9 +122,10 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                             }
                         })
                         .setNegativeButton("Não", null).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
-
     }
 
 }
