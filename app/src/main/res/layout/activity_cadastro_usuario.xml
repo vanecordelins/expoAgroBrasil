@@ -16,7 +16,7 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
-        tools:layout_editor_absoluteY="-77dp" />
+        tools:layout_editor_absoluteY="-76dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -88,12 +88,12 @@
         app:layout_constraintRight_toRightOf="@+id/textInputNome"
         app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
 
-        <AutoCompleteTextView
+        <com.expoagro.expoagrobrasil.util.PhoneEditText
             android:id="@+id/campoTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/campo_telefone"
-            android:inputType="phone" />
+            android:hint="@string/campo_telefone" />
+
     </android.support.design.widget.TextInputLayout>
 
     <Spinner
@@ -108,27 +108,27 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputTelefone" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputSenha"
+    android:id="@+id/textInputSenha"
+    android:layout_width="303dp"
+    android:layout_height="50dp"
+    app:layout_constraintLeft_toLeftOf="@+id/spinner"
+    app:layout_constraintRight_toRightOf="@+id/spinner"
+    app:layout_constraintTop_toBottomOf="@+id/spinner">
+
+    <EditText
+        android:id="@+id/campoSenha"
         android:layout_width="303dp"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:hint="@string/campo_senha"
+        android:imeOptions="actionUnspecified"
+        android:inputType="textPassword"
+        android:password="true"
         app:layout_constraintLeft_toLeftOf="@+id/spinner"
         app:layout_constraintRight_toRightOf="@+id/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/spinner">
-
-        <EditText
-            android:id="@+id/campoSenha"
-            android:layout_width="303dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
-            android:hint="@string/campo_senha"
-            android:imeOptions="actionUnspecified"
-            android:inputType="textPassword"
-            android:password="true"
-            app:layout_constraintLeft_toLeftOf="@+id/spinner"
-            app:layout_constraintRight_toRightOf="@+id/spinner"
-            tools:layout_editor_absoluteY="367dp" />
-    </android.support.design.widget.TextInputLayout>
+        tools:layout_editor_absoluteY="367dp" />
+</android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputRepetir"

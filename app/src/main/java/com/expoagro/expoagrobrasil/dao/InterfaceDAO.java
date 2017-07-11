@@ -8,6 +8,4 @@ public interface InterfaceDAO<T> {
     public void save(T object);
     public void update(T object);
     public void delete(String id);
-    public void read(String id);
-    public void readAll();
 }
