@@ -37,7 +37,8 @@ ext {
   junit = 'junit:junit:4.12'
 
   supportTest = [espressoCore: 'com.android.support.test.espresso:espresso-core:2.2.2',
-                 rules       : 'com.android.support.test:rules:0.5']
+                 rules       : 'com.android.support.test:rules:0.5',
+                 runner      : 'com.android.support.test:runner:0.5']
 }
 
 
