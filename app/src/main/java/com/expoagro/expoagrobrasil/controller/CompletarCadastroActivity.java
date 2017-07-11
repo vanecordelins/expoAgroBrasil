@@ -141,7 +141,9 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
         }
 
         if (cancelar) {
-            focusView.requestFocus();
+            if (focusView != null) {
+                focusView.requestFocus();
+            }
             progress.hide();
         } else {
             final Usuario usuario = new Usuario();
