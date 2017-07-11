@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
 
+import junit.framework.Assert;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -63,7 +65,9 @@ public class LoginActivityTestSenhaInvalido {
         Thread.sleep(3000);
         ViewInteraction textView = onView(allOf(withText("ExpoAgro Brasil"),childAtPosition(allOf(withId(R.id.action_bar),
                 childAtPosition(withId(R.id.action_bar_container),0)),0),isDisplayed()));
-        textView.check(doesNotExist());
+        ViewInteraction result = textView.check(doesNotExist());
+
+        Assert.assertNotNull(result);
     }
 
     public void closeKeyboard() throws Exception {

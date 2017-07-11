@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
 
+import junit.framework.Assert;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -24,6 +26,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -65,7 +68,9 @@ public class LoginActivityTestEmailSenhaValido {
 
         ViewInteraction textView = onView(allOf(withText("ExpoAgro Brasil"),childAtPosition(allOf(withId(R.id.action_bar),
                 childAtPosition(withId(R.id.action_bar_container),0)),0),isDisplayed()));
-        textView.check(matches(withText("ExpoAgro Brasil")));
+        ViewInteraction result = textView.check(matches(withText("ExpoAgro Brasil")));
+
+        Assert.assertNotNull(result); //textView.check(matches(withText("ExpoAgro Brasil")));
 
     }
 
