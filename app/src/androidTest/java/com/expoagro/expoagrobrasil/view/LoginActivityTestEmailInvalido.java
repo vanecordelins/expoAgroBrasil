@@ -53,7 +53,7 @@ public class LoginActivityTestEmailInvalido {
 
     @Test
     public void loginActivityTest() throws Exception{
-        onView(withId(R.id.campoEmail)).perform(typeText("samirjosue_13@hotmail.com"));
+        onView(withId(R.id.campoEmail)).perform(typeText("samirjosue_13@hotmail.co"));
         closeKeyboard();
         onView(withId(R.id.campoSenha)).perform(typeText("123456"));
         closeKeyboard();
@@ -64,6 +64,8 @@ public class LoginActivityTestEmailInvalido {
         ViewInteraction textView = onView(allOf(withText("ExpoAgro Brasil"),childAtPosition(allOf(withId(R.id.action_bar),
                 childAtPosition(withId(R.id.action_bar_container),0)),0),isDisplayed()));
         textView.check(doesNotExist());
+
+
 
     }
 
