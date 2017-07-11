@@ -73,10 +73,7 @@ sourceSets {
 dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
-<<<<<<< HEAD
 dependencies {
     compile 'org.jsoup:jsoup:1.10.3'
 }
-=======
 apply plugin: 'com.google.gms.google-services'
->>>>>>> 374c1b777cd61154013668e993a890f3cddfcf2d

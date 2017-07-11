@@ -51,7 +51,7 @@ public class InicialArrobaActivity extends Activity {
     }
 
     public void onAnuncios (View v) {
-        Intent it = new Intent(this, AnunciosActivity.class);
+        Intent it = new Intent(this, LoginActivity.class);
         startActivity(it);
     }
 

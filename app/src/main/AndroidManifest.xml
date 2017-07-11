@@ -20,11 +20,6 @@
             android:screenOrientation="portrait">
             <!-- android:theme="@android:style/Theme.NoTitleBar"> -->
         </activity>
-        <activity android:name=".controller.AnunciosActivity" />
-        <activity
-            android:name=".controller.CadastroUsuarioActivity"
-            android:screenOrientation="portrait">
-        </activity>
 
         <activity android:name=".controller.ArrobaDoBoiActivity">
         </activity>
@@ -36,8 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
+
         <activity
             android:name=".controller.AnunciosActivity"
             android:screenOrientation="portrait">
@@ -70,7 +64,6 @@
         <activity android:name=".controller.AlterarSenhaActivity"
             android:screenOrientation="portrait">
         </activity>
->>>>>>> 374c1b777cd61154013668e993a890f3cddfcf2d
     </application>
 
 </manifest>
