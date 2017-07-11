@@ -26,6 +26,7 @@
     <string name="error_login">Não foi possível realizar o Login. Tente Novamente</string>
 
     <string name="cadastre_se">Não é cadastrado? <u>Cadastre-se</u></string>
+    <string name="cotacao_do_boi"><u>Cotação do Boi Gordo</u></string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>

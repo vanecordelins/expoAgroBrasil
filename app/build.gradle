@@ -68,6 +68,7 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:9.6.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:+'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
@@ -79,4 +80,7 @@ sourceSets {
 }
 dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'org.jsoup:jsoup:1.10.3'
 }
