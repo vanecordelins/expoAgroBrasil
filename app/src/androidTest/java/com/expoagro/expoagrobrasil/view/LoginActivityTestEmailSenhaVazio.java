@@ -55,9 +55,9 @@ public class LoginActivityTestEmailSenhaVazio {
 
     @Test
     public void loginActivityTest() throws Exception{
-        onView(withId(R.id.email)).perform(typeText(""));
+        onView(withId(R.id.campoEmail)).perform(typeText(""));
         closeKeyboard();
-        onView(withId(R.id.password)).perform(typeText(""));
+        onView(withId(R.id.campoSenha)).perform(typeText(""));
         closeKeyboard();
         onView(withId(R.id.btnEntrar)).perform(click());
 

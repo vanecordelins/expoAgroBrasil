@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.expoagro.expoagrobrasil.controller.AlterarSenhaActivity">
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="350dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="textPersonName"
+        android:text="ALTERAÇÃO DE SENHA"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="121dp"
+        android:layout_height="126dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/eab_logosnome" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputSenha"
+        android:layout_width="303dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="28dp"
+        app:layout_constraintTop_toBottomOf="@+id/editText3"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <EditText
+            android:id="@+id/campoSenha"
+            android:layout_width="303dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:hint="Senha Atual"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:password="true"
+            app:layout_constraintLeft_toLeftOf="@+id/spinner"
+            app:layout_constraintRight_toRightOf="@+id/spinner"
+            tools:layout_editor_absoluteY="367dp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputNovaSenha"
+        android:layout_width="303dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/textInputSenha"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.507">
+
+        <EditText
+            android:id="@+id/campoNovaSenha"
+            android:layout_width="303dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:hint="Nova Senha"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:password="true"
+            app:layout_constraintLeft_toLeftOf="@+id/spinner"
+            app:layout_constraintRight_toRightOf="@+id/spinner"
+            tools:layout_editor_absoluteY="367dp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputConfirmaNovaSenha"
+        android:layout_width="303dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/textInputNovaSenha"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.507">
+
+        <EditText
+            android:id="@+id/campoConfirmaNovaSenha"
+            android:layout_width="303dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:hint="Confirme Nova Senha"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:password="true"
+            app:layout_constraintLeft_toLeftOf="@+id/spinner"
+            app:layout_constraintRight_toRightOf="@+id/spinner"
+            tools:layout_editor_absoluteY="367dp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CONFIRMAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="39dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textInputConfirmaNovaSenha"
+        app:layout_constraintVertical_bias="0.564"
+        app:layout_constraintLeft_toRightOf="@+id/btn_cancelar"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.99" />
+
+    <Button
+        android:id="@+id/btn_cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CANCELAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textInputConfirmaNovaSenha"
+        android:layout_marginLeft="41dp"
+        app:layout_constraintVertical_bias="0.564"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

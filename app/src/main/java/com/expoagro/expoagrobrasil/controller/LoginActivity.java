@@ -1,6 +1,5 @@
 package com.expoagro.expoagrobrasil.controller;
 
-import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
@@ -15,16 +14,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
-import com.expoagro.expoagrobrasil.dao.FirebaseLogin;
-import com.expoagro.expoagrobrasil.util.GoogleApiClientHelper;
+import com.expoagro.expoagrobrasil.util.FirebaseLogin;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
+import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -34,20 +31,15 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.List;
-
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private SignInButton googleButton;
     private static GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private ProgressDialog mProgressDialog;
@@ -61,7 +53,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.campoEmail);
-        //populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.campoSenha);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -85,16 +76,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        GoogleApiClientHelper.getInstance().setGoogleApiClient(mGoogleApiClient);
-
-        googleButton =  (SignInButton) findViewById(R.id.sign_in_button);
+        SignInButton googleButton =  (SignInButton) findViewById(R.id.sign_in_button);
 
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showProgress();
-                GoogleSignIn.signIn(GoogleApiClientHelper.getInstance().getGoogleApiClient(), LoginActivity.this); // Google Sign In
-                GoogleApiClientHelper.getInstance().getGoogleApiClient().connect();
+                showProgress();
+                GoogleSignIn.signIn(mGoogleApiClient, LoginActivity.this); // Google Sign In
             }
         });
 
@@ -102,19 +90,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin(); //Aqui chamar o mÃ©todo para login *****************
+                attemptLogin(); //Aqui chamar o metodo para login *****************
             }
         });
-
-        mProgressView = findViewById(R.id.login_progress);
 
         //Get Firebase auth instance
         mAuth = FirebaseAuth.getInstance();
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             // Usuario ja esta logado, nÃ£o ir para a tela de login
-            Intent it = new Intent(LoginActivity.this, AnunciosActivity.class);
+            Intent it = new Intent(LoginActivity.this, MenuActivity.class);
             startActivity(it);
+            finish();
         }
 
         TextView t2 = (TextView) findViewById(R.id.textoNovoCadastro);
@@ -123,9 +110,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View view) {
                 Intent telaCadastro = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
                 startActivity(telaCadastro);
+                finish();
             }
         });
 
+        TextView t3 = (TextView) findViewById(R.id.textoRecuperarSenha);
+        t3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(LoginActivity.this, RecuperarSenhaActivity.class);
+                startActivity(it);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -134,15 +131,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-                GoogleSignIn.firebaseAuthWithGoogle(mAuth, this, account);
+                GoogleSignIn.firebaseAuthWithGoogle(mAuth, this, account, mProgressDialog);
 
             } else {
-                System.out.println("NÃ£o foi possÃ­vel realizar o Login. Tente Novamente");
-                // Google Sign In failed, update UI appropriately
-                // ...
+                mProgressDialog.dismiss();
+                System.out.println("Não foi possível realizar o Login. Tente Novamente");
             }
         }
     }
@@ -171,7 +168,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancelar = true;
-        } else if (!isPasswordValid(senha)) {
+        } else if (!Regex.isPasswordValid(senha)) {
             mPasswordView.setError(getString(R.string.error_senha_invalida));
             focusView = mPasswordView;
             cancelar = true;
@@ -182,7 +179,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancelar = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!Regex.isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_email_invalido));
             focusView = mEmailView;
             cancelar = true;
@@ -192,65 +189,45 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Existe um erro; nÃ£o Ã© chamado o login
             focusView.requestFocus(); //foco no primeiro campo com um erro
         } else {
+
+
             // Mostra um spinner de progresso, and kick off a background task to
             // perform the user login attempt.
-            //showProgress();
-
+            showProgress();
 
             //authenticate user pelo firebase
-            FirebaseLogin.firebaseAuthentication(LoginActivity.this, mAuth, email, senha);
+            FirebaseLogin.firebaseAuthentication(LoginActivity.this, mAuth, email, senha, mProgressDialog);
 
         }
-    }
-
-    public boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    public boolean isPasswordValid(String password) {
-        return password.length() >= 6;
     }
 
     /**
      * Shows the progress UI and hides the login form.
      */
 
-    // private void showProgress() {
-    //     if (mProgressDialog == null) {
-    //         mProgressDialog = new ProgressDialog(this);
-    //         mProgressDialog.setMessage("Verificando Dados...");
-    //         mProgressDialog.setIndeterminate(true);
-    //     }
-    //     mProgressDialog.show();
-    // }
+     private void showProgress() {
+         if (mProgressDialog == null) {
+             mProgressDialog = new ProgressDialog(this);
+             mProgressDialog.setCancelable(false);
+             mProgressDialog.setMessage("Verificando Dados...");
+             mProgressDialog.setIndeterminate(true);
+         }
+         mProgressDialog.show();
+     }
 
-    //  @Override
-    //  public void onDestroy() {
-    //      super.onDestroy();
-    //      if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
-    //          mProgressDialog.cancel();
-    //      }
-    //  }
-
-//    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<>(LoginActivity.this,
-//                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-//
-//        mEmailView.setAdapter(adapter);
-//    }
-
+      @Override
+      public void onDestroy() {
+          super.onDestroy();
+          if ( mProgressDialog!=null && mProgressDialog.isShowing() ){
+              mProgressDialog.dismiss();
+          }
+      }
 
     public void onConnectionFailed(ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         System.out.println("onConnectionFailed:" + connectionResult);
     }
-
-
-
-
 
 }
 
