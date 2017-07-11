@@ -41,8 +41,7 @@ public class AlterarUsuarioActivityTestNomeInvalido {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.campoEmail), isDisplayed()));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.campoEmail), isDisplayed()));
         appCompatEditText2.perform(replaceText("zcqayptc@imgof.com"), closeSoftKeyboard());
 
         // Added a sleep statement to match the app's execution delay.
@@ -54,8 +53,7 @@ public class AlterarUsuarioActivityTestNomeInvalido {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatEditText6 = onView(
-                allOf(withId(R.id.campoSenha), isDisplayed()));
+        ViewInteraction appCompatEditText6 = onView(allOf(withId(R.id.campoSenha), isDisplayed()));
         appCompatEditText6.perform(replaceText("senha123"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton2 = onView(

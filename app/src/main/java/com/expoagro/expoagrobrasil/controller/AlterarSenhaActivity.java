@@ -51,7 +51,7 @@ public class AlterarSenhaActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(AlterarSenhaActivity.this, AnunciosActivity.class);
+                Intent it = new Intent(AlterarSenhaActivity.this, VisualizarUsuarioActivity.class);
                 startActivity(it);
                 finish();
             }
@@ -61,7 +61,7 @@ public class AlterarSenhaActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent it = new Intent(AlterarSenhaActivity.this, AnunciosActivity.class);
+        Intent it = new Intent(AlterarSenhaActivity.this, MenuActivity.class);
         startActivity(it);
         finish();
     }
@@ -138,7 +138,7 @@ public class AlterarSenhaActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(AlterarSenhaActivity.this, "Senha atualizada com sucesso!", Toast.LENGTH_SHORT).show();
                                             progress.dismiss();
-                                            Intent it = new Intent(AlterarSenhaActivity.this, AnunciosActivity.class);
+                                            Intent it = new Intent(AlterarSenhaActivity.this, VisualizarUsuarioActivity.class);
                                             startActivity(it);
                                             finish();
                                         } else {
