@@ -1,35 +1,14 @@
 package com.expoagro.expoagrobrasil;
 
 
-import com.expoagro.expoagrobrasil.dao.UserDAO;
-import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.Regex;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
 
 
 public class CadastroUnitTest {
-
-    private UserDAO userDAO;
-
-    @Mock
-    private Usuario usuario;
-
-    @Before
-    public void init(){
-        MockitoAnnotations.initMocks(this);
-        userDAO = new UserDAO();
-    }
-
-    @Test
-    public void cadastrarUser(){
-
-    }
 
 
     @Test
