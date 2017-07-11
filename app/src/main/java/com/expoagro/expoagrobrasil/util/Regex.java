@@ -28,7 +28,7 @@ public class Regex {
     }
 
     public static boolean isTelephoneValid(String telefone) {
-        String expression = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$";
+        String expression = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$";  //(87) 96547-9654
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(telefone);
         return matcher.matches();
