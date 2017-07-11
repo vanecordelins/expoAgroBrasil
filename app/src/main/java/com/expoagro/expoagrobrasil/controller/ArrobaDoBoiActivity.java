@@ -3,11 +3,8 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
@@ -17,7 +14,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by joao on 03/07/17.
@@ -36,14 +32,14 @@ public class ArrobaDoBoiActivity extends Activity {
     }
 
         private class Arrobas extends AsyncTask<Void, Void, Void> {
-            String url = "http://www.canalrural.com.br/cotacao/boi-gordo/";
-            ProgressDialog mProgressDialog;
-            String valorArrobas;
-            String lugarArrobas;
-            String ufArrobas;
-            TextView textValorArrobas = (TextView) findViewById(R.id.valorArrobatext);
-            TextView textLugaresArrobas = (TextView) findViewById(R.id.lugaraArrobatext);
-            TextView textUfArrobas = (TextView) findViewById(R.id.ufArrobatext);
+            private String url = "http://www.canalrural.com.br/cotacao/boi-gordo/";
+            private ProgressDialog mProgressDialog;
+            private String valorArrobas;
+            private String lugarArrobas;
+            private String ufArrobas;
+            private TextView textValorArrobas = (TextView) findViewById(R.id.valorArrobatext);
+            private TextView textLugaresArrobas = (TextView) findViewById(R.id.lugaraArrobatext);
+            private TextView textUfArrobas = (TextView) findViewById(R.id.ufArrobatext);
 
 
             @Override

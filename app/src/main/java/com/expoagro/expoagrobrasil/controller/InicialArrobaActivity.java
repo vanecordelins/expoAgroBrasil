@@ -1,18 +1,12 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 
@@ -23,8 +17,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
-
-import static com.expoagro.expoagrobrasil.R.id.spinner;
 
 
 /**
@@ -56,10 +48,10 @@ public class InicialArrobaActivity extends Activity {
     }
 
     private class ArrobaNacional extends AsyncTask<Void, Void, Void> {
-        String url = "http://www.cepea.esalq.usp.br/br/indicador/boi-gordo.aspx";
-        ProgressDialog mProgressDialog;
-        String valorNacional;
-        TextView textValorNacional = (TextView) findViewById(R.id.valorNacionalText);
+        private String url = "http://www.cepea.esalq.usp.br/br/indicador/boi-gordo.aspx";
+        private ProgressDialog mProgressDialog;
+        private String valorNacional;
+        private TextView textValorNacional = (TextView) findViewById(R.id.valorNacionalText);
 
 
         @Override
