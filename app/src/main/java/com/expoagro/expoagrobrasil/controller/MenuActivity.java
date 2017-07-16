@@ -32,6 +32,7 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class MenuActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        uid = "";
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -78,7 +81,21 @@ public class MenuActivity extends AppCompatActivity
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
 
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+
+        emailUsuarioLogado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    Intent it = new Intent(MenuActivity.this, LoginActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+            }
+        });
+
 
         UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -120,20 +137,44 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_meu_perfil) {
-            Intent telaVisualizar = new Intent(MenuActivity.this, VisualizarUsuarioActivity.class);
-            startActivity(telaVisualizar);
-        } /*else if (id == R.id.menu_novo_anuncio) {
-
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Intent telaVisualizar = new Intent(MenuActivity.this, VisualizarUsuarioActivity.class);
+                startActivity(telaVisualizar);
+                finish();
+            } else {
+                Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
+        } else if (id == R.id.menu_novo_anuncio) {
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                //
+            } else {
+                Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
         } else if (id == R.id.menu_meus_anuncios) {
-
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                //
+            } else {
+                Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
         } else if (id == R.id.menu_hoje) {
-
+            finish();
         } else if (id == R.id.menu_favoritos) {
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                //
+            } else {
+                Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
+        } /* else if (id == R.id.menu_sobre) {
 
-        } else if (id == R.id.menu_sobre) {
-
-        } */
-
+          }*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

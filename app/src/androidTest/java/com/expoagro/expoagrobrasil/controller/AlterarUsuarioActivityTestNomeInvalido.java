@@ -70,11 +70,11 @@ public class AlterarUsuarioActivityTestNomeInvalido {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(R.id.alterar), withText("ALTERAR"), isDisplayed()));
-        appCompatButton3.perform(click());
-
+        // -------------------------------------------------------------------------
+        //ViewInteraction appCompatButton3 = onView(
+        //        allOf(withId(R.id.alterar), withText("ALTERAR"), isDisplayed()));
+        //appCompatButton3.perform(click());
+        //--------------------------------------------------------------------------
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html

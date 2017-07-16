@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.expoagro.expoagrobrasil.controller.InicialArrobaActivity;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.expoagro.expoagrobrasil.controller.CompletarCadastroActivity;
 import com.expoagro.expoagrobrasil.controller.MenuActivity;
@@ -91,16 +92,16 @@ public class GoogleSignIn {
                         @Override
                         public void onResult(Status status) {
                             FirebaseAuth.getInstance().signOut();
-                            Intent it = new Intent(activity, LoginActivity.class);
-                            activity.startActivity(it);
+                            //Intent it = new Intent(activity, InicialArrobaActivity.class);
+                            //activity.startActivity(it);
                             activity.finish();
                         }
                     });
         } else { // Conectado pelo App
             System.out.println("desconectando firebase account");
             FirebaseAuth.getInstance().signOut();
-            Intent it = new Intent(activity, LoginActivity.class);
-            activity.startActivity(it);
+            //Intent it = new Intent(activity, InicialArrobaActivity.class);
+            //activity.startActivity(it);
             activity.finish();
         }
         System.out.println("saiu");

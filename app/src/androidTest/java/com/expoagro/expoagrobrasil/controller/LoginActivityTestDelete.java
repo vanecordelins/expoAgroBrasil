@@ -74,11 +74,11 @@ public class LoginActivityTestDelete {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
 
-
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(R.id.btn_delete), withText("DELETAR"), isDisplayed()));
-        appCompatButton3.perform(click());
-
+        // -----------------------------------------------------------
+       // ViewInteraction appCompatButton3 = onView(
+       //         allOf(withId(R.id.btn_delete), withText("DELETAR"), isDisplayed()));
+       // appCompatButton3.perform(click());
+        // -----------------------------------------------------------
         ViewInteraction appCompatButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("Sim")));
         appCompatButton4.perform(scrollTo(), click());

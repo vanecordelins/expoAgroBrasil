@@ -40,6 +40,9 @@
 
     <string name="bem_vindo">Bem vindo ao ExpoAgro Brasil!</string>
     <string name="fazer_login"><u>Fazer Login</u></string>
+
+    <string name="cotacao_do_boi"><u>Cotação do Boi Gordo</u></string>
+
     <string name="cadastre_se">NÃO É CADASTRADO? <u>CADASTRE-SE</u></string>
     <string name="esqueceu_senha"><u>ESQUECEU SUA SENHA?</u></string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
