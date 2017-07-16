@@ -5,6 +5,7 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
+
 
 import junit.framework.Assert;
 
@@ -25,6 +27,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -56,9 +59,11 @@ public class LoginActivityTestSenhaInvalido {
 
     @Test
     public void loginActivityTest() throws Exception{
+
         onView(withId(R.id.campoEmail)).perform(typeText("samirjosue_13@hotmail.com"));
         closeKeyboard();
         onView(withId(R.id.campoSenha)).perform(typeText("1234"));
+
         closeKeyboard();
         onView(withId(R.id.btnEntrar)).perform(click());
 
