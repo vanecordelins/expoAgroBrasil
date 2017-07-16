@@ -148,7 +148,7 @@ public class MenuActivity extends AppCompatActivity
             }
         } else if (id == R.id.menu_novo_anuncio) {
             if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-                //
+                System.out.println("MENU NOVO ANUNCIOS"); // Ja esta logado
             } else {
                 Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
@@ -156,7 +156,7 @@ public class MenuActivity extends AppCompatActivity
             }
         } else if (id == R.id.menu_meus_anuncios) {
             if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-                //
+                System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
             } else {
                 Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
@@ -166,7 +166,7 @@ public class MenuActivity extends AppCompatActivity
             finish();
         } else if (id == R.id.menu_favoritos) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                //
+                System.out.println("MENU FAVORITOS"); // Ja esta logado
             } else {
                 Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(telaLogin);

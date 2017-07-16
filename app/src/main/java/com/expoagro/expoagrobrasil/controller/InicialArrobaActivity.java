@@ -1,13 +1,11 @@
 package com.expoagro.expoagrobrasil.controller;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;

@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.expoagro.expoagrobrasil.controller.InicialArrobaActivity;
-import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.expoagro.expoagrobrasil.controller.CompletarCadastroActivity;
 import com.expoagro.expoagrobrasil.controller.MenuActivity;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
