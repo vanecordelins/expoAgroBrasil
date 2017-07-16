@@ -41,10 +41,10 @@ public class AlterarUsuarioActivityTestNomeValido {
         onView(withId(R.id.btnEntrar)).perform(click());
 
         Thread.sleep(3000);
-
-        ViewInteraction appCompatButton3 = onView(allOf(withId(R.id.alterar), withText("ALTERAR"), isDisplayed()));
-        appCompatButton3.perform(click());
-
+// -----------------------------------------------------------
+      //  ViewInteraction appCompatButton3 = onView(allOf(withId(R.id.alterar), withText("ALTERAR"), isDisplayed()));
+      //  appCompatButton3.perform(click());
+// -----------------------------------------------------------
         Thread.sleep(3000);
 
         ViewInteraction appCompatAutoCompleteTextView = onView(allOf(withId(R.id.campoNome), isDisplayed()));

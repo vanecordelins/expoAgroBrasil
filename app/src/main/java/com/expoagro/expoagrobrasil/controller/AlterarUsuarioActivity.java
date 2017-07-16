@@ -73,7 +73,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
         mCancelarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent telaLogin = new Intent(AlterarUsuarioActivity.this, LoginActivity.class);
+                Intent telaLogin = new Intent(AlterarUsuarioActivity.this, VisualizarUsuarioActivity.class);
                 startActivity(telaLogin);
                 finish();
             }
@@ -177,7 +177,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
                             Toast.makeText(AlterarUsuarioActivity.this, "Perfil atualizado com sucesso.", Toast.LENGTH_SHORT).show();
                             progress.dismiss();
 
-                            Intent it = new Intent(AlterarUsuarioActivity.this, AnunciosActivity.class);
+                            Intent it = new Intent(AlterarUsuarioActivity.this, VisualizarUsuarioActivity.class);
                             startActivity(it);
                             finish();
                             break;
@@ -191,7 +191,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
 
     @Override
     public void onBackPressed() {
-        Intent it = new Intent(AlterarUsuarioActivity.this, AnunciosActivity.class);
+        Intent it = new Intent(AlterarUsuarioActivity.this, VisualizarUsuarioActivity.class);
         startActivity(it);
         finish();
     }

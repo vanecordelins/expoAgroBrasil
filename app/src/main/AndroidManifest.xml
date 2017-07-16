@@ -21,21 +21,18 @@
             <!-- android:theme="@android:style/Theme.NoTitleBar"> -->
         </activity>
 
-        <activity android:name=".controller.ArrobaDoBoiActivity">
-        </activity>
-
-        <activity android:name=".controller.InicialArrobaActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".controller.ArrobaDoBoiActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".controller.AnunciosActivity"
+            android:name=".controller.InicialArrobaActivity"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -64,6 +61,25 @@
         <activity android:name=".controller.AlterarSenhaActivity"
             android:screenOrientation="portrait">
         </activity>
-    </application>
 
+        <activity
+            android:name=".controller.VisualizarUsuarioActivity"
+            android:parentActivityName=".controller.MenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
+        </activity>
+
+        <activity
+            android:name=".controller.MenuActivity"
+            android:parentActivityName=".controller.MenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
+        </activity>
+    </application>
 </manifest>

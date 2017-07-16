@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.expoagro.expoagrobrasil.controller.AnunciosActivity;
-import com.expoagro.expoagrobrasil.controller.CompletarCadastroActivity;
+import com.expoagro.expoagrobrasil.controller.InicialArrobaActivity;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
+import com.expoagro.expoagrobrasil.controller.CompletarCadastroActivity;
+import com.expoagro.expoagrobrasil.controller.MenuActivity;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -39,42 +40,43 @@ public class GoogleSignIn {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
         mAuth.signInWithCredential(credential).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        System.out.println("signInWithCredential:onComplete:" + task.isSuccessful());
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                System.out.println("signInWithCredential:onComplete:" + task.isSuccessful());
 
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(activity, "Sem conexão à internet.", Toast.LENGTH_SHORT).show();
-                            System.out.println("signInWithCredential. " + "Not Successful." );
+                if (!task.isSuccessful()) {
+                    Toast.makeText(activity, "Sem conexão à internet.", Toast.LENGTH_SHORT).show();
+                    System.out.println("signInWithCredential. " + "Not Successful." );
+                    dialog.dismiss();
+                } else {
+
+                    final String uid = task.getResult().getUser().getUid();
+
+                    UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.println("The read failed: " + databaseError.getMessage());
                             dialog.dismiss();
-                        } else {
-                            final String uid = task.getResult().getUser().getUid();
+                        }
 
-                            UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    System.out.println("The read failed: " + databaseError.getMessage());
-                                    dialog.dismiss();
-                                }
-
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot user : dataSnapshot.getChildren()) {
-                                        if (user.getKey().equals(uid)) {
-                                            Intent it = new Intent(activity, AnunciosActivity.class);
-                                            activity.startActivity(it);
-                                            activity.finish();
-                                            return;
-                                        }
-                                    }
-                                    Intent it = new Intent(activity, CompletarCadastroActivity.class);
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                if (user.getKey().equals(uid)) {
+                                    Intent it = new Intent(activity, MenuActivity.class);
                                     activity.startActivity(it);
                                     activity.finish();
+                                    return;
                                 }
-                            });
+                            }
+                            Intent it = new Intent(activity, CompletarCadastroActivity.class);
+                            activity.startActivity(it);
+                            activity.finish();
                         }
-                    }
-                });
+                    });
+                }
+            }
+        });
     }
 
     public static void signIn(GoogleApiClient mGoogleApiClient, Activity activity) {
@@ -90,16 +92,16 @@ public class GoogleSignIn {
                         @Override
                         public void onResult(Status status) {
                             FirebaseAuth.getInstance().signOut();
-                            Intent it = new Intent(activity, LoginActivity.class);
-                            activity.startActivity(it);
+                            //Intent it = new Intent(activity, InicialArrobaActivity.class);
+                            //activity.startActivity(it);
                             activity.finish();
                         }
                     });
         } else { // Conectado pelo App
             System.out.println("desconectando firebase account");
             FirebaseAuth.getInstance().signOut();
-            Intent it = new Intent(activity, LoginActivity.class);
-            activity.startActivity(it);
+            //Intent it = new Intent(activity, InicialArrobaActivity.class);
+            //activity.startActivity(it);
             activity.finish();
         }
         System.out.println("saiu");

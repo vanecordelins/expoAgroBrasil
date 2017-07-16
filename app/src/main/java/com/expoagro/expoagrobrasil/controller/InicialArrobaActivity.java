@@ -1,11 +1,13 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
@@ -43,7 +45,7 @@ public class InicialArrobaActivity extends Activity {
     }
 
     public void onAnuncios (View v) {
-        Intent it = new Intent(this, LoginActivity.class);
+        Intent it = new Intent(this, MenuActivity.class);
         startActivity(it);
     }
 
@@ -58,10 +60,13 @@ public class InicialArrobaActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(InicialArrobaActivity.this);
-            mProgressDialog.setTitle("Boi gordo - Centro de Estudos Avançados em Economia Aplicada - CEPEA-Esalq/USP");
+            mProgressDialog.setTitle("Boi gordo - CEPEA-Esalq/USP");
             mProgressDialog.setMessage("Carregando...");
             mProgressDialog.setIndeterminate(true);
+            mProgressDialog.setCancelable(false);
+
             mProgressDialog.show();
+
         }
 
         @Override
