@@ -39,8 +39,7 @@ public class CadastroUsuarioActivityTestInvalido {
     public void cadastroUsuarioActivityTeste() throws Exception{
         Thread.sleep(3000);
 
-        ViewInteraction appCompatTextView = onView(
-                allOf(withId(R.id.textoNovoCadastro), withText("NÃO É CADASTRADO? CADASTRE-SE"), isDisplayed()));
+        ViewInteraction appCompatTextView = onView(allOf(withId(R.id.textoNovoCadastro), withText("NÃO É CADASTRADO? CADASTRE-SE"), isDisplayed()));
         appCompatTextView.perform(click());
 
 

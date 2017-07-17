@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             // Usuario ja esta logado, nÃ£o ir para a tela de login
-            Intent it = new Intent(LoginActivity.this, AnunciosActivity.class);
+            Intent it = new Intent(LoginActivity.this, MenuActivity.class);
             startActivity(it);
             finish();
         }
@@ -118,6 +118,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 finish();
             }
         });
+
+        Button btn_voltar = (Button) findViewById(R.id.btnSair);
+        btn_voltar.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(LoginActivity.this, MenuActivity.class);
+                startActivity(it);
+                finish();
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent it = new Intent(LoginActivity.this, MenuActivity.class);
+        startActivity(it);
+        finish();
     }
 
     @Override

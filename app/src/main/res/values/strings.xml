@@ -14,11 +14,15 @@
     <string name="acao_login_curta">Entrar</string>
     <string name="acao_cadastrar">Cadastrar</string>
     <string name="acao_cancelar">Cancelar</string>
+    <string name="acao_alterar_senha">Alterar Senha</string>
+    <string name="acao_editar">Editar Conta</string>
+    <string name="acao_excluir">Excluir Conta</string>
 
     <string name="msg_cadastro_sucesso">Cadastro realizado com sucesso</string>
 
     <string name="error_nome_invalido">Nome inválido</string>
     <string name="error_telefone_invalido">Formato: (XX) 9XXXX-XXXX</string>
+
     <string name="error_email_invalido">Endereço de email inválido</string>
     <string name="error_senha_invalida">Digite entre 6 e 15 caracteres</string>
     <string name="error_incorrect_password">Senha incorreta</string>
@@ -26,13 +30,31 @@
     <string name="error_cidade_nao_selecionada">Selecione uma cidade</string>
     <string name="error_repetir_senha_invalida">As senhas não combinam! Verifique.</string>
     <string name="error_login">Não foi possível realizar o Login. Tente Novamente</string>
+
+    <string name="menu_perfil">Meu perfil</string>
+    <string name="menu_novo_anuncio">Novo anúncio</string>
+    <string name="menu_meus_anuncios">Meus anúncios</string>
+    <string name="menu_arroba">"@" hoje</string>
+    <string name="menu_favoritos">Favoritos</string>
+    <string name="menu_sobre">Sobre</string>
+
+    <string name="bem_vindo">Bem vindo ao ExpoAgro Brasil!</string>
+    <string name="fazer_login"><u>Fazer Login</u></string>
+
     <string name="cotacao_do_boi"><u>Cotação do Boi Gordo</u></string>
+
     <string name="cadastre_se">NÃO É CADASTRADO? <u>CADASTRE-SE</u></string>
     <string name="esqueceu_senha"><u>ESQUECEU SUA SENHA?</u></string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_visualizar_usuario"></string>
+    <string name="title_activity_menu"></string>
+
     <string name="title_activity_alterar_usuario">AlterarUsuarioActivity</string>
     <string name="title_activity_completar_cadastro">CompletarCadastroActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>

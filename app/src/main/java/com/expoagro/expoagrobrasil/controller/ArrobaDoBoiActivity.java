@@ -49,6 +49,7 @@ public class ArrobaDoBoiActivity extends Activity {
                 mProgressDialog.setTitle("Boi Gordo – Cotações - SCOT CONSULTORIA");
                 mProgressDialog.setMessage("Carregando...");
                 mProgressDialog.setIndeterminate(true);
+                mProgressDialog.setCancelable(false);
                 mProgressDialog.show();
             }
 

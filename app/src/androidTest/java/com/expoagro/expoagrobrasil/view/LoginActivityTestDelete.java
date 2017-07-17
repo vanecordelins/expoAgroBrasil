@@ -47,10 +47,10 @@ public class LoginActivityTestDelete {
         onView(withId(R.id.btnEntrar)).perform(click());
 
         Thread.sleep(3000);
-
-        ViewInteraction appCompatButton3 = onView(allOf(withId(R.id.btn_delete), withText("DELETAR"), isDisplayed()));
-        appCompatButton3.perform(click());
-
+        // -----------------------------------------------------------
+      //  ViewInteraction appCompatButton3 = onView(allOf(withId(R.id.btn_delete), withText("DELETAR"), isDisplayed()));
+      //  appCompatButton3.perform(click());
+// -----------------------------------------------------------
         Thread.sleep(3000);
 
         ViewInteraction appCompatButton4 = onView(allOf(withId(android.R.id.button1), withText("Sim")));

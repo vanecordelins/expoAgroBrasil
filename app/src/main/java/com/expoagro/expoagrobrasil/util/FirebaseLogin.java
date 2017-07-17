@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
+import com.expoagro.expoagrobrasil.controller.MenuActivity;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
-import com.expoagro.expoagrobrasil.controller.AnunciosActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -61,7 +61,7 @@ public class FirebaseLogin {
                         } else {
                             if (task.getResult().getUser().isEmailVerified()) {
                                 System.out.println("Autorizado.");
-                                Intent it = new Intent(activity, AnunciosActivity.class);
+                                Intent it = new Intent(activity, MenuActivity.class);
                                 activity.startActivity(it);
                                 activity.finish();
                             } else {
