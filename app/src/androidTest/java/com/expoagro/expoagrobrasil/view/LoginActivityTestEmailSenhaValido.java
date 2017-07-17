@@ -31,7 +31,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
@@ -70,13 +70,13 @@ public class LoginActivityTestEmailSenhaValido {
 
         ViewInteraction textView = onView(allOf(withText("ExpoAgro Brasil"),childAtPosition(allOf(withId(R.id.action_bar),
                 childAtPosition(withId(R.id.action_bar_container),0)),0),isDisplayed()));
-       // ViewInteraction result = textView.check(matches(withText("ExpoAgro Brasil")));
+        ViewInteraction result = textView.check(matches(withText("ExpoAgro Brasil")));
 
         Thread.sleep(3000);
 
         onView(withId(R.id.btn_sair)).perform(click());
      // ------------------------------------------------------------
-     //   Assert.assertNotNull(result); //textView.check(matches(withText("ExpoAgro Brasil")));
+        Assert.assertNotNull(result); //textView.check(matches(withText("ExpoAgro Brasil")));
      // --------------------------------------------------------------
     }
 
