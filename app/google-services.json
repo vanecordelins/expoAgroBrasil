@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "484342406744-bhkpeah51hadr9o4lsmk30elkfnmofd5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expoagro.expoagrobrasil",
+            "certificate_hash": "3ac90ee31b31cbb5e813e15d06a5788bf3869243"
+          }
+        },
+        {
           "client_id": "484342406744-40bf53u2rlp5h30idej845cm5rrqnd6o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
