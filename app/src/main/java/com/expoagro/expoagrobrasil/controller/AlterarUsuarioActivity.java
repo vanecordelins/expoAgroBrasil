@@ -144,7 +144,7 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
             cancelar = true;
         }
 
-        if ( "Selecione...".equals(cidade) ) {
+        if ( "Cidades de PERNAMBUCO".equals(cidade) ) {
             Toast.makeText(AlterarUsuarioActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_SHORT).show();
             cancelar = true;
         }

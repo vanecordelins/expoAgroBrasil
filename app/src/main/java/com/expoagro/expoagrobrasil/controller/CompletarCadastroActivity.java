@@ -135,7 +135,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
             cancelar = true;
         }
 
-        if ( "Selecione...".equals(cidade) ) {
+        if ( "Cidades de PERNAMBUCO".equals(cidade) ) {
             Toast.makeText(CompletarCadastroActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_LONG).show();
             cancelar = true;
         }
