@@ -17,8 +17,9 @@ public class Anuncio {
     private String hora;
     private float valor;
 
-    public Anuncio(String id, String nome, String observacao, String descricao, String data, String hora, float valor) {
-        this.id = id;
+    public Anuncio() { }
+
+    public Anuncio(String nome, String observacao, String descricao, String data, String hora, float valor) {
         this.nome = nome;
         this.observacao = observacao;
         this.descricao = descricao;
