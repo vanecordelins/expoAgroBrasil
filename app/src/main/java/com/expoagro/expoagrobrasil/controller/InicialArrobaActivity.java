@@ -88,9 +88,12 @@ public class InicialArrobaActivity extends Activity {
 
         @Override
         protected void onPostExecute(Void result) {
-
-            textValorNacional.setText(" @Nacional R$ "+valorNacional);
-            mProgressDialog.dismiss();
+            if(valorNacional == null){
+                textValorNacional.setText(" @Nacional R$ "+"126,00");
+            }else {
+                textValorNacional.setText(" @Nacional R$ " + valorNacional);
+            }
+                mProgressDialog.dismiss();
 
         }
     }
