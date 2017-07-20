@@ -1,8 +1,10 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
+import com.expoagro.expoagrobrasil.util.FirebaseLogin;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,10 +24,18 @@ import com.google.firebase.database.ValueEventListener;
 
 public class VisualizarUsuarioActivity extends AppCompatActivity {
 
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_usuario);
+
+        progress = new ProgressDialog(this);
+        progress.setCancelable(false);
+        progress.setMessage("Carregando Dados...");
+        progress.show();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -33,6 +44,11 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
         recuperarUsuario();
 
         Button btn_alterar_senha = (Button) findViewById(R.id.btnAlterarSenha);
+
+        if (FirebaseAuth.getInstance().getCurrentUser().getProviders().get(0).equals("google.com")) {
+            btn_alterar_senha.setVisibility(View.GONE);
+        }
+
         btn_alterar_senha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +64,7 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
 
         final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        UserDAO.getReference().addValueEventListener(new ValueEventListener() {
+        UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot user : dataSnapshot.getChildren()) {
@@ -62,11 +78,13 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getMessage());
+                progress.dismiss();
             }
         });
     }
@@ -76,6 +94,13 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent it = new Intent(VisualizarUsuarioActivity.this, MenuActivity.class);
+        startActivity(it);
+        finish();
     }
 
     @Override
@@ -94,9 +119,20 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                 startActivity(itAlt);
                 finish();
                 return true;
+            case R.id.acao_excluir:
+                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Excluir Conta")
+                        .setMessage("Tem certeza que deseja excluir sua conta? Todos os seus dados serão excluídos!")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseLogin.deleteAccount(VisualizarUsuarioActivity.this);
+                            }
+                        })
+                        .setNegativeButton("Não", null).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
-
     }
 
 }

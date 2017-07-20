@@ -2,9 +2,9 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -51,7 +51,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         progress = new ProgressDialog(this);
         progress.setCancelable(false);
 
-        // Cria um ArrayAdapter usando um array de string e um layout default do spinner
+
+       // Cria um ArrayAdapter usando um array de string e um layout default do spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.cidades_PE, android.R.layout.simple_spinner_item); //simple_spinner_dropdown_item
         // Especifica o layout que será usado quando a lista de opções aparecer
@@ -60,6 +61,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spinner);
         // Aplica o adapter ao spinner
         spinner.setAdapter(adapter);
+
 
         Button mCadastrarButton = (Button) findViewById(R.id.btnCadastrar);
         mCadastrarButton.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +131,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             cancelar = true;
         }
 
-        if ( "Selecione...".equals(cidade) ) {
+        if ( "Cidades de PERNAMBUCO".equals(cidade) ) {
             Toast.makeText(CadastroUsuarioActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_SHORT).show();
             cancelar = true;
         }

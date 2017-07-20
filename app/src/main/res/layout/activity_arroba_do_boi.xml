@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/ufArrobatext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UF"
+        android:textSize="20dp"
+        android:layout_marginStart="64dp"
+        app:layout_constraintRight_toLeftOf="@+id/lugaraArrobatext"
+        tools:layout_editor_absoluteY="21dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/lugaraArrobatext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Localidade"
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="21dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/ufArrobatext"
+        android:layout_toEndOf="@+id/ufArrobatext"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp" />
+
+    <TextView
+        android:id="@+id/valorArrobatext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor R$"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@+id/lugaraArrobatext"
+        tools:layout_editor_absoluteY="21dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/lugaraArrobatext"
+        android:layout_toEndOf="@+id/lugaraArrobatext" />
+    </RelativeLayout>
+</ScrollView>
+</RelativeLayout>

@@ -8,6 +8,11 @@
     <string name="campo_telefone">Telefone</string>
     <string name="campo_cidade">Cidade</string>
     <string name="campo_repetirSenha">Repetir Senha</string>
+    <string name="campo_categoria">Categoria</string>
+    <string name="campo_frequencia">Frequência</string>
+    <string name="campo_valor">Valor</string>
+    <string name="campo_descricao">Descrição</string>
+    <string name="campo_observacao">Observação</string>
 
     <string name="acao_login">Entrar</string>
     <string name="acao_voltar">Voltar</string>
@@ -15,12 +20,14 @@
     <string name="acao_cadastrar">Cadastrar</string>
     <string name="acao_cancelar">Cancelar</string>
     <string name="acao_alterar_senha">Alterar Senha</string>
-    <string name="acao_editar">Editar</string>
+    <string name="acao_editar">Editar Conta</string>
+    <string name="acao_excluir">Excluir Conta</string>
 
     <string name="msg_cadastro_sucesso">Cadastro realizado com sucesso</string>
 
     <string name="error_nome_invalido">Nome inválido</string>
-    <string name="error_telefone_invalido">Formato: XX YXXXX-XXXX</string>
+    <string name="error_telefone_invalido">Formato: (XX) 9XXXX-XXXX</string>
+
     <string name="error_email_invalido">Endereço de email inválido</string>
     <string name="error_senha_invalida">Digite entre 6 e 15 caracteres</string>
     <string name="error_incorrect_password">Senha incorreta</string>
@@ -38,6 +45,9 @@
 
     <string name="bem_vindo">Bem vindo ao ExpoAgro Brasil!</string>
     <string name="fazer_login"><u>Fazer Login</u></string>
+
+    <string name="cotacao_do_boi"><u>Cotação do Boi Gordo</u></string>
+
     <string name="cadastre_se">NÃO É CADASTRADO? <u>CADASTRE-SE</u></string>
     <string name="esqueceu_senha"><u>ESQUECEU SUA SENHA?</u></string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
@@ -51,5 +61,21 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="categorias">
+        <item>Selecione a Categoria...</item>
+        <item>Animal</item>
+        <item>Ferramenta</item>
+    </string-array>
+
+    <string-array name="frequencias">
+        <item>Selecione a Frequência...</item>
+        <item>Diário</item>
+        <item>Por Hora</item>
+    </string-array>
+
 
 </resources>

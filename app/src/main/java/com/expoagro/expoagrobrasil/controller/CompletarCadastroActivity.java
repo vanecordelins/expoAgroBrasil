@@ -2,9 +2,9 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -135,13 +135,15 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
             cancelar = true;
         }
 
-        if ( "Selecione...".equals(cidade) ) {
+        if ( "Cidades de PERNAMBUCO".equals(cidade) ) {
             Toast.makeText(CompletarCadastroActivity.this, R.string.error_cidade_nao_selecionada, Toast.LENGTH_LONG).show();
             cancelar = true;
         }
 
         if (cancelar) {
-            focusView.requestFocus();
+            if (focusView != null) {
+                focusView.requestFocus();
+            }
             progress.hide();
         } else {
             final Usuario usuario = new Usuario();
@@ -164,6 +166,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
                                 Toast.makeText(CompletarCadastroActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
 
                                 Intent it = new Intent(CompletarCadastroActivity.this, MenuActivity.class);
+
                                 startActivity(it);
                                 finish();
                             } else {

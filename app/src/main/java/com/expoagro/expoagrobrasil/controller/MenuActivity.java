@@ -2,8 +2,7 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,12 +10,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
+
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
@@ -32,14 +31,13 @@ import com.google.firebase.database.ValueEventListener;
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
-    private Button btn_sair;
     private GoogleApiClient mGoogleApiClient;
-    private TextView nomeUsuarioLogado;
-    private TextView emailUsuarioLogado;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,10 +48,12 @@ public class MenuActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        uid = "";
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        btn_sair = (Button) findViewById(R.id.btn_sair);
+        Button btn_sair = (Button) findViewById(R.id.btn_sair);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -73,13 +73,31 @@ public class MenuActivity extends AppCompatActivity
             }
         });
 
-        nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
-        emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
+    }
 
-        //Ta dando erro com esse código abaixo. Ele alterar os TextViews para exibir nome e email do usuario
-        /*final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
+        final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
 
-        UserDAO.getReference().addValueEventListener(new ValueEventListener() {
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+
+        emailUsuarioLogado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    Intent it = new Intent(MenuActivity.this, LoginActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+            }
+        });
+
+
+        UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot user : dataSnapshot.getChildren()) {
@@ -97,7 +115,8 @@ public class MenuActivity extends AppCompatActivity
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getMessage());
             }
-        });*/
+        });
+        return true;
     }
 
     @Override
@@ -118,20 +137,46 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_meu_perfil) {
-            Intent telaVisualizar = new Intent(MenuActivity.this, VisualizarUsuarioActivity.class);
-            startActivity(telaVisualizar);
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
+                Intent telaVisualizar = new Intent(MenuActivity.this, VisualizarUsuarioActivity.class);
+                startActivity(telaVisualizar);
+                finish();
+            } else {
+                Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
         } else if (id == R.id.menu_novo_anuncio) {
-
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
+                Intent telaCadastrarAnuncio = new Intent(MenuActivity.this, CadastroProdutoActivity.class);
+                startActivity(telaCadastrarAnuncio);
+                finish();
+            } else {
+                Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
         } else if (id == R.id.menu_meus_anuncios) {
-
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
+            } else {
+                Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
         } else if (id == R.id.menu_hoje) {
-
+            finish();
         } else if (id == R.id.menu_favoritos) {
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                System.out.println("MENU FAVORITOS"); // Ja esta logado
+            } else {
+                Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
+        } /* else if (id == R.id.menu_sobre) {
 
-        } else if (id == R.id.menu_sobre) {
-
-        }
-
+          }*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -38,15 +38,14 @@
         android:id="@+id/nome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Carregando nome"
-        android:textSize="20sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtNome"
         android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/txtNome"
         android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/txtNome"
         app:layout_constraintRight_toRightOf="@+id/txtNome"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNome" />
 
     <TextView
         android:id="@+id/txtEmail"
@@ -67,14 +66,13 @@
         android:id="@+id/menu_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Carregando email"
-        android:textSize="20sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
         android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/txtEmail"
         android:layout_marginRight="0dp"
-        app:layout_constraintRight_toRightOf="@+id/txtEmail" />
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@+id/txtEmail"
+        app:layout_constraintRight_toRightOf="@+id/txtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
     <TextView
         android:id="@+id/txtTelefone"
@@ -94,15 +92,14 @@
         android:id="@+id/telefone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Carregando telefone"
-        android:textSize="20sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtTelefone"
         android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/txtTelefone"
         android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/txtTelefone"
         app:layout_constraintRight_toRightOf="@+id/txtTelefone"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTelefone" />
 
     <TextView
         android:id="@+id/txtCidade"
@@ -122,15 +119,14 @@
         android:id="@+id/cidade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Carregando cidade"
-        android:textSize="20sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtCidade"
         android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/txtCidade"
         android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/txtCidade"
         app:layout_constraintRight_toRightOf="@+id/txtCidade"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCidade" />
 
     <Button
         android:id="@+id/btnAlterarSenha"
