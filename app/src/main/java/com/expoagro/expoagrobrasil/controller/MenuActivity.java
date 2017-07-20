@@ -137,7 +137,7 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_meu_perfil) {
-            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
                 Intent telaVisualizar = new Intent(MenuActivity.this, VisualizarUsuarioActivity.class);
                 startActivity(telaVisualizar);
                 finish();
@@ -147,10 +147,8 @@ public class MenuActivity extends AppCompatActivity
                 finish();
             }
         } else if (id == R.id.menu_novo_anuncio) {
-            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
-                Intent telaCadastrarAnuncio = new Intent(MenuActivity.this, CadastroProdutoActivity.class);
-                startActivity(telaCadastrarAnuncio);
-                finish();
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                System.out.println("MENU NOVO ANUNCIOS"); // Ja esta logado
             } else {
                 Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
