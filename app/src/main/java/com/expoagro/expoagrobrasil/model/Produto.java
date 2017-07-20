@@ -36,5 +36,6 @@ public class Produto extends Anuncio {
 
     public void setFoto(List<String> fotos) {
         this.fotos = fotos;
+
     }
 }

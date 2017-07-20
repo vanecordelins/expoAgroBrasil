@@ -9,10 +9,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+
 import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,6 +31,7 @@ import com.expoagro.expoagrobrasil.Manifest;
 import com.expoagro.expoagrobrasil.R;
 
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
+
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Anuncio;
 import com.expoagro.expoagrobrasil.model.Produto;
@@ -60,6 +63,7 @@ public class MenuActivity extends AppCompatActivity
     private String uid;
     private static final int CALL_IMAGE = 12;
     private static final int CALL_CAMERA = 14;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +196,7 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_meu_perfil) {
-            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
                 Intent telaVisualizar = new Intent(MenuActivity.this, VisualizarUsuarioActivity.class);
                 startActivity(telaVisualizar);
                 finish();
@@ -202,8 +206,11 @@ public class MenuActivity extends AppCompatActivity
                 finish();
             }
         } else if (id == R.id.menu_novo_anuncio) {
-            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU NOVO ANUNCIOS"); // Ja esta logado
+
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
+                Intent telaCadastrarAnuncio = new Intent(MenuActivity.this, CadastroProdutoActivity.class);
+                startActivity(telaCadastrarAnuncio);
+                finish();
             } else {
                 Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
