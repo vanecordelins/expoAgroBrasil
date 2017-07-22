@@ -78,8 +78,6 @@ public class MenuActivity extends AppCompatActivity
 
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        } else {
-
         }
 
         emailUsuarioLogado.setOnClickListener(new View.OnClickListener() {

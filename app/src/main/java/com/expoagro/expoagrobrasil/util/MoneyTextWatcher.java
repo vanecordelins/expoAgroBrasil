@@ -5,6 +5,7 @@ import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
@@ -23,10 +24,12 @@ public class MoneyTextWatcher implements TextWatcher {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // do Nothing
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // do Nothing
         }
 
         @TargetApi(Build.VERSION_CODES.N)
@@ -36,7 +39,7 @@ public class MoneyTextWatcher implements TextWatcher {
             if (editText == null) return;
             String s = editable.toString();
             editText.removeTextChangedListener(this);
-            String cleanString = s.toString().replaceAll("[R$,.]", "");
+            String cleanString = s.replaceAll("[R$,.]", "");
             BigDecimal parsed = new BigDecimal(cleanString).setScale(2, BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR);
             String formatted = NumberFormat.getCurrencyInstance().format(parsed);
             editText.setText(formatted);

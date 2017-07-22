@@ -4,9 +4,6 @@ import com.expoagro.expoagrobrasil.model.Produto;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
-import java.io.File;
-
 /**
  * Created by Fabricio on 7/17/2017.
  */

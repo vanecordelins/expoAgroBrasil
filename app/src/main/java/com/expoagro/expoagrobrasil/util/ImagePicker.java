@@ -170,6 +170,8 @@ public class ImagePicker {
                     case ExifInterface.ORIENTATION_ROTATE_90:
                         rotate = 90;
                         break;
+                    default:
+                        break;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
