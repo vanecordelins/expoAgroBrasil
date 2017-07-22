@@ -161,7 +161,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
                                 System.out.println("E-mail Verification Sent.");
                                 UserDAO userDAO = new UserDAO();
                                 userDAO.save(usuario);
-                                progress.hide();
+                                progress.dismiss();
 
                                 Toast.makeText(CompletarCadastroActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
 
@@ -171,7 +171,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
                                 finish();
                             } else {
                                 Toast.makeText(CompletarCadastroActivity.this, "E-mail inválido", Toast.LENGTH_SHORT).show();
-                                progress.hide();
+                                progress.dismiss();
                             }
                         }
             });
