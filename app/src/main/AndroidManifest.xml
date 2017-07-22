@@ -61,8 +61,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
         </activity>
-<<<<<<< HEAD
-=======
         <activity
             android:name=".controller.CadastroProdutoActivity"
             android:screenOrientation="portrait"></activity>
