@@ -5,7 +5,6 @@ import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
