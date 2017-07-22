@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.expoagro.expoagrobrasil.controller.VisualizarAnuncioActivity">
+
+
+    <TextView
+        android:id="@+id/dataAnuncio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:text="Data Anuncio:"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_below="@+id/viewPager"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/categoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Categoria:"
+        android:layout_below="@+id/dataAnuncio"
+        android:layout_alignRight="@+id/dataAnuncio"
+        android:layout_alignEnd="@+id/dataAnuncio" />
+
+    <TextView
+        android:id="@+id/vendedor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/categoria"
+        android:layout_alignRight="@+id/categoria"
+        android:layout_below="@+id/categoria"
+        android:layout_marginTop="26dp"
+        android:text="Vendedor:" />
+
+    <TextView
+        android:id="@+id/cidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="Cidade:"
+        android:layout_below="@+id/vendedor"
+        android:layout_alignRight="@+id/vendedor"
+        android:layout_alignEnd="@+id/vendedor" />
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="370dp"
+        android:layout_height="250dp"
+        android:id="@+id/viewPager"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>
