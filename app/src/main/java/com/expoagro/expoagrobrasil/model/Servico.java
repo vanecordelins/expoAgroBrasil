@@ -10,8 +10,9 @@ public class Servico extends Anuncio {
 
     public Servico() {}
 
-    public Servico(String nome, String observacao, String descricao, String data, String hora, float valor, String frequencia) {
-        super(nome, observacao, descricao, data, hora, valor);
+    public Servico(String nome, String observacao, String descricao, String data, String hora, String cidade, String valor, String frequencia) {
+        super(nome, observacao, descricao, data, hora, valor, cidade);
+
         this.frequencia = frequencia;
     }
 

@@ -78,10 +78,17 @@ public class ArrobaDoBoiActivity extends Activity {
 
             @Override
             protected void onPostExecute(Void result) {
+                if (valorArrobas == null) {
+                    textValorArrobas.setText("");
+                    textLugaresArrobas.setText("");
+                    textUfArrobas.setText("Sem conexão com internet");
 
-                textValorArrobas.setText("Valor R$\n\n"+valorArrobas);
-                textLugaresArrobas.setText("Localidade\n\n"+lugarArrobas);
-                textUfArrobas.setText("UF\n\n"+ufArrobas);
+
+                }else {
+                    textValorArrobas.setText("Valor R$\n\n" + valorArrobas);
+                    textLugaresArrobas.setText("Localidade\n\n"+lugarArrobas);
+                    textUfArrobas.setText("UF\n\n"+ufArrobas);
+                }
                 mProgressDialog.dismiss();
 
             }

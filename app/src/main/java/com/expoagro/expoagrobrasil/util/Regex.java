@@ -33,4 +33,5 @@ public class Regex {
         Matcher matcher = pattern.matcher(telefone);
         return matcher.matches();
     }
+
 }

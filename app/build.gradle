@@ -69,6 +69,7 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-storage:0.6.0'
     compile 'com.github.chrisbanes:PhotoView:2.1.2'
 
+
 }
 
 sourceSets {
@@ -78,6 +79,3 @@ sourceSets {
 }
 
 apply plugin: 'com.google.gms.google-services'
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}

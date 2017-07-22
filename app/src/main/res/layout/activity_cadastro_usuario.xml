@@ -102,6 +102,8 @@
         android:layout_height="40dp"
         android:layout_marginTop="7dp"
         android:spinnerMode="dialog"
+        android:hint="@string/campo_cidade"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/textInputTelefone"
         app:layout_constraintRight_toRightOf="@+id/textInputTelefone"
