@@ -34,11 +34,4 @@ public class Regex {
         return matcher.matches();
     }
 
-    public static boolean isDataValid(String data) {
-        String expression = "^\\d{2}/\\d{2}/\\d{4}$"; // 11/01/2014
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(data);
-        return matcher.matches();
-    }
-
 }
