@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,6 +59,8 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     private List<Bitmap> fotos;
     private List<String> fotosURL;
     private ProgressDialog dialog;
+    private ViewPager viewPager;
+    private ProdutoViewPager produtoViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +72,9 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mValorView = (EditText) findViewById(R.id.campoValor);
         mDescricaoView = (TextView) findViewById(R.id.campoDescricao);
         mObservacaoView = (TextView) findViewById(R.id.campoObservacao);
-        imView = (ImageView) findViewById(R.id.imageView);
+        //imView = (ImageView) findViewById(R.id.viewProduto);
+        viewPager = (ViewPager) findViewById(R.id.viewProduto);
+
 
         mValorView.addTextChangedListener(new MoneyTextWatcher(mValorView));
 
@@ -130,7 +135,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             }
         });
 
-        imView.setOnClickListener(new View.OnClickListener() {
+        viewPager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent chooseImageIntent = ImagePicker.getPickImageIntent(CadastroProdutoActivity.this);
@@ -157,10 +162,15 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             switch (requestCode) {
                 case PICK_IMAGE_ID:
                     Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, imView.getWidth(), imView.getHeight(), false);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, viewPager.getWidth(), viewPager.getHeight(), false);
                     fotos.add(resizedBitmap);
 
-                    imView.setImageBitmap(resizedBitmap);
+//                    imView.setImageBitmap(resizedBitmap);
+                    //viewPager = (ViewPager)findViewById(R.id.viewPager);
+                    produtoViewPager = new ProdutoViewPager(this, fotos);
+                    System.out.println(produtoViewPager);
+                    viewPager.setAdapter(produtoViewPager);
+
                     break;
                 default:
                     super.onActivityResult(requestCode, resultCode, data);
