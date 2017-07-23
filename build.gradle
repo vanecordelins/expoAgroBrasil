@@ -45,6 +45,7 @@ ext {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
     }
     project.version = '0.1.0'
 }

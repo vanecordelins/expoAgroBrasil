@@ -17,11 +17,11 @@ public class Anuncio {
     private String hora;
     private String valor;
     private String cidade;
-
+    private String idUsuario;
 
     public Anuncio() { }
 
-    public Anuncio(String nome, String observacao, String descricao, String data, String hora, String valor, String cidade) {
+    public Anuncio(String nome, String observacao, String descricao, String data, String hora, String valor, String cidade, String idUsuario) {
 
         this.nome = nome;
         this.observacao = observacao;
@@ -30,6 +30,15 @@ public class Anuncio {
         this.hora = hora;
         this.valor = valor;
         this.cidade = cidade;
+        this.idUsuario = idUsuario;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getCidade() {

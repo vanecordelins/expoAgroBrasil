@@ -2,6 +2,8 @@ package com.expoagro.expoagrobrasil.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.List;
+
 /**
  * Created by Fabricio on 6/22/2017.
  */

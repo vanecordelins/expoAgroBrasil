@@ -67,6 +67,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.3'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.firebaseui:firebase-ui-storage:0.6.0'
+    compile 'com.github.chrisbanes:PhotoView:2.1.2'
 
 
 }
@@ -78,4 +79,3 @@ sourceSets {
 }
 
 apply plugin: 'com.google.gms.google-services'
-
