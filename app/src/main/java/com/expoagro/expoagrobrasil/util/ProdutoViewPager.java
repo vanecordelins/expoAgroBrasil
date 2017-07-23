@@ -20,7 +20,6 @@ import java.util.List;
 public class ProdutoViewPager extends PagerAdapter {
 
     private Context context;
-    private LayoutInflater layoutInflater;
     private List<Bitmap> images;
 
     public ProdutoViewPager(Context context, List<Bitmap> images){
@@ -40,7 +39,7 @@ public class ProdutoViewPager extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position){
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View item_view = layoutInflater.inflate(R.layout.produto_viewpager, container, false);
 //        ImageView imageView = (ImageView) item_view.findViewById(R.id.imageView6);
         PhotoView photoView = (PhotoView) item_view.findViewById(R.id.photo_view2);

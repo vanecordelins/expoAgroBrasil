@@ -74,7 +74,7 @@ public class LoginActivityTestEmailSenhaValido {
 
         Thread.sleep(3000);
 
-        onView(withId(R.id.btn_sair)).perform(click());
+      //  onView(withId(R.id.btn_sair)).perform(click());
      // ------------------------------------------------------------
         Assert.assertNotNull(result); //textView.check(matches(withText("ExpoAgro Brasil")));
      // --------------------------------------------------------------

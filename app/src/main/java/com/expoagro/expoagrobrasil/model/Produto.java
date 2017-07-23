@@ -12,8 +12,8 @@ public class Produto extends Anuncio {
     private String categoria;
     private List<String> fotos;
 
-    public Produto(String nome, String observacao, String descricao, String data, String hora, String valor, String cidade, String idUsuario, String categoria, List<String> fotos) {
-        super(nome, observacao, descricao, data, hora, valor, cidade, idUsuario);
+    public Produto(String nome, String observacao, String descricao, String valor, String idUsuario, String categoria, List<String> fotos) {
+        super(nome, observacao, descricao, valor, idUsuario);
         this.categoria = categoria;
         this.fotos = fotos;
     }

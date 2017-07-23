@@ -56,7 +56,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     private Spinner spinnerCategoria;
     private TextView mDescricaoView;
     private TextView mObservacaoView;
-    private ImageView imView;
     private List<Bitmap> fotos;
     private List<String> fotosURL;
     private ProgressDialog dialog;
@@ -233,7 +232,9 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         dialog.show();
         final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final ProdutoDAO pdao = new ProdutoDAO();
-        final Produto produto = new Produto(nome, observacao, descricao, date, time, valor, "", uid, categoria, fotosURL);
+        final Produto produto = new Produto(nome, observacao, descricao, valor, uid, categoria, fotosURL);
+        produto.setData(date);
+        produto.setHora(time);
         pdao.save(produto);
 
         Thread mThread = new Thread() {
@@ -247,13 +248,9 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                             for (DataSnapshot user : dataSnapshot.getChildren()) {
                                 if (user.getKey().equals(uid)) {
                                     Usuario target = user.getValue(Usuario.class);
-                                    Produto produto = new Produto(nome, observacao, descricao, date, time, valor, target.getCidade(), uid, categoria, fotosURL);
+                                    produto.setCidade(target.getCidade());
+                                    produto.setFoto(fotosURL);
                                     pdao.save(produto);
-                                    Toast.makeText(CadastroProdutoActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
-                                    Intent it = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
-                                    startActivity(it);
-                                    finish();
                                 }
                             }
                         }
@@ -273,10 +270,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     byte[] data = baos.toByteArray();
 
-                    StorageReference ref = FirebaseStorage.getInstance().getReference().child(FirebaseAuth.getInstance()
-                            .getCurrentUser().getUid()).child(nome).child(nome + "" + (i + 1) + ".png");
-
-                    UploadTask uploadTask = ref.putBytes(data);
+                    UploadTask uploadTask = FirebaseStorage.getInstance().getReference().child(uid).child(nome).child(nome + "" + (i + 1) + ".png").putBytes(data);
 
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -312,7 +306,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                         }
                     });
                 }
-                while(fotosURL.size() != fotos.size()) { continue;}
+                while(fotosURL.size() != fotos.size()) { }
                 CadastroProdutoActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -323,7 +317,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
             }
         };
         mThread.start();
