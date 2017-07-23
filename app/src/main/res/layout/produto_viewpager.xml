@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photo_view2"
-        android:layout_width="105dp"
-        android:layout_height="107dp"
+        android:layout_width="236dp"
+        android:layout_height="140dp"
+        android:layout_weight="0.10"
         app:srcCompat="@color/black" />
 </LinearLayout>

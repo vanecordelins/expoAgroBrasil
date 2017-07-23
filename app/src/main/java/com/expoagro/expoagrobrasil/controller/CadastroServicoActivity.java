@@ -96,6 +96,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     @Override
@@ -142,34 +143,37 @@ public class CadastroServicoActivity extends AppCompatActivity {
                                             for (DataSnapshot user : dataSnapshot.getChildren()) {
                                                 if (user.getKey().equals(uid)) {
                                                     Usuario target = user.getValue(Usuario.class);
-                                                    Servico servico = new Servico(nome, observacao, descricao, date, time, target.getCidade(), valor, frequencia);
+                                                    Servico servico = new Servico(nome, observacao, descricao, date, time, target.getCidade(), valor, uid, frequencia);
                                                     ServicoDAO servicoDAO = new ServicoDAO();
-                                                    servicoDAO.save(servico, uid);
-                                                    dialog.dismiss();
+                                                    servicoDAO.save(servico);
                                                 }
                                             }
                                         }
 
                                         @Override
                                         public void onCancelled(DatabaseError databaseError) {
-                                            dialog.dismiss();
                                             System.out.println("The read failed: " + databaseError.getMessage());
                                         }
                                     });
                                 }
                             };
                             mThread.start();
-                            Toast.makeText(CadastroServicoActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
-
-                            Intent it = new Intent(CadastroServicoActivity.this, MenuActivity.class);
-                            startActivity(it);
-                            finish();
+                            onSucessoCadastro();
 
                         }
                     })
                     .setNegativeButton("Não", null).show();
+            dialog.dismiss();
         }
 
+    }
+
+    public void onSucessoCadastro() {
+        Toast.makeText(CadastroServicoActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+        dialog.dismiss();
+        Intent it = new Intent(CadastroServicoActivity.this, MenuActivity.class);
+        startActivity(it);
+        finish();
     }
 
     public boolean validateInfo(String nome, String valor, String frequencia) {

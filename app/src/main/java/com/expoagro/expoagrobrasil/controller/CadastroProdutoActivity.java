@@ -29,6 +29,7 @@ import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.ImagePicker;
 import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
+import com.expoagro.expoagrobrasil.util.ProdutoViewPager;
 import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -84,7 +85,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
-        dialog.setMessage("Cadastrando novo produto...");
+        dialog.setMessage("Cadastrando novo produto. Aguarde alguns instantes...");
 
         // Cria um ArrayAdapter usando um array de string e um layout default do spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -162,18 +163,22 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             switch (requestCode) {
                 case PICK_IMAGE_ID:
                     Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, viewPager.getWidth(), viewPager.getHeight(), false);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, viewPager.getWidth(), viewPager.getHeight(), true);
                     fotos.add(resizedBitmap);
 
-//                    imView.setImageBitmap(resizedBitmap);
+                    if(fotos.size() > 4) {
+                        findViewById(R.id.btn_add_mais).setEnabled(false);
+                        Toast.makeText(this, "Você adicionou a quantidade máxima permitida de fotos.", Toast.LENGTH_SHORT).show();
+                    }
+
+                   // imView.setImageBitmap(resizedBitmap);
                     //viewPager = (ViewPager)findViewById(R.id.viewPager);
                     produtoViewPager = new ProdutoViewPager(this, fotos);
-                    System.out.println(produtoViewPager);
+
                     viewPager.setAdapter(produtoViewPager);
 
                     break;
                 default:
-                    super.onActivityResult(requestCode, resultCode, data);
                     break;
             }
         }
@@ -198,15 +203,25 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             SimpleDateFormat dfTime = new SimpleDateFormat("HH:mm");
             final String time = dfTime.format(Calendar.getInstance().getTime());
 
-            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
-                    .setMessage("Deseja continuar? Verifique se todos os dados estão corretos. ")
-                    .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(final DialogInterface dialog, int which) {
-
-                            registrarProduto(nome, observacao, descricao, date, time, valor, categoria);
-                        }
-                    }).setNegativeButton("Não", null).show();
+            if(fotos.isEmpty()) {
+                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
+                        .setMessage("Deseja continuar sem adicionar fotos?")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog, int which) {
+                                registrarProduto(nome, observacao, descricao, date, time, valor, categoria);
+                            }
+                        }).setNegativeButton("Não", null).show();
+            } else {
+                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
+                        .setMessage("Deseja continuar? Verifique se todos os dados estão corretos. ")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog, int which) {
+                                registrarProduto(nome, observacao, descricao, date, time, valor, categoria);
+                            }
+                        }).setNegativeButton("Não", null).show();
+            }
 
         }
     }
@@ -214,13 +229,42 @@ public class CadastroProdutoActivity extends AppCompatActivity {
 
     public void registrarProduto(final String nome, final String observacao, final String descricao, final String date, final String time,
                                  final String valor, final String categoria) {
+
         dialog.show();
+        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final ProdutoDAO pdao = new ProdutoDAO();
+        final Produto produto = new Produto(nome, observacao, descricao, date, time, valor, "", uid, categoria, fotosURL);
+        pdao.save(produto);
+
         Thread mThread = new Thread() {
             @Override
             public void run() {
 
-                final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                final ProdutoDAO pdao = new ProdutoDAO();
+                if(fotos.isEmpty()) {
+                    UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                if (user.getKey().equals(uid)) {
+                                    Usuario target = user.getValue(Usuario.class);
+                                    Produto produto = new Produto(nome, observacao, descricao, date, time, valor, target.getCidade(), uid, categoria, fotosURL);
+                                    pdao.save(produto);
+                                    Toast.makeText(CadastroProdutoActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                    Intent it = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.println("The read failed: " + databaseError.getMessage());
+                            dialog.dismiss();
+                        }
+                    });
+                }
 
                 for (int i = 0; i < fotos.size(); i++) {
 
@@ -252,13 +296,9 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                     for (DataSnapshot user : dataSnapshot.getChildren()) {
                                         if (user.getKey().equals(uid)) {
                                             Usuario target = user.getValue(Usuario.class);
-                                            Produto produto = new Produto(nome, observacao, descricao, date, time, valor, target.getCidade(), categoria, fotosURL);
-                                            pdao.save(produto, uid);
-                                            Toast.makeText(CadastroProdutoActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
-                                            dialog.dismiss();
-                                            Intent it = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
-                                            startActivity(it);
-                                            finish();
+                                            produto.setCidade(target.getCidade());
+                                            produto.setFoto(fotosURL);
+                                            pdao.update(produto);
                                         }
                                     }
                                 }
@@ -272,6 +312,18 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                         }
                     });
                 }
+                while(fotosURL.size() != fotos.size()) { continue;}
+                CadastroProdutoActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        Intent it = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                });
+
             }
         };
         mThread.start();

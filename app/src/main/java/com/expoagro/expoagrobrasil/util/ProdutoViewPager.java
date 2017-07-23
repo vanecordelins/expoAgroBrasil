@@ -1,4 +1,4 @@
-package com.expoagro.expoagrobrasil.controller;
+package com.expoagro.expoagrobrasil.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.expoagro.expoagrobrasil.R;
 import com.github.chrisbanes.photoview.PhotoView;
 
