@@ -32,6 +32,9 @@ public class UserDAO implements InterfaceDAO<Usuario> {
 
     public void delete(String id) {
         getReference().child(id).removeValue();
+        if(ProdutoDAO.getDatabaseReference().child(id) != null) {
+            ProdutoDAO.getDatabaseReference().child(id).removeValue();
+        }
     }
 
 }

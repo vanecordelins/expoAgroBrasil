@@ -35,6 +35,9 @@
     <string name="error_cidade_nao_selecionada">Selecione uma cidade</string>
     <string name="error_repetir_senha_invalida">As senhas não combinam! Verifique.</string>
     <string name="error_login">Não foi possível realizar o Login. Tente Novamente</string>
+    <string name="error_valor_invalido">Preço Inválido</string>
+    <string name="error_frequencia_nao_selecionada">Selecione a frequência do serviço</string>
+    <string name="error_categoria_nao_selecionada">Selecione a categoria do produto</string>
 
     <string name="menu_perfil">Meu perfil</string>
     <string name="menu_novo_anuncio">Novo anúncio</string>
@@ -42,6 +45,7 @@
     <string name="menu_arroba">"@" hoje</string>
     <string name="menu_favoritos">Favoritos</string>
     <string name="menu_sobre">Sobre</string>
+    <string name="menu_sair">Sair</string>
 
     <string name="bem_vindo">Bem vindo ao ExpoAgro Brasil!</string>
     <string name="fazer_login"><u>Fazer Login</u></string>
@@ -65,15 +69,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="pick_image_intent_text">Selecione uma Foto:</string>
+
     <string-array name="categorias">
         <item>Selecione a Categoria...</item>
         <item>Animal</item>
         <item>Ferramenta</item>
+
     </string-array>
 
     <string-array name="frequencias">
         <item>Selecione a Frequência...</item>
-        <item>Diário</item>
+        <item>Diária</item>
         <item>Por Hora</item>
     </string-array>
 

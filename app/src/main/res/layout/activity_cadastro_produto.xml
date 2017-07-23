@@ -6,186 +6,266 @@
     android:layout_height="match_parent"
     tools:context="com.expoagro.expoagrobrasil.controller.CadastroProdutoActivity">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="153dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:gravity="center"
-        android:text="Tipo de anúncio:"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
-
-    <RadioGroup
-        android:id="@+id/tipoAnuncio"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:checkedButton="@+id/rdoBtnProduto"
-        android:orientation="horizontal"
-        app:layout_constraintLeft_toRightOf="@+id/textView4"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp">
-
-        <RadioButton
-            android:id="@+id/rdoBtnProduto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Produto"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="96dp"
-            tools:layout_editor_absoluteY="141dp" />
-
-        <RadioButton
-            android:id="@+id/rdoBtnServico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Serviço"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="116dp"
-            tools:layout_editor_absoluteY="283dp" />
-
-    </RadioGroup>
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="105dp"
-        android:layout_height="107dp"
-        app:srcCompat="@drawable/sem_foto"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="48dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputNomeProd"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6">
+        app:layout_constraintTop_toBottomOf="parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/campoNomeProduto"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/campo_nome" />
+            android:layout_height="match_parent">
 
-    </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="153dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Tipo de anúncio:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="1dp" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputValor"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textInputNomeProd"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent">
+            <RadioGroup
+                android:id="@+id/tipoAnuncio"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:checkedButton="@+id/rdoBtnProduto"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toRightOf="@+id/textView4"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/campoValor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/campo_valor" />
-    </android.support.design.widget.TextInputLayout>
+                <RadioButton
+                    android:id="@+id/rdoBtnProduto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Produto"
+                    android:textSize="16sp"
+                    tools:layout_editor_absoluteX="96dp"
+                    tools:layout_editor_absoluteY="141dp" />
 
-    <Spinner
-        android:id="@+id/spinnerCategoria"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textInputValor"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+                <RadioButton
+                    android:id="@+id/rdoBtnServico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Serviço"
+                    android:textSize="16sp"
+                    tools:layout_editor_absoluteX="116dp"
+                    tools:layout_editor_absoluteY="283dp" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputDescricao"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCategoria"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent">
+            </RadioGroup>
 
-        <EditText
-            android:id="@+id/campoDescricao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/campo_descricao"
-            android:singleLine="false" />
-    </android.support.design.widget.TextInputLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewProduto"
+                android:layout_width="236dp"
+                android:layout_height="140dp"
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputObservacao"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textInputDescricao"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent">
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="95dp"
+                android:background="@drawable/sem_foto"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/campoObservacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/campo_observacao"
-            android:singleLine="false" />
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="360dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textPersonName"
+                android:text="CADASTRO DE PRODUTO"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toTopOf="@+id/viewProduto"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tipoAnuncio"
+                app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/btnCadastrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        android:text="@string/acao_cadastrar"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textInputObservacao" />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputNomeProd"
+                android:layout_width="328dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewProduto">
 
-    <Button
-        android:id="@+id/btnCancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:text="@string/acao_cancelar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textInputObservacao" />
+                <AutoCompleteTextView
+                    android:id="@+id/campoNomeProduto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/campo_nome" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputValor"
+                android:layout_width="328dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputNomeProd">
+
+                <EditText
+                    android:id="@+id/campoValor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="1234567890"
+                    android:hint="@string/campo_valor"
+                    android:inputType="numberDecimal"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:text="R$0,00" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinnerCategoria"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="328dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputValor" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputDescricao"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerCategoria">
+
+                <EditText
+                    android:id="@+id/campoDescricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/campo_descricao"
+                    android:singleLine="false" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputObservacao"
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputDescricao">
+
+                <EditText
+                    android:id="@+id/campoObservacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/campo_observacao"
+                    android:singleLine="false" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnCadastrar"
+                android:layout_width="107dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/acao_cadastrar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.896"
+                app:layout_constraintLeft_toLeftOf="@+id/textInputObservacao"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputObservacao"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="107dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/acao_cancelar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.171"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/btnCadastrar"
+                app:layout_constraintTop_toBottomOf="@+id/textInputObservacao"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/btn_add_mais"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorAccent"
+                android:text="+"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/textInputNomeProd"
+                app:layout_constraintHorizontal_bias="0.023"
+                app:layout_constraintLeft_toRightOf="@+id/viewProduto"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tipoAnuncio"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

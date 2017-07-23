@@ -2,11 +2,14 @@ package com.expoagro.expoagrobrasil;
 
 
 import com.expoagro.expoagrobrasil.util.Regex;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class CadastroUnitTest {
+
 
     @Test
     public void telefoneValido() throws Exception {
@@ -31,7 +34,6 @@ public class CadastroUnitTest {
         boolean result = Regex.isNameValid("123");
         assertEquals(false, result);
     }
-
 
 
 }

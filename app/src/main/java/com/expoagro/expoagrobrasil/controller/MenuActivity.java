@@ -1,7 +1,9 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.content.Intent;
+
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -11,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
@@ -53,8 +54,6 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Button btn_sair = (Button) findViewById(R.id.btn_sair);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -65,19 +64,15 @@ public class MenuActivity extends AppCompatActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-
-        btn_sair.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
-            }
-        });
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+
+        //getMenuInflater().inflate(R.menu.menu, menu);
+
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
 
@@ -137,7 +132,7 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_meu_perfil) {
-            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
                 Intent telaVisualizar = new Intent(MenuActivity.this, VisualizarUsuarioActivity.class);
                 startActivity(telaVisualizar);
                 finish();
@@ -147,8 +142,11 @@ public class MenuActivity extends AppCompatActivity
                 finish();
             }
         } else if (id == R.id.menu_novo_anuncio) {
-            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU NOVO ANUNCIOS"); // Ja esta logado
+
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
+                Intent telaCadastrarAnuncio = new Intent(MenuActivity.this, CadastroProdutoActivity.class);
+                startActivity(telaCadastrarAnuncio);
+                finish();
             } else {
                 Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
@@ -172,6 +170,8 @@ public class MenuActivity extends AppCompatActivity
                 startActivity(telaLogin);
                 finish();
             }
+        } else if (id == R.id.menu_sair) {
+            GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
         } /* else if (id == R.id.menu_sobre) {
 
           }*/
@@ -185,4 +185,6 @@ public class MenuActivity extends AppCompatActivity
         // be available.
         System.out.println("onConnectionFailed:" + connectionResult);
     }
+
 }
+
