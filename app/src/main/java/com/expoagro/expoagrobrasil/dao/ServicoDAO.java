@@ -8,30 +8,33 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by Fabricio on 7/19/2017.
  */
 
-public class ServicoDAO  {
+public class ServicoDAO implements InterfaceDAO<Servico>{
 
     public static DatabaseReference getDatabaseReference() {
         return FirebaseDatabase.getInstance().getReference("Serviço");
     }
 
-    public void save(Servico servico, String userID) {
+    @Override
+    public void save(Servico servico) {
         if (servico == null) {
             return;
         }
         DatabaseReference mDatabase = getDatabaseReference();
         servico.setId(mDatabase.push().getKey());
-        mDatabase.child(userID).child(servico.getId()).setValue(servico);
+        mDatabase.child(servico.getId()).setValue(servico);
     }
 
-    public void update(Servico servico, String userID) {
+    @Override
+    public void update(Servico servico) {
         if (servico == null) {
             return;
         }
         DatabaseReference mDatabase = getDatabaseReference();
-        mDatabase.child(userID).child(servico.getId()).setValue(servico);
+        mDatabase.child(servico.getId()).setValue(servico);
     }
 
-    public void delete(Servico servico, String userID) {
-        getDatabaseReference().child(userID).child(servico.getId()).removeValue();
+    @Override
+    public void delete(String idServico) {
+        getDatabaseReference().child(idServico).removeValue();
     }
 }
