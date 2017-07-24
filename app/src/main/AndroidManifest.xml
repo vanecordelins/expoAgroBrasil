@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,50 +20,38 @@
             android:name=".controller.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
+
             <!-- android:theme="@android:style/Theme.NoTitleBar"> -->
         </activity>
-
         <activity
             android:name=".controller.ArrobaDoBoiActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".controller.InicialArrobaActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".controller.CadastroUsuarioActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".controller.AlterarUsuarioActivity"
             android:label="@string/title_activity_alterar_usuario"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".controller.CompletarCadastroActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".controller.RecuperarSenhaActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".controller.AlterarSenhaActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".controller.AlterarSenhaActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".controller.VisualizarUsuarioActivity"
             android:parentActivityName=".controller.MenuActivity"
@@ -73,7 +61,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
         </activity>
-
+        <activity
+            android:name=".controller.CadastroProdutoActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".controller.CadastroServicoActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".controller.MenuActivity"
             android:parentActivityName=".controller.MenuActivity"
@@ -83,5 +76,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
         </activity>
+
     </application>
+
 </manifest>
