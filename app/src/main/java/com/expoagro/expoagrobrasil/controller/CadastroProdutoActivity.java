@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -76,7 +78,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mObservacaoView = (TextView) findViewById(R.id.campoObservacao);
         //imView = (ImageView) findViewById(R.id.viewProduto);
         viewPager = (ViewPager) findViewById(R.id.viewProduto);
-
 
         mValorView.addTextChangedListener(new MoneyTextWatcher(mValorView));
 
@@ -157,6 +158,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -164,7 +166,9 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             switch (requestCode) {
                 case PICK_IMAGE_ID:
                     Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
+
                     Bitmap resizedBitmap = resize(bitmap, 600, 400);
+                    viewPager.setBackground(null);
                     //Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 600, 400, false);
 
                     fotos.add(resizedBitmap);
@@ -179,6 +183,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                     produtoViewPager = new ProdutoViewPager(this, fotos);
 
                     viewPager.setAdapter(produtoViewPager);
+
 
                     break;
                 default:
