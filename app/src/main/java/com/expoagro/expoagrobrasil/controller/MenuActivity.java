@@ -64,21 +64,6 @@ public class MenuActivity extends AppCompatActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
- /*       ProdutoDAO.getDatabaseReference().orderByChild("idUsuario").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot produto : dataSnapshot.getChildren()) {
-                    Produto p = produto.getValue(Produto.class);
-                    System.out.println(p.getId());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        }); */
-
     }
 
 
