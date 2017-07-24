@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,7 +37,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
@@ -162,7 +160,8 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             switch (requestCode) {
                 case PICK_IMAGE_ID:
                     Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, viewPager.getWidth(), viewPager.getHeight(), true);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 600, 400, false);
+
                     fotos.add(resizedBitmap);
 
                     if(fotos.size() > 4) {
@@ -250,7 +249,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                     Usuario target = user.getValue(Usuario.class);
                                     produto.setCidade(target.getCidade());
                                     produto.setFoto(fotosURL);
-                                    pdao.save(produto);
+                                    pdao.update(produto);
                                 }
                             }
                         }
