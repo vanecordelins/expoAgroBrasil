@@ -17,9 +17,7 @@ import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
 
-import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
-import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.google.android.gms.auth.api.Auth;
@@ -27,7 +25,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
