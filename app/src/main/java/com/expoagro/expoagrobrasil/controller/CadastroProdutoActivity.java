@@ -162,8 +162,8 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             switch (requestCode) {
                 case PICK_IMAGE_ID:
                     Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, viewPager.getWidth(), viewPager.getHeight(), true);
-                    fotos.add(resizedBitmap);
+                    //Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, viewPager.getWidth(), viewPager.getHeight(), true);
+                    fotos.add(bitmap);
 
                     if(fotos.size() > 4) {
                         findViewById(R.id.btn_add_mais).setEnabled(false);
@@ -250,7 +250,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                     Usuario target = user.getValue(Usuario.class);
                                     produto.setCidade(target.getCidade());
                                     produto.setFoto(fotosURL);
-                                    pdao.save(produto);
+                                    pdao.update(produto);
                                 }
                             }
                         }
