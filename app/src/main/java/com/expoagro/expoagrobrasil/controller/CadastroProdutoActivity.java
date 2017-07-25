@@ -40,7 +40,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
@@ -59,7 +58,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     private Spinner spinnerCategoria;
     private TextView mDescricaoView;
     private TextView mObservacaoView;
-    private ImageView imView;
     private List<Bitmap> fotos;
     private List<String> fotosURL;
     private ProgressDialog dialog;
@@ -236,6 +234,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
 
 
     private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        Bitmap resizedImage = image;
         if (maxHeight > 0 && maxWidth > 0) {
             int width = image.getWidth();
             int height = image.getHeight();
@@ -249,10 +248,10 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             } else {
                 finalHeight = (int) ((float)maxWidth / ratioBitmap);
             }
-            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
-            return image;
+            resizedImage = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return resizedImage;
         } else {
-            return image;
+            return resizedImage;
         }
     }
 

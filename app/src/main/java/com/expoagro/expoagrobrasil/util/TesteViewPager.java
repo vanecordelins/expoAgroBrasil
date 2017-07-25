@@ -5,7 +5,6 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -17,8 +16,6 @@ import com.github.chrisbanes.photoview.PhotoView;
  */
 
 public class TesteViewPager extends PagerAdapter {
-
-
 
     private String[] images= {
             "https://firebasestorage.googleapis.com/v0/b/expoagro-brasil.appspot.com/o/teste%2FDILMA%20(1).png?alt=media&token=1bf1f081-eadd-4184-90e7-15f38056a7d7",
@@ -32,7 +29,6 @@ public class TesteViewPager extends PagerAdapter {
 
 
     private Context context;
-    private LayoutInflater layoutInflater;
 
     public TesteViewPager(Context context){
         this.context = context;
@@ -51,7 +47,7 @@ public class TesteViewPager extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position){
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View item_view = layoutInflater.inflate(R.layout.teste_viewpager, container, false);
 //        ImageView imageView = (ImageView) item_view.findViewById(R.id.imageView6);
         PhotoView photoView = (PhotoView) item_view.findViewById(R.id.photo_view);

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.expoagro.expoagrobrasil.R;
 import com.github.chrisbanes.photoview.PhotoView;
 
