@@ -5,11 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -38,7 +40,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
@@ -46,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 
 public class CadastroProdutoActivity extends AppCompatActivity {
 
@@ -74,7 +76,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mObservacaoView = (TextView) findViewById(R.id.campoObservacao);
         //imView = (ImageView) findViewById(R.id.viewProduto);
         viewPager = (ViewPager) findViewById(R.id.viewProduto);
-
 
         mValorView.addTextChangedListener(new MoneyTextWatcher(mValorView));
 
@@ -155,6 +156,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -162,7 +164,11 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             switch (requestCode) {
                 case PICK_IMAGE_ID:
                     Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, viewPager.getWidth(), viewPager.getHeight(), true);
+
+                    Bitmap resizedBitmap = resize(bitmap, 600, 400);
+                    viewPager.setBackground(null);
+                    //Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 600, 400, false);
+
                     fotos.add(resizedBitmap);
 
                     if(fotos.size() > 4) {
@@ -175,6 +181,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                     produtoViewPager = new ProdutoViewPager(this, fotos);
 
                     viewPager.setAdapter(produtoViewPager);
+
 
                     break;
                 default:
@@ -226,6 +233,28 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     }
 
 
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        Bitmap resizedImage = image;
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            resizedImage = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return resizedImage;
+        } else {
+            return resizedImage;
+        }
+    }
+
     public void registrarProduto(final String nome, final String observacao, final String descricao, final String date, final String time,
                                  final String valor, final String categoria) {
 
@@ -250,7 +279,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                     Usuario target = user.getValue(Usuario.class);
                                     produto.setCidade(target.getCidade());
                                     produto.setFoto(fotosURL);
-                                    pdao.save(produto);
+                                    pdao.update(produto);
                                 }
                             }
                         }
