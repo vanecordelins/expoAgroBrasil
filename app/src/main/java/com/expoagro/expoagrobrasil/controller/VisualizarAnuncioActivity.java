@@ -35,10 +35,9 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = MenuActivity.getId();
-
-       // System.out.println(keyProduto);
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        System.out.println("VISUALIZOU");
+//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -46,7 +45,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                     if (prod.getKey().equals(keyProduto) ) {
                         Produto produto = prod.getValue(Produto.class);
                         ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
-                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + nome);
+//                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + nome);
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
