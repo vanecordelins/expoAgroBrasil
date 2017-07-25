@@ -34,7 +34,7 @@ public class CadastroServicoActivityTestNomeVazio {
     public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
 
     @Test
-    public void CadastroServicoActivityTest() {
+    public void cadastroServicoActivityTest() {
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
             ViewInteraction appCompatImageButton2 = onView(
