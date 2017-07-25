@@ -44,9 +44,8 @@ public class ProdutoViewPager extends PagerAdapter {
 //        ImageView imageView = (ImageView) item_view.findViewById(R.id.imageView6);
         PhotoView photoView = (PhotoView) item_view.findViewById(R.id.photo_view2);
         container.addView(item_view);
-//        Glide.with(context).load(images.get(position)).centerCrop().into(photoView);
+     //Glide.with(context).load(images.get(position)).centerCrop().into(photoView);
         photoView.setImageBitmap(images.get(position));
-
 
         return item_view;
     }

@@ -41,6 +41,7 @@ public class Anuncio {
         this.idUsuario = idUsuario;
     }
 
+
     public String getIdUsuario() {
         return idUsuario;
     }

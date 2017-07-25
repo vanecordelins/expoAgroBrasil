@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
+import java.util.Locale;
 
 /**
  * Created by Fabricio on 7/21/2017.
@@ -40,7 +41,7 @@ public class MoneyTextWatcher implements TextWatcher {
             editText.removeTextChangedListener(this);
             String cleanString = s.replaceAll("[R$,.]", "");
             BigDecimal parsed = new BigDecimal(cleanString).setScale(2, BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR);
-            String formatted = NumberFormat.getCurrencyInstance().format(parsed);
+            String formatted = NumberFormat.getCurrencyInstance(new Locale( "pt", "BR" )).format(parsed);
             editText.setText(formatted);
             editText.setSelection(formatted.length());
             editText.addTextChangedListener(this);
