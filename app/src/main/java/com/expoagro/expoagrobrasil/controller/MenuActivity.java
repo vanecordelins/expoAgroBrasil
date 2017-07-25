@@ -1,39 +1,72 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.content.Intent;
-
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-
-import android.view.Menu;
-import android.view.View;
+import android.provider.MediaStore;
+import android.provider.SyncStateContract;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
-
+import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
+import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
+import com.expoagro.expoagrobrasil.util.Lista;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
     private String uid;
+    private static final int CALL_IMAGE = 12;
+    private static final int CALL_CAMERA = 14;
+    private RecyclerView recyclerView;
+    private DatabaseReference myref;
+    private DatabaseReference myref2;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +84,9 @@ public class MenuActivity extends AppCompatActivity
 
         uid = "";
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -60,11 +94,105 @@ public class MenuActivity extends AppCompatActivity
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(MenuActivity.this)
-                .enableAutoManage(MenuActivity.this /* FragmentActivity */, MenuActivity.this /* OnConnectionFailedListener */)
+                .enableAutoManage(MenuActivity.this, MenuActivity.this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
+        // ----------------------------------RecyclerView-----------------------------------------------------------
+
+        mAuth = FirebaseAuth.getInstance();
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        myref = FirebaseDatabase.getInstance().getReference("Produto");
+        FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
+                Lista.class,
+                R.layout.linha,
+                ListaViewHolder.class,
+                myref
+
+
+        ) {
+
+            @Override
+            protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
+
+                final String key = getRef(position).getKey();
+
+                viewHolder.setCategoria(model.getCategoria());
+                viewHolder.setData(model.getData());
+                viewHolder.setValor(model.getValor());
+                viewHolder.setFoto(model.getFoto());
+                viewHolder.setNome(model.getNome());
+
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                       // Intent intent = new Intent(this, VisualizarAnuncioActivity.class);
+                       // startActivity(intent);
+                        Toast.makeText(MenuActivity.this, key, Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+            }
+
+        };
+
+        recyclerView.setAdapter(recyclerAdapter);
     }
+
+    public static class ListaViewHolder extends RecyclerView.ViewHolder {
+        View mView;
+        TextView textView_nome;
+        TextView textView_data;
+        TextView textView_valor;
+        TextView textView_categoria;
+        ImageView imageView;
+
+        public ListaViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+            textView_nome = (TextView) itemView.findViewById(R.id.nomeProduto);
+            textView_data = (TextView) itemView.findViewById(R.id.dataProduto);
+            textView_valor = (TextView) itemView.findViewById(R.id.valorProduto);
+            textView_categoria = (TextView) itemView.findViewById(R.id.categoriaProduto);
+            imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);
+        }
+
+
+        public void setNome(String nome) {
+            textView_nome.setText(nome);
+        }
+
+        public void setData(String data) {
+            textView_data.setText(data);
+        }
+
+        public void setValor(String valor) {
+            textView_valor.setText(valor);
+        }
+
+        public void setCategoria(String categoria) {
+            textView_categoria.setText(categoria);
+        }
+
+
+        public void setFoto(List<String> foto) {
+            if (foto == null) {
+            } else {
+                Picasso.with(mView.getContext())
+                        .load(foto.get(0))
+                        .resize(100,100)
+                        .into(imageView);
+            }
+        }
+    }
+
+//---------------------------------------------------------------------------------------
 
 
     @Override
@@ -173,7 +301,6 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.menu_sair) {
             GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
         } /* else if (id == R.id.menu_sobre) {
-
           }*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -187,4 +314,3 @@ public class MenuActivity extends AppCompatActivity
     }
 
 }
-
