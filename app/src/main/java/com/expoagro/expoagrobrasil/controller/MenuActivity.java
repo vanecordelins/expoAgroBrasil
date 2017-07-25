@@ -1,14 +1,7 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.provider.SyncStateContract;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,22 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
-import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
-import com.expoagro.expoagrobrasil.util.Lista;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,14 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MenuActivity extends AppCompatActivity
@@ -64,8 +46,9 @@ public class MenuActivity extends AppCompatActivity
     private static final int CALL_CAMERA = 14;
     private RecyclerView recyclerView;
     private DatabaseReference myref;
-    private DatabaseReference myref2;
+    private Query myref2;
     private FirebaseAuth mAuth;
+    private static String idClicado;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
@@ -101,14 +84,14 @@ public class MenuActivity extends AppCompatActivity
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
         mAuth = FirebaseAuth.getInstance();
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         myref = FirebaseDatabase.getInstance().getReference("Produto");
-        FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
-                Lista.class,
+
+        FirebaseRecyclerAdapter<Produto, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, ListaViewHolder>(
+                Produto.class,
                 R.layout.linha,
                 ListaViewHolder.class,
                 myref
@@ -117,7 +100,7 @@ public class MenuActivity extends AppCompatActivity
         ) {
 
             @Override
-            protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
+            protected void populateViewHolder(ListaViewHolder viewHolder, final Produto model, int position) {
 
                 final String key = getRef(position).getKey();
 
@@ -131,9 +114,12 @@ public class MenuActivity extends AppCompatActivity
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       // Intent intent = new Intent(this, VisualizarAnuncioActivity.class);
-                       // startActivity(intent);
-                        Toast.makeText(MenuActivity.this, key, Toast.LENGTH_LONG).show();
+                        setId(key);
+                      //  TextView i = (TextView) findViewById(R.id.vendedor);
+                     //   i.setText(model.getNome());
+                        Intent intent = new Intent(MenuActivity.this, VisualizarAnuncioActivity.class);
+                        startActivity(intent);
+
 
                     }
                 });
@@ -145,13 +131,22 @@ public class MenuActivity extends AppCompatActivity
         recyclerView.setAdapter(recyclerAdapter);
     }
 
-    public static class ListaViewHolder extends RecyclerView.ViewHolder {
+    public static String getId() {
+        return idClicado;
+    }
+
+    public static void setId(String id) {
+        idClicado = id;
+    }
+
+    public static class ListaViewHolder extends RecyclerView.ViewHolder{
         View mView;
         TextView textView_nome;
         TextView textView_data;
         TextView textView_valor;
         TextView textView_categoria;
         ImageView imageView;
+        TextView textView_nome2;
 
         public ListaViewHolder(View itemView) {
             super(itemView);
@@ -161,10 +156,12 @@ public class MenuActivity extends AppCompatActivity
             textView_valor = (TextView) itemView.findViewById(R.id.valorProduto);
             textView_categoria = (TextView) itemView.findViewById(R.id.categoriaProduto);
             imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);
+            //textView_nome2 = (TextView) itemView.findViewById(R.id.vendedorProduto);
         }
 
 
         public void setNome(String nome) {
+
             textView_nome.setText(nome);
         }
 
@@ -190,6 +187,7 @@ public class MenuActivity extends AppCompatActivity
                         .into(imageView);
             }
         }
+
     }
 
 //---------------------------------------------------------------------------------------
@@ -283,6 +281,9 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.menu_meus_anuncios) {
             if(FirebaseAuth.getInstance().getCurrentUser() != null) {
                 System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
+                Intent telaMeuAnuncio = new Intent(MenuActivity.this, VisualizarMeusAnunciosActivitty.class);
+                startActivity(telaMeuAnuncio);
+                finish();
             } else {
                 Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(telaLogin);

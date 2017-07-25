@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.expoagro.expoagrobrasil.R;
-import com.expoagro.expoagrobrasil.model.Anuncio;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class AnuncioViewPager extends PagerAdapter {
 //        ImageView imageView = (ImageView) item_view.findViewById(R.id.imageView6);
         PhotoView photoView = (PhotoView) item_view.findViewById(R.id.photo_view);
         container.addView(item_view);
-        Glide.with(context).load(images.get(position)).centerCrop().into(photoView);
+        Glide.with(context).load(images.get(position)).into(photoView);
 
 
         return item_view;

@@ -19,10 +19,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /**
- * Created by Samir on 24/07/2017.
+ * Created by Samir on 25/07/2017.
  */
 
-public class VisualizarAnuncioActivity extends AppCompatActivity {
+public class VisualizarMeuAnuncio extends AppCompatActivity {
+
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
 
@@ -34,9 +35,10 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar_anuncio);
         final ArrayList<String> img = new ArrayList<>();
 
-        final String keyProduto = MenuActivity.getId();
+        final String keyProduto = VisualizarMeusAnunciosActivitty.getId();
 
-       // System.out.println(keyProduto);
+
+        System.out.println(keyProduto);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -58,7 +60,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                             }
                         }
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
-                        testeViewPager = new AnuncioViewPager(VisualizarAnuncioActivity.this, img);
+                        testeViewPager = new AnuncioViewPager(VisualizarMeuAnuncio.this, img);
                         viewPager.setAdapter(testeViewPager);
                     }
                 }
@@ -75,15 +77,11 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
         alterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VisualizarAnuncioActivity.this, CadastroProdutoActivity.class);
+                Intent intent = new Intent(VisualizarMeuAnuncio.this, AlterarProdutoActivity.class);
+                startActivity(intent);
+
             }
         });
-
-
-    }
-
-    public void recuperarAuncio() {
-
 
 
     }
