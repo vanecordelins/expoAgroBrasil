@@ -33,7 +33,7 @@ public class CadastroProdutoActivityTestNovo{
     public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
 
     @Test
-    public void CadastroProdutoActivityTest() throws InterruptedException {
+    public void cadastroProdutoActivityTest() throws InterruptedException {
 
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
