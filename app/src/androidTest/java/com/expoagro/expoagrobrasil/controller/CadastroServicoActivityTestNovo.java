@@ -96,16 +96,16 @@ public class CadastroServicoActivityTestNovo {
         appCompatSpinner2.perform(click());
 
         ViewInteraction appCompatCheckedTextView5 = onView(
-                allOf(withId(android.R.id.text1), withText("Diária"), isDisplayed()));
+                allOf(withId(android.R.id.text1), withText("Por Dia"), isDisplayed()));
         appCompatCheckedTextView5.perform(click());
 
         ViewInteraction appCompatEditText11 = onView(
                 allOf(withId(R.id.campoDescricao), isDisplayed()));
-        appCompatEditText11.perform(replaceText("ser"), closeSoftKeyboard());
+        appCompatEditText11.perform(replaceText("servico"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText12 = onView(
                 allOf(withId(R.id.campoObservacao), isDisplayed()));
-        appCompatEditText12.perform(replaceText("obs"), closeSoftKeyboard());
+        appCompatEditText12.perform(replaceText("observaçao"), closeSoftKeyboard());
 
 
         ViewInteraction appCompatButton2 = onView(

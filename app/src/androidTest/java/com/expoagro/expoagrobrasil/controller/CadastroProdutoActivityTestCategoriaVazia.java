@@ -92,10 +92,6 @@ public class CadastroProdutoActivityTestCategoriaVazia {
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.btnCadastrar),isDisplayed()));
         appCompatButton2.perform(click());
-        Thread.sleep(3000);
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(android.R.id.button1), withText("Sim")));
-        appCompatButton3.perform(scrollTo(), click());
 
 
 

@@ -100,11 +100,12 @@ public class CadastroServicoActivityTestNomeInvalido {
 
 
         ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.btnCadastrar), isDisplayed()));
-        appCompatButton2.perform(click());
+                allOf(withId(R.id.btnCadastrar),isDisplayed()));
+        appCompatButton2.perform(scrollTo(),click());
 
-        ViewInteraction result = onView(withText(R.string.error_nome_invalido)).inRoot(new TesteUtils.ToastMatcher())
-                .check(matches(withText("Nome inválido")));
+        ViewInteraction result = onView(
+                allOf(withId(R.id.btnCadastrar), isDisplayed()));
+        result.check(matches(withText("Cadastrar")));
 
         Assert.assertNotNull(result);
 

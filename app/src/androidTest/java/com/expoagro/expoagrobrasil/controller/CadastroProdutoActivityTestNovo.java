@@ -74,7 +74,7 @@ public class CadastroProdutoActivityTestNovo{
 
         ViewInteraction appCompatAutoCompleteTextView = onView(
                 allOf(withId(R.id.campoNomeProduto), isDisplayed()));
-        appCompatAutoCompleteTextView.perform(replaceText("Papa-Capim"), closeSoftKeyboard());
+        appCompatAutoCompleteTextView.perform(replaceText("Papa Capim"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText5 = onView(
                 allOf(withId(R.id.campoValor), isDisplayed()));
@@ -95,21 +95,19 @@ public class CadastroProdutoActivityTestNovo{
         ViewInteraction appCompatEditText12 = onView(
                 allOf(withId(R.id.campoObservacao), isDisplayed()));
         appCompatEditText12.perform(replaceText("Não Deixa Passar Vergonha"), closeSoftKeyboard());
-        Thread.sleep(3000);
+
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.btnCadastrar),isDisplayed()));
-        appCompatButton2.perform(click());
-        Thread.sleep(3000);
+        appCompatButton2.perform(scrollTo(),click());
+
         ViewInteraction appCompatButton3 = onView(
                 allOf(withId(android.R.id.button1), withText("Sim")));
-        appCompatButton3.perform(scrollTo(), click());
+        appCompatButton3.perform(scrollTo(),click());
 
 
 
-        ViewInteraction result = onView(withText(R.string.error_nome_invalido)).inRoot(new TesteUtils.ToastMatcher())
-                .check(matches(withText("Nome inválido")));
-
-
+        ViewInteraction result = onView(withText(R.string.msg_cadastro_sucesso)).inRoot(new TesteUtils.ToastMatcher())
+                .check(matches(withText("Cadastro realizado com sucesso")));
 
         Assert.assertNotNull(result);
 

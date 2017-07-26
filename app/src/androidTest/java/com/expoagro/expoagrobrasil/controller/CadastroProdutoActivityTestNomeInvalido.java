@@ -95,19 +95,14 @@ public class CadastroProdutoActivityTestNomeInvalido {
         ViewInteraction appCompatEditText12 = onView(
                 allOf(withId(R.id.campoObservacao), isDisplayed()));
         appCompatEditText12.perform(replaceText("Não Deixa Passar Vergonha"), closeSoftKeyboard());
-        Thread.sleep(3000);
+
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.btnCadastrar),isDisplayed()));
-        appCompatButton2.perform(click());
-        Thread.sleep(3000);
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(android.R.id.button1), withText("Sim")));
-        appCompatButton3.perform(scrollTo(), click());
+        appCompatButton2.perform(scrollTo(),click());
 
-
-
-        ViewInteraction result = onView(withText(R.string.error_nome_invalido)).inRoot(new TesteUtils.ToastMatcher())
-                .check(matches(withText("Nome inválido")));
+        ViewInteraction result = onView(
+                allOf(withId(R.id.btnCadastrar), isDisplayed()));
+        result.check(matches(withText("Cadastrar")));
 
 
 

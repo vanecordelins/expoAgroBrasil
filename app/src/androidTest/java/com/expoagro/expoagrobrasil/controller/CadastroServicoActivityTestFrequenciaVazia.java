@@ -101,7 +101,7 @@ public class CadastroServicoActivityTestFrequenciaVazia {
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.btnCadastrar), isDisplayed()));
-        appCompatButton2.perform(click());
+        appCompatButton2.perform(scrollTo(),click());
 
 
         ViewInteraction result = onView(withText(R.string.error_frequencia_nao_selecionada)).inRoot(new TesteUtils.ToastMatcher())
