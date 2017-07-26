@@ -1,17 +1,17 @@
 package com.expoagro.expoagrobrasil.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
-import com.google.firebase.auth.FirebaseAuth;
+import com.expoagro.expoagrobrasil.util.AnuncioViewPager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -51,7 +51,6 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
 
                         if(produto.getFoto() == null){
-                        }else {
                             for (int i =0; i<produto.getFoto().size(); i++){
                                 img.add(produto.getFoto().get(i));
                             }
@@ -65,17 +64,17 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(VisualizarAnuncioActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
             }
         });
 
         //System.out.println(img);
         Button alterar = (Button) findViewById(R.id.alterarProduto);
         Button excluir = (Button) findViewById(R.id.excluirProduto);
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            alterar.setVisibility(View.GONE);
-            excluir.setVisibility(View.GONE);
-        }
+
+        alterar.setVisibility(View.GONE);
+        excluir.setVisibility(View.GONE);
+
 
 
     }

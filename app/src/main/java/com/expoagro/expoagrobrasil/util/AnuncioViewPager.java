@@ -1,4 +1,4 @@
-package com.expoagro.expoagrobrasil.controller;
+package com.expoagro.expoagrobrasil.util;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -23,7 +23,6 @@ public class AnuncioViewPager extends PagerAdapter {
 
 
     private Context context;
-    private LayoutInflater layoutInflater;
 
     public AnuncioViewPager(Context context, ArrayList<String> images){
         this.context = context;
@@ -42,7 +41,7 @@ public class AnuncioViewPager extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position){
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View item_view = layoutInflater.inflate(R.layout.teste_viewpager, container, false);
 //        ImageView imageView = (ImageView) item_view.findViewById(R.id.imageView6);
         PhotoView photoView = (PhotoView) item_view.findViewById(R.id.photo_view);

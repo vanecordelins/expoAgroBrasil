@@ -48,13 +48,13 @@ public class AlterarProdutoActivity extends AppCompatActivity {
     private Spinner spinnerCategoria;
     private TextView mDescricaoView;
     private TextView mObservacaoView;
-    private List<Bitmap> fotos;
-    private List<String> fotosURL;
+ //   private List<Bitmap> fotos;
+ //   private List<String> fotosURL;
     private ProgressDialog dialog;
     private ViewPager viewPager;
-    private ProdutoViewPager produtoViewPager;
+ //   private ProdutoViewPager produtoViewPager;
     private static final int PICK_IMAGE_ID = 234;
-    private AnuncioViewPager testeViewPager;
+//    private AnuncioViewPager testeViewPager;
     private String keyProduto;
 
     @Override
@@ -71,8 +71,8 @@ public class AlterarProdutoActivity extends AppCompatActivity {
 
         mValorView.addTextChangedListener(new MoneyTextWatcher(mValorView));
 
-        fotos = new ArrayList<>();
-        fotosURL = new ArrayList<>();
+    //    fotos = new ArrayList<>();
+    //    fotosURL = new ArrayList<>();
 
         dialog = new ProgressDialog(AlterarProdutoActivity.this);
         dialog = new ProgressDialog(this);
@@ -121,11 +121,9 @@ public class AlterarProdutoActivity extends AppCompatActivity {
             }
         });
 
-        final ArrayList<String> img = new ArrayList<>();
+     //   final ArrayList<String> img = new ArrayList<>();
 
         keyProduto = VisualizarMeusAnunciosActivitty.getId();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -145,24 +143,24 @@ public class AlterarProdutoActivity extends AppCompatActivity {
                                 break;
                             }
                         }
-
-                        if(produto.getFoto() == null){
-                        }else {
+                      /*  viewPager = (ViewPager)findViewById(R.id.viewPager);
+                        testeViewPager = new ProdutoViewPager(AlterarProdutoActivity.this, img);
+                        if(produto.getFoto() != null){
                             for (int i =0; i<produto.getFoto().size(); i++){
+
                                 img.add(produto.getFoto().get(i));
                             }
                         }
-                        viewPager = (ViewPager)findViewById(R.id.viewPager);
                         dialog.dismiss();
-                     //   testeViewPager = new ProdutoViewPager(AlterarProdutoActivity.this, img);
-                    //    viewPager.setAdapter(testeViewPager);
+                        testeViewPager = new ProdutoViewPager(AlterarProdutoActivity.this, img);
+                        viewPager.setAdapter(testeViewPager); */
                     }
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(AlterarProdutoActivity.this, "Erro de Alteração. Tente Novamente.", Toast.LENGTH_SHORT);
             }
         });
 
@@ -179,14 +177,15 @@ public class AlterarProdutoActivity extends AppCompatActivity {
         boolean cancelar = validateInfo(nome, valor, categoria);
 
         if (cancelar) {
+            dialog.dismiss();
             return;
         } else {
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            final String date = df.format(calendar.getTime());
+//            Calendar calendar = Calendar.getInstance();
+//            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+///            final String date = df.format(calendar.getTime());
 
-            SimpleDateFormat dfTime = new SimpleDateFormat("HH:mm");
-            final String time = dfTime.format(Calendar.getInstance().getTime());
+//            SimpleDateFormat dfTime = new SimpleDateFormat("HH:mm");
+//            final String time = dfTime.format(Calendar.getInstance().getTime());
 
 //            if(fotos.isEmpty()) {
 //                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Alterar Cadastro")
@@ -215,7 +214,6 @@ public class AlterarProdutoActivity extends AppCompatActivity {
                                  final String valor, final String categoria) {
 
 
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final ProdutoDAO pdao = new ProdutoDAO();
 
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -236,7 +234,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
                         target.setNome(nome);
 
                         pdao.update(target);
-                        Toast.makeText(AlterarProdutoActivity.this, "Produto tualizado com sucesso.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AlterarProdutoActivity.this, "Produto atualizado com sucesso.", Toast.LENGTH_SHORT).show();
 
                         dialog.dismiss();
                         Intent it = new Intent(AlterarProdutoActivity.this, VisualizarMeuAnuncio.class);
@@ -248,7 +246,13 @@ public class AlterarProdutoActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuAnuncio.class);
+        startActivity(intent);
+        finish();
     }
 
     public boolean validateInfo(String nome, String valor, String categoria) {

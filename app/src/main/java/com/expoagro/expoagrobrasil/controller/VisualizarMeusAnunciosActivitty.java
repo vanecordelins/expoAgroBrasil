@@ -27,10 +27,6 @@ import java.util.List;
 
 public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
 
-
-    private RecyclerView recyclerView;
-    private Query myref;
-    private FirebaseAuth mAuth;
     private static String idClicado;
 
     @Override
@@ -45,12 +41,11 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
-        mAuth = FirebaseAuth.getInstance();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        myref = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("idUsuario").equalTo(uid);
+        Query myref = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("idUsuario").equalTo(uid);
 
         FirebaseRecyclerAdapter<Produto, VisualizarMeusAnunciosActivitty.ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, VisualizarMeusAnunciosActivitty.ListaViewHolder>(
                 Produto.class,
@@ -81,6 +76,7 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
                         //   i.setText(model.getNome());
                         Intent intent = new Intent(VisualizarMeusAnunciosActivitty.this, VisualizarMeuAnuncio.class);
                         startActivity(intent);
+                        finish();
                    //     Toast.makeText(VisualizarMeusAnunciosActivitty.this, key, Toast.LENGTH_LONG).show();
 
                     }
@@ -102,13 +98,12 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
     }
 
     public static class ListaViewHolder extends RecyclerView.ViewHolder{
-        View mView;
-        TextView textView_nome;
-        TextView textView_data;
-        TextView textView_valor;
-        TextView textView_categoria;
-        ImageView imageView;
-        TextView textView_nome2;
+        private View mView;
+        private TextView textView_nome;
+        private TextView textView_data;
+        private TextView textView_valor;
+        private TextView textView_categoria;
+        private ImageView imageView;
 
         public ListaViewHolder(View itemView) {
             super(itemView);
@@ -142,7 +137,6 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
 
         public void setFoto(List<String> foto) {
             if (foto == null) {
-            } else {
                 Picasso.with(mView.getContext())
                         .load(foto.get(0))
                         .resize(100,100)
