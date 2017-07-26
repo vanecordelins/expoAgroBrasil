@@ -7,48 +7,6 @@
     tools:context="com.expoagro.expoagrobrasil.controller.VisualizarAnuncioActivity">
 
 
-    <TextView
-        android:id="@+id/dataAnuncio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="39dp"
-        android:text="Data Anuncio:"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_below="@+id/viewPager"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/categoria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Categoria:"
-        android:layout_below="@+id/dataAnuncio"
-        android:layout_alignRight="@+id/dataAnuncio"
-        android:layout_alignEnd="@+id/dataAnuncio" />
-
-    <TextView
-        android:id="@+id/vendedor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/categoria"
-        android:layout_alignRight="@+id/categoria"
-        android:layout_below="@+id/categoria"
-        android:layout_marginTop="26dp"
-        android:text="Vendedor:" />
-
-    <TextView
-        android:id="@+id/cidade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:text="Cidade:"
-        android:layout_below="@+id/vendedor"
-        android:layout_alignRight="@+id/vendedor"
-        android:layout_alignEnd="@+id/vendedor" />
-
     <android.support.v4.view.ViewPager
         android:layout_width="370dp"
         android:layout_height="250dp"
@@ -57,5 +15,78 @@
         android:layout_centerHorizontal="true">
 
     </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:id="@+id/nomeProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome"
+        android:layout_below="@+id/viewPager"
+        android:layout_alignLeft="@+id/viewPager"
+        android:layout_alignStart="@+id/viewPager"
+        android:layout_marginTop="15dp"
+        android:textSize="8pt"/>
+
+    <TextView
+        android:id="@+id/descricaoProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nomeProduto"
+        android:layout_alignStart="@+id/nomeProduto"
+        android:layout_below="@+id/nomeProduto"
+        android:layout_marginTop="24dp"
+        android:text="Descriçao" />
+
+    <TextView
+        android:id="@+id/observacaoProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:text="Observação"
+        android:layout_below="@+id/descricaoProduto"
+        android:layout_alignLeft="@+id/descricaoProduto"
+        android:layout_alignStart="@+id/descricaoProduto" />
+
+    <TextView
+        android:id="@+id/dataProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="Data"
+        android:layout_below="@+id/observacaoProduto"
+        android:layout_alignLeft="@+id/observacaoProduto"
+        android:layout_alignStart="@+id/observacaoProduto" />
+
+    <TextView
+        android:id="@+id/vendedorProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Vendedor"
+        android:layout_below="@+id/dataProduto"
+        android:layout_alignLeft="@+id/dataProduto"
+        android:layout_alignStart="@+id/dataProduto" />
+
+    <Button
+        android:id="@+id/alterarProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:text="Alterar"
+        android:layout_below="@+id/vendedorProduto"
+        android:layout_toRightOf="@+id/observacaoProduto"
+        android:layout_toEndOf="@+id/observacaoProduto" />
+
+    <Button
+        android:id="@+id/excluirProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/alterarProduto"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp"
+        android:layout_toEndOf="@+id/alterarProduto"
+        android:layout_toRightOf="@+id/alterarProduto"
+        android:text="Excluir" />
 
 </RelativeLayout>
