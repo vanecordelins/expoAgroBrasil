@@ -97,12 +97,12 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
     }
 
     public static class ListaViewHolder extends RecyclerView.ViewHolder{
-        View mView;
-        TextView textView_nome;
-        TextView textView_data;
-        TextView textView_valor;
-        TextView textView_categoria;
-        ImageView imageView;
+        private View mView;
+        private TextView textView_nome;
+        private TextView textView_data;
+        private TextView textView_valor;
+        private TextView textView_categoria;
+        private ImageView imageView;
 
         public ListaViewHolder(View itemView) {
             super(itemView);
