@@ -50,7 +50,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
 
-                        if(produto.getFoto() == null){
+                        if(produto.getFoto() != null){
                             for (int i =0; i<produto.getFoto().size(); i++){
                                 img.add(produto.getFoto().get(i));
                             }
