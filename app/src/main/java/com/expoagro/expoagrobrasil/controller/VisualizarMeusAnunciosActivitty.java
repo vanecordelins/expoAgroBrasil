@@ -41,6 +41,7 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,8 +53,6 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
                 R.layout.linha,
                 VisualizarMeusAnunciosActivitty.ListaViewHolder.class,
                 myref
-
-
         ) {
 
             @Override
@@ -98,12 +97,12 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
     }
 
     public static class ListaViewHolder extends RecyclerView.ViewHolder{
-        private View mView;
-        private TextView textView_nome;
-        private TextView textView_data;
-        private TextView textView_valor;
-        private TextView textView_categoria;
-        private ImageView imageView;
+        View mView;
+        TextView textView_nome;
+        TextView textView_data;
+        TextView textView_valor;
+        TextView textView_categoria;
+        ImageView imageView;
 
         public ListaViewHolder(View itemView) {
             super(itemView);
@@ -137,6 +136,7 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
 
         public void setFoto(List<String> foto) {
             if (foto == null) {
+            } else {
                 Picasso.with(mView.getContext())
                         .load(foto.get(0))
                         .resize(100,100)

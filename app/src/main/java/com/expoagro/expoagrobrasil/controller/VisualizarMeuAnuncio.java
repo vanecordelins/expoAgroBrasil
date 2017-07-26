@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
@@ -37,6 +36,7 @@ public class VisualizarMeuAnuncio extends AppCompatActivity {
 
         final String keyProduto = VisualizarMeusAnunciosActivitty.getId();
 
+
         System.out.println(keyProduto);
         final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -52,6 +52,7 @@ public class VisualizarMeuAnuncio extends AppCompatActivity {
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
 
                         if(produto.getFoto() == null){
+                        }else {
                             for (int i =0; i<produto.getFoto().size(); i++){
                                 img.add(produto.getFoto().get(i));
                             }
@@ -65,7 +66,7 @@ public class VisualizarMeuAnuncio extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(VisualizarMeuAnuncio.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
+
             }
         });
 
