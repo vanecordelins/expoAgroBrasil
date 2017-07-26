@@ -19,14 +19,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /**
- * Created by Samir on 24/07/2017.
+ * Created by Samir on 25/07/2017.
  */
 
-public class VisualizarAnuncioActivity extends AppCompatActivity {
+public class VisualizarMeuAnuncio extends AppCompatActivity {
+
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +33,11 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar_anuncio);
         final ArrayList<String> img = new ArrayList<>();
 
-        final String keyProduto = MenuActivity.getId();
-        System.out.println("VISUALIZOU");
-//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        final String keyProduto = VisualizarMeusAnunciosActivitty.getId();
+
+
+        System.out.println(keyProduto);
+        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -45,7 +45,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                     if (prod.getKey().equals(keyProduto) ) {
                         Produto produto = prod.getValue(Produto.class);
                         ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
-//                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + nome);
+                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + nome);
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
@@ -57,7 +57,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                             }
                         }
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
-                        testeViewPager = new AnuncioViewPager(VisualizarAnuncioActivity.this, img);
+                        testeViewPager = new AnuncioViewPager(VisualizarMeuAnuncio.this, img);
                         viewPager.setAdapter(testeViewPager);
                     }
                 }
@@ -71,13 +71,15 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
 
         //System.out.println(img);
         Button alterar = (Button) findViewById(R.id.alterarProduto);
-        Button excluir = (Button) findViewById(R.id.excluirProduto);
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            alterar.setVisibility(View.GONE);
-            excluir.setVisibility(View.GONE);
-        }
+        alterar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(VisualizarMeuAnuncio.this, AlterarProdutoActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
     }
-
 }

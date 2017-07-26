@@ -1,8 +1,6 @@
 package com.expoagro.expoagrobrasil.util;
 
-import android.annotation.TargetApi;
-import android.icu.text.NumberFormat;
-import android.os.Build;
+import java.text.NumberFormat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -32,7 +30,6 @@ public class MoneyTextWatcher implements TextWatcher {
             // do Nothing
         }
 
-        @TargetApi(Build.VERSION_CODES.N)
         @Override
         public void afterTextChanged(Editable editable) {
             EditText editText = editTextWeakReference.get();

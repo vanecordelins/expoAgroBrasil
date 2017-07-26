@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 
 
@@ -22,7 +23,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 
@@ -54,6 +54,9 @@ public class MenuActivity extends AppCompatActivity
     private GoogleApiClient mGoogleApiClient;
     private String uid;
     private RecyclerView recyclerView;
+    private static String idClicado;
+    private ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,61 +73,86 @@ public class MenuActivity extends AppCompatActivity
         toggle.syncState();
 
         uid = "";
+        progress = new ProgressDialog(MenuActivity.this);
+        progress.setCancelable(false);
+        progress.setIndeterminate(true);
+        progress.setMessage("Carregando anúncios...");
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+                final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                navigationView.setNavigationItemSelectedListener(MenuActivity.this);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(MenuActivity.this)
-                .enableAutoManage(MenuActivity.this, MenuActivity.this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                mGoogleApiClient = new GoogleApiClient.Builder(MenuActivity.this)
+                        .enableAutoManage(MenuActivity.this, MenuActivity.this)
+                        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                        .build();
 
-        // ----------------------------------RecyclerView-----------------------------------------------------------
+                // ----------------------------------RecyclerView-----------------------------------------------------------
+        progress.show();
+        Thread mThread = new Thread() {
+            @Override
+            public void run() {
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MenuActivity.this));
+                DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Produto");
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Produto");
-            FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
-                    Lista.class,
-                    R.layout.linha,
-                    ListaViewHolder.class,
-                    myref
+                final FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
+                        Lista.class,
+                        R.layout.linha,
+                        ListaViewHolder.class,
+                        myref
+                ) {
+
+                    @Override
+                    protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
+
+                        final String key = getRef(position).getKey();
+
+                        viewHolder.setCategoria(model.getCategoria());
+                        viewHolder.setData(model.getData());
+                        viewHolder.setValor(model.getValor());
+                        viewHolder.setFoto(model.getFoto());
+                        viewHolder.setNome(model.getNome());
+                        progress.dismiss();
+
+                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                setId(key);
+                                //  TextView i = (TextView) findViewById(R.id.vendedor);
+                                //   i.setText(model.getNome());
+                                Intent intent = new Intent(MenuActivity.this, VisualizarAnuncioActivity.class);
+                                startActivity(intent);
+                                //Toast.makeText(MenuActivity.this, key, Toast.LENGTH_LONG).show();
+                            }
+                        });
 
 
-            ) {
+                    }
 
-                @Override
-                protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
+                };
+                MenuActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.setAdapter(recyclerAdapter);
+                    }
+                });
+            }
+        };
+        mThread.start();
+    }
 
-                    final String key = getRef(position).getKey();
+    public static String getId() {
+        return idClicado;
+    }
 
-                    viewHolder.setCategoria(model.getCategoria());
-                    viewHolder.setData(model.getData());
-                    viewHolder.setValor(model.getValor());
-                    viewHolder.setFoto(model.getFoto());
-                    viewHolder.setNome(model.getNome());
-
-
-                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(MenuActivity.this, key, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-
-                }
-
-
-            };
-
-            recyclerView.setAdapter(recyclerAdapter);
+    public static void setId(String id) {
+        idClicado = id;
     }
 
     public static class ListaViewHolder extends RecyclerView.ViewHolder {
@@ -138,11 +166,12 @@ public class MenuActivity extends AppCompatActivity
         public ListaViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            textView_nome = (TextView) itemView.findViewById(R.id.nome);
-            textView_data = (TextView) itemView.findViewById(R.id.data);
-            textView_valor = (TextView) itemView.findViewById(R.id.valor);
-            textView_categoria = (TextView) itemView.findViewById(R.id.categoria);
-            imageView = (ImageView) itemView.findViewById(R.id.foto);
+            textView_nome = (TextView) itemView.findViewById(R.id.nomeProduto);
+            textView_data = (TextView) itemView.findViewById(R.id.dataProduto);
+            textView_valor = (TextView) itemView.findViewById(R.id.valorProduto);
+            textView_categoria = (TextView) itemView.findViewById(R.id.categoriaProduto);
+            imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);
+            //textView_nome2 = (TextView) itemView.findViewById(R.id.vendedorProduto);
         }
 
 
@@ -168,7 +197,7 @@ public class MenuActivity extends AppCompatActivity
             } else {
                 Picasso.with(mView.getContext())
                         .load(foto.get(0))
-                        .resize(50,50)
+                        .resize(100,100)
                         .into(imageView);
             }
         }
@@ -189,6 +218,16 @@ public class MenuActivity extends AppCompatActivity
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
 
+        emailUsuarioLogado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    Intent it = new Intent(MenuActivity.this, LoginActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+            }
+        });
 
         UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -254,6 +293,9 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.menu_meus_anuncios) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
+                Intent telaLogin = new Intent(MenuActivity.this, VisualizarMeusAnunciosActivitty.class);
+                startActivity(telaLogin);
+                finish();
             } else {
                 Intent telaLogin = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
@@ -272,7 +314,6 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.menu_sair) {
             GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
         } /* else if (id == R.id.menu_sobre) {
-
           }*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -286,4 +327,5 @@ public class MenuActivity extends AppCompatActivity
     }
 
 }
+
 
