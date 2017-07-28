@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 
@@ -31,6 +32,7 @@ import com.expoagro.expoagrobrasil.dao.UserDAO;
 
 
 import com.expoagro.expoagrobrasil.model.Usuario;
+import com.expoagro.expoagrobrasil.util.FirebaseLogin;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.expoagro.expoagrobrasil.util.Lista;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -93,6 +95,7 @@ public class MenuActivity extends AppCompatActivity
 
                 // ----------------------------------RecyclerView-----------------------------------------------------------
         progress.show();
+
         Thread mThread = new Thread() {
             @Override
             public void run() {
@@ -145,6 +148,27 @@ public class MenuActivity extends AppCompatActivity
             }
         };
         mThread.start();
+
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (!connected) {
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                        GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
+                    }
+                    Toast.makeText(MenuActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.out.println("Error");
+            }
+        });
     }
 
     public static String getId() {
