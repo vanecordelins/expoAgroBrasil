@@ -1,8 +1,11 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
  * Created by Samir on 25/07/2017.
  */
 
-public class VisualizarMeuAnuncio extends AppCompatActivity {
+public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
@@ -35,7 +38,7 @@ public class VisualizarMeuAnuncio extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar_anuncio);
         final ArrayList<String> img = new ArrayList<>();
 
-        final String keyProduto = VisualizarMeusAnunciosActivitty.getId();
+        final String keyProduto = VisualizarMeusAnunciosActivity.getId();
 
 
         System.out.println(keyProduto);
@@ -47,7 +50,7 @@ public class VisualizarMeuAnuncio extends AppCompatActivity {
                     if (prod.getKey().equals(keyProduto) ) {
                         Produto produto = prod.getValue(Produto.class);
                         ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
-                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + nome);
+                        ((TextView) findViewById(R.id.vendedorProduto)).setVisibility(View.GONE);
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
@@ -58,7 +61,7 @@ public class VisualizarMeuAnuncio extends AppCompatActivity {
                             }
                         }
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
-                        testeViewPager = new AnuncioViewPager(VisualizarMeuAnuncio.this, img);
+                        testeViewPager = new AnuncioViewPager(VisualizarMeuAnuncioClicadoActivity.this, img);
                         viewPager.setAdapter(testeViewPager);
                     }
                 }
@@ -66,7 +69,7 @@ public class VisualizarMeuAnuncio extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(VisualizarMeuAnuncio.this, "Erro ao recuperar produto", Toast.LENGTH_SHORT);
+                Toast.makeText(VisualizarMeuAnuncioClicadoActivity.this, "Erro ao recuperar produto", Toast.LENGTH_SHORT);
             }
         });
 
@@ -75,18 +78,38 @@ public class VisualizarMeuAnuncio extends AppCompatActivity {
         alterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VisualizarMeuAnuncio.this, AlterarProdutoActivity.class);
+                Intent intent = new Intent(VisualizarMeuAnuncioClicadoActivity.this, AlterarProdutoActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
+        Button excluir = (Button) findViewById(R.id.excluirProduto);
+        excluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog alertDialog = new AlertDialog.Builder(VisualizarMeuAnuncioClicadoActivity.this).setIcon(android.R.drawable.ic_delete).setTitle("EXCLUIR PRODUTO")
+                        .setMessage("Deseja realmente EXCLUIR este produto? Todos os seus dados serão perdidos!")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialog, int which) {
+                                ProdutoDAO pdao = new ProdutoDAO();
+                                pdao.delete(keyProduto);
+                                Toast.makeText(VisualizarMeuAnuncioClicadoActivity.this, "Produto deletado com sucesso.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(VisualizarMeuAnuncioClicadoActivity.this, VisualizarMeusAnunciosActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }).setNegativeButton("Não", null).show();
+                alertDialog.setCanceledOnTouchOutside(true);
+            }
+        });
 
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(VisualizarMeuAnuncio.this, VisualizarMeusAnunciosActivitty.class);
+        Intent intent = new Intent(VisualizarMeuAnuncioClicadoActivity.this, VisualizarMeusAnunciosActivity.class);
         startActivity(intent);
         finish();
     }

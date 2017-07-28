@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -129,7 +130,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
             SimpleDateFormat dfTime = new SimpleDateFormat("HH:mm");
             final String time = dfTime.format(Calendar.getInstance().getTime());
 
-            new AlertDialog.Builder(CadastroServicoActivity.this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
+            Dialog alertDialog = new AlertDialog.Builder(CadastroServicoActivity.this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
                     .setMessage("Deseja continuar? Verifique se todos os dados estão corretos. ")
                     .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                         @Override
@@ -163,6 +164,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
                         }
                     })
                     .setNegativeButton("Não", null).show();
+            alertDialog.setCanceledOnTouchOutside(true);
             dialog.dismiss();
         }
 

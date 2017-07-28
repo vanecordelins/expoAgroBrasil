@@ -293,7 +293,7 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.menu_meus_anuncios) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
-                Intent telaLogin = new Intent(MenuActivity.this, VisualizarMeusAnunciosActivitty.class);
+                Intent telaLogin = new Intent(MenuActivity.this, VisualizarMeusAnunciosActivity.class);
                 startActivity(telaLogin);
                 finish();
             } else {

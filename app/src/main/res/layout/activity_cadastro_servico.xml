@@ -142,6 +142,7 @@
 
                 <EditText
                     android:id="@+id/campoDescricao"
+                    android:inputType="textCapSentences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/campo_descricao"
@@ -212,6 +213,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/campoNomeServico"
+                    android:inputType="textCapSentences"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
                     android:hint="@string/campo_nome" />
@@ -233,6 +235,7 @@
 
                 <EditText
                     android:id="@+id/campoObservacao"
+                    android:inputType="textCapSentences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/campo_observacao"

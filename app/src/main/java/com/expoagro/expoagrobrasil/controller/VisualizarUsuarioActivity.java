@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -120,8 +121,8 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.acao_excluir:
-                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Excluir Conta")
-                        .setMessage("Tem certeza que deseja excluir sua conta? Todos os seus dados serão excluídos!")
+                Dialog alertDialog = new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_delete).setTitle("EXCLUIR CONTA")
+                        .setMessage("Tem certeza que deseja excluir sua conta? Todos os seus dados e anúncios serão excluídos!")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -129,6 +130,7 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                             }
                         })
                         .setNegativeButton("Não", null).show();
+                alertDialog.setCanceledOnTouchOutside(true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -138,6 +138,27 @@ public class ImagePicker {
             return bm;
         }
 
+        public static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+            Bitmap resizedImage = image;
+            if (maxHeight > 0 && maxWidth > 0) {
+                int width = image.getWidth();
+                int height = image.getHeight();
+                float ratioBitmap = (float) width / (float) height;
+                float ratioMax = (float) maxWidth / (float) maxHeight;
+
+                int finalWidth = maxWidth;
+                int finalHeight = maxHeight;
+                if (ratioMax > 1) {
+                    finalWidth = (int) ((float)maxHeight * ratioBitmap);
+                } else {
+                    finalHeight = (int) ((float)maxWidth / ratioBitmap);
+                }
+                resizedImage = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+                return resizedImage;
+            } else {
+                return resizedImage;
+            }
+        }
 
         private static int getRotation(Context context, Uri imageUri, boolean isCamera) {
             int rotation;

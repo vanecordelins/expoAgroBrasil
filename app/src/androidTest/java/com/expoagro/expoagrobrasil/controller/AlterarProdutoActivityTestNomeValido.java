@@ -14,10 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -68,7 +66,7 @@ public class AlterarProdutoActivityTestNomeValido {
 
         Thread.sleep(3000);
         ViewInteraction appCompatButton4 = onView(
-                allOf(withId(R.id.btnAlterar), withText("Alterar"), isDisplayed()));
+                allOf(withId(R.id.btnCadastrar), withText("Alterar"), isDisplayed()));
         appCompatButton4.perform(  click());
 
         ViewInteraction appCompatButton5 = onView(

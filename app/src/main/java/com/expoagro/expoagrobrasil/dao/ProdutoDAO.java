@@ -1,8 +1,13 @@
 package com.expoagro.expoagrobrasil.dao;
 
 import com.expoagro.expoagrobrasil.model.Produto;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 /**
  * Created by Fabricio on 7/17/2017.
@@ -32,8 +37,33 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
         mDatabase.child(produto.getId()).setValue(produto);
     }
     @Override
-    public void delete(String id) {
+    public void delete(final String id) {
+
+        getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot produto: dataSnapshot.getChildren()) {
+                    if (produto.getKey().equals(id)) {
+                        Produto prod = produto.getValue(Produto.class);
+                        if (prod.getFoto() != null) {
+                            StorageReference photoRef;
+                            for (int i = 0; i < prod.getFoto().size(); i++) {
+                                photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(prod.getFoto().get(i));
+                                photoRef.delete();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         getDatabaseReference().child(id).removeValue();
+
     }
 
 }
