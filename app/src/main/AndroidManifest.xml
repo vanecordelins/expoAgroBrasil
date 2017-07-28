@@ -84,13 +84,14 @@
         </activity>
 
         <activity
-            android:name=".controller.VisualizarMeusAnunciosActivitty"
+            android:name=".controller.VisualizarMeusAnunciosActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:name=".controller.VisualizarMeuAnuncio"
+            android:name=".controller.VisualizarMeuAnuncioClicadoActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

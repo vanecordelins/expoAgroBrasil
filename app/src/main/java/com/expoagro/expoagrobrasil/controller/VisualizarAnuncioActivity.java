@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
+import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
+import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.AnuncioViewPager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,8 +45,26 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot prod : dataSnapshot.getChildren()) {
                     if (prod.getKey().equals(keyProduto) ) {
-                        Produto produto = prod.getValue(Produto.class);
+                        final Produto produto = prod.getValue(Produto.class);
                         ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
+                        UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                    if (user.getKey().equals(produto.getIdUsuario())) {
+                                        Usuario target = user.getValue(Usuario.class);
+                                        System.out.println(target.getNome());
+                                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + target.getNome());
+                                        break;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("Erro ao pesquisar vendedor");
+                            }
+                        });
 //                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + nome);
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());

@@ -1,9 +1,11 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -164,7 +166,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 case PICK_IMAGE_ID:
                     Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
 
-                    Bitmap resizedBitmap = resize(bitmap, 600, 400);
+                    Bitmap resizedBitmap = ImagePicker.resize(bitmap, 600, 400);
                     viewPager.setBackground(null);
                     //Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 600, 400, false);
 
@@ -177,7 +179,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
 
                    // imView.setImageBitmap(resizedBitmap);
                     //viewPager = (ViewPager)findViewById(R.id.viewPager);
-                    produtoViewPager = new ProdutoViewPager(this, fotos);
+                    produtoViewPager = new ProdutoViewPager(this, fotos, null);
 
                     viewPager.setAdapter(produtoViewPager);
 
@@ -209,7 +211,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             final String time = dfTime.format(Calendar.getInstance().getTime());
 
             if(fotos.isEmpty()) {
-                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
+                Dialog dialog = new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
                         .setMessage("Deseja continuar sem adicionar fotos?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             @Override
@@ -217,8 +219,9 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                 registrarProduto(nome, observacao, descricao, date, time, valor, categoria);
                             }
                         }).setNegativeButton("Não", null).show();
+                dialog.setCanceledOnTouchOutside(true);
             } else {
-                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
+                Dialog dialog = new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
                         .setMessage("Deseja continuar? Verifique se todos os dados estão corretos. ")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             @Override
@@ -226,31 +229,9 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                 registrarProduto(nome, observacao, descricao, date, time, valor, categoria);
                             }
                         }).setNegativeButton("Não", null).show();
+                dialog.setCanceledOnTouchOutside(true);
             }
 
-        }
-    }
-
-
-    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
-        Bitmap resizedImage = image;
-        if (maxHeight > 0 && maxWidth > 0) {
-            int width = image.getWidth();
-            int height = image.getHeight();
-            float ratioBitmap = (float) width / (float) height;
-            float ratioMax = (float) maxWidth / (float) maxHeight;
-
-            int finalWidth = maxWidth;
-            int finalHeight = maxHeight;
-            if (ratioMax > 1) {
-                finalWidth = (int) ((float)maxHeight * ratioBitmap);
-            } else {
-                finalHeight = (int) ((float)maxWidth / ratioBitmap);
-            }
-            resizedImage = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
-            return resizedImage;
-        } else {
-            return resizedImage;
         }
     }
 
