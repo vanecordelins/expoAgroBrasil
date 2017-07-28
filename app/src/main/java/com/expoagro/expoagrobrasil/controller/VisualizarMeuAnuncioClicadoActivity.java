@@ -42,7 +42,6 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
 
 
         System.out.println(keyProduto);
-        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

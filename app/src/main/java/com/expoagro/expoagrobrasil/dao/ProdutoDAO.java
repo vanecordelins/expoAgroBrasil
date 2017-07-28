@@ -58,7 +58,7 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                System.out.println("Cancelado.");
             }
         });
 
