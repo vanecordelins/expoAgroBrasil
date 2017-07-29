@@ -98,7 +98,6 @@ public class MenuActivity extends AppCompatActivity
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
-        mAuth = FirebaseAuth.getInstance();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
