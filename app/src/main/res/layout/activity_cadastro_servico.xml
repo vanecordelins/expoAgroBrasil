@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.expoagro.expoagrobrasil.controller.CadastroServicoActivity">
+    tools:context="com.expoagro.expoagrobrasil.controller.CadastroServicoActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="match_parent"

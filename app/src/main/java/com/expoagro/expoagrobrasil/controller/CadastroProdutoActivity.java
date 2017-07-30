@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -74,7 +75,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mValorView = (EditText) findViewById(R.id.campoValor);
         mDescricaoView = (TextView) findViewById(R.id.campoDescricao);
         mObservacaoView = (TextView) findViewById(R.id.campoObservacao);
-        //imView = (ImageView) findViewById(R.id.viewProduto);
+        ImageView imView = (ImageView) findViewById(R.id.viewDelete);
         viewPager = (ViewPager) findViewById(R.id.viewProduto);
 
         mValorView.addTextChangedListener(new MoneyTextWatcher(mValorView));
@@ -125,7 +126,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             }
         });
 
-        Button mAddMoreButton = (Button) findViewById(R.id.btn_add_mais);
+        final ImageView mAddMoreButton = (ImageView) findViewById(R.id.btn_add_mais);
         mAddMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +143,37 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 Intent chooseImageIntent = ImagePicker.getPickImageIntent(CadastroProdutoActivity.this);
                 if (chooseImageIntent != null) {
                     startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+                }
+            }
+        });
+
+        imView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!fotos.isEmpty()) {
+                    Dialog alertDialog = new AlertDialog.Builder(CadastroProdutoActivity.this).setIcon(android.R.drawable.ic_input_delete).setTitle("Remover")
+                            .setMessage("Deseja remover esta foto?")
+                            .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                @Override
+                                public void onClick(final DialogInterface dialog, int which) {
+                                    fotos.remove(viewPager.getCurrentItem());
+
+                                    produtoViewPager = new ProdutoViewPager(CadastroProdutoActivity.this, fotos, null);
+
+                                    viewPager.setAdapter(produtoViewPager);
+
+                                    if(fotos.isEmpty()) {
+                                        viewPager.setBackground(CadastroProdutoActivity.this.getResources().getDrawable(R.drawable.sem_foto, null));
+                                    }
+
+                                    if (!mAddMoreButton.isEnabled()) {
+                                        mAddMoreButton.setEnabled(true);
+                                    }
+
+                                }
+                            }).setNegativeButton("Não", null).show();
+                    alertDialog.setCanceledOnTouchOutside(true);
                 }
             }
         });
@@ -179,9 +211,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                    // imView.setImageBitmap(resizedBitmap);
                     //viewPager = (ViewPager)findViewById(R.id.viewPager);
                     produtoViewPager = new ProdutoViewPager(this, fotos, null);
-
                     viewPager.setAdapter(produtoViewPager);
-
 
                     break;
                 default:

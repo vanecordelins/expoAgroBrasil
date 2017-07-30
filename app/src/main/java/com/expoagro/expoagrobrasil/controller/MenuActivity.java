@@ -1,9 +1,12 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -80,20 +83,43 @@ public class MenuActivity extends AppCompatActivity
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
 
-                final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                navigationView.setNavigationItemSelectedListener(MenuActivity.this);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(MenuActivity.this);
 
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(getString(R.string.default_web_client_id))
-                        .requestEmail()
-                        .build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
-                mGoogleApiClient = new GoogleApiClient.Builder(MenuActivity.this)
-                        .enableAutoManage(MenuActivity.this, MenuActivity.this)
-                        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                        .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(MenuActivity.this)
+                .enableAutoManage(MenuActivity.this, MenuActivity.this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
-                // ----------------------------------RecyclerView-----------------------------------------------------------
+        // ----------------------------------RecyclerView-----------------------------------------------------------
+
+        /*DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+
+        connectedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                System.out.println(connected);
+                if (!connected) {
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                        GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
+                    }
+                    Toast.makeText(MenuActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.out.println("Error");
+            }
+        }); */
+
         progress.show();
 
         Thread mThread = new Thread() {
@@ -149,26 +175,17 @@ public class MenuActivity extends AppCompatActivity
         };
         mThread.start();
 
-        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
-
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (!connected) {
-                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                        GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
-                    }
-                    Toast.makeText(MenuActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
-                    progress.dismiss();
-                }
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(MenuActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            progress.dismiss();
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
             }
+        }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.out.println("Error");
-            }
-        });
     }
 
     public static String getId() {

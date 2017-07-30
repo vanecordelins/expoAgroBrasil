@@ -3,7 +3,9 @@ package com.expoagro.expoagrobrasil.controller;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +45,7 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
 
         System.out.println(keyProduto);
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot prod : dataSnapshot.getChildren()) {
@@ -54,12 +57,16 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
 
+                        viewPager = (ViewPager)findViewById(R.id.viewPager);
+
                         if(produto.getFoto() != null){
+                            if (!produto.getFoto().isEmpty()) {
+                                viewPager.setBackground(null);
+                            }
                             for (int i =0; i<produto.getFoto().size(); i++){
                                 img.add(produto.getFoto().get(i));
                             }
                         }
-                        viewPager = (ViewPager)findViewById(R.id.viewPager);
                         testeViewPager = new AnuncioViewPager(VisualizarMeuAnuncioClicadoActivity.this, img);
                         viewPager.setAdapter(testeViewPager);
                     }

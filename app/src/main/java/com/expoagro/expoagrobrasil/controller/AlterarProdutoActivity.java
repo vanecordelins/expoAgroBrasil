@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -111,7 +112,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
             }
         });
 
-        Button mAddMoreButton = (Button) findViewById(R.id.btn_add_mais);
+        ImageView mAddMoreButton = (ImageView) findViewById(R.id.btn_add_mais);
         mAddMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +144,6 @@ public class AlterarProdutoActivity extends AppCompatActivity {
                                 break;
                             }
                         }
-
                         if (produto.getFoto() != null) {
                             for (int i = 0; i < produto.getFoto().size(); i++) {
                                 fotosURL.add(produto.getFoto().get(i));
@@ -153,8 +153,9 @@ public class AlterarProdutoActivity extends AppCompatActivity {
                             }
                         }
                         produtoViewPager = new ProdutoViewPager(AlterarProdutoActivity.this, null, fotosURL);
-                        viewPager.setAdapter(produtoViewPager);
 
+                        viewPager.setAdapter(produtoViewPager);
+                        System.out.println(viewPager.getDrawingCache());
                         break;
                     }
                 }

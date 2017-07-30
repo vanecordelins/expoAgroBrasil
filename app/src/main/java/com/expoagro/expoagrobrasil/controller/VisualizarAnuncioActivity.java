@@ -1,6 +1,8 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -28,8 +30,6 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +37,10 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = MenuActivity.getId();
-        System.out.println("VISUALIZOU");
 //        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 //        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot prod : dataSnapshot.getChildren()) {
@@ -70,12 +70,16 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
 
+                        viewPager = (ViewPager)findViewById(R.id.viewPager);
+
                         if(produto.getFoto() != null){
+                            if (!produto.getFoto().isEmpty()) {
+                                viewPager.setBackground(null);
+                            }
                             for (int i =0; i<produto.getFoto().size(); i++){
                                 img.add(produto.getFoto().get(i));
                             }
                         }
-                        viewPager = (ViewPager)findViewById(R.id.viewPager);
                         testeViewPager = new AnuncioViewPager(VisualizarAnuncioActivity.this, img);
                         viewPager.setAdapter(testeViewPager);
                     }

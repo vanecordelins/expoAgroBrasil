@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.expoagro.expoagrobrasil.controller.CadastroProdutoActivity">
+    tools:context="com.expoagro.expoagrobrasil.controller.CadastroProdutoActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,9 +14,11 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,7 +34,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="17dp" />
+                tools:layout_editor_absoluteX="41dp" />
 
             <RadioGroup
                 android:id="@+id/tipoAnuncio"
@@ -244,25 +248,38 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputObservacao"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <Button
+            <ImageView
+                android:id="@+id/viewDelete"
+                android:layout_width="35dp"
+                android:layout_height="38dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="55dp"
+                app:layout_constraintHorizontal_bias="0.111"
+                app:layout_constraintLeft_toRightOf="@+id/viewProduto"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tipoAnuncio"
+                app:srcCompat="@android:drawable/ic_delete" />
+
+            <ImageView
                 android:id="@+id/btn_add_mais"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="38dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/colorAccent"
-                android:text="+"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toTopOf="@+id/textInputNomeProd"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.11"
                 app:layout_constraintLeft_toRightOf="@+id/viewProduto"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@+id/viewDelete"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@android:drawable/ic_input_add" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
