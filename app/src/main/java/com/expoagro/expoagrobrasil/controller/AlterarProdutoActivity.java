@@ -2,9 +2,8 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ListActivity;
+
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,7 +12,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
@@ -30,10 +28,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
-import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.util.ImagePicker;
 import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
@@ -41,17 +37,13 @@ import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
 import com.expoagro.expoagrobrasil.util.ProdutoViewPager;
 import com.expoagro.expoagrobrasil.util.Regex;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnPausedListener;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -62,7 +54,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Samir on 25/07/2017.
@@ -253,11 +244,6 @@ public class AlterarProdutoActivity extends AppCompatActivity {
 
         public BackgroundUpload(ProdutoDAO pdao) {
             this.pdao = pdao;
-        }
-
-        @Override
-        protected void onPreExecute() {
-
         }
 
         @Override

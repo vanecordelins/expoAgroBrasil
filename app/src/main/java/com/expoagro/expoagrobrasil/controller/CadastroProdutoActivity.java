@@ -41,7 +41,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
@@ -69,7 +68,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getSupportActionBar().hide();
         setContentView(R.layout.activity_cadastro_produto);
 
         mNomeView = (AutoCompleteTextView) findViewById(R.id.campoNomeProduto);
@@ -90,13 +88,10 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         dialog.setMessage("Cadastrando novo produto. Aguarde alguns instantes...");
 
         // Cria um ArrayAdapter usando um array de string e um layout default do spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.categorias, android.R.layout.simple_spinner_item); //simple_spinner_dropdown_item
-        // Especifica o layout que será usado quando a lista de opções aparecer
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categorias, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerCategoria = (Spinner) findViewById(R.id.spinnerCategoria);
-        // Aplica o adapter ao spinner
         spinnerCategoria.setAdapter(adapter);
 
         RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico);
@@ -138,7 +133,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             }
         });
 
-
         imView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,26 +144,20 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(final DialogInterface dialog, int which) {
                                     fotos.remove(viewPager.getCurrentItem());
-
                                     produtoViewPager = new ProdutoViewPager(CadastroProdutoActivity.this, fotos, null);
-
                                     viewPager.setAdapter(produtoViewPager);
-
                                     if(fotos.isEmpty()) {
                                         viewPager.setBackground(CadastroProdutoActivity.this.getResources().getDrawable(R.drawable.sem_foto, null));
                                     }
-
                                     if (!mAddMoreButton.isEnabled()) {
                                         mAddMoreButton.setEnabled(true);
                                     }
-
                                 }
                             }).setNegativeButton("Não", null).show();
                     alertDialog.setCanceledOnTouchOutside(true);
                 }
             }
         });
-
     }
 
     @Override
@@ -352,7 +340,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mThread.start();
 
     }
-
 
     public boolean validateInfo(String nome, String valor, String categoria) {
 

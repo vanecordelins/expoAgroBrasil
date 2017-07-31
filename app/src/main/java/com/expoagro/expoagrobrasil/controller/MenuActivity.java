@@ -35,7 +35,6 @@ import com.expoagro.expoagrobrasil.dao.UserDAO;
 
 
 import com.expoagro.expoagrobrasil.model.Usuario;
-import com.expoagro.expoagrobrasil.util.FirebaseLogin;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.expoagro.expoagrobrasil.util.Lista;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -66,14 +65,12 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -99,7 +96,6 @@ public class MenuActivity extends AppCompatActivity
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
         progress.show();
-
         Thread mThread = new Thread() {
             @Override
             public void run() {
@@ -114,12 +110,9 @@ public class MenuActivity extends AppCompatActivity
                         ListaViewHolder.class,
                         myref
                 ) {
-
                     @Override
                     protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
-
                         final String key = getRef(position).getKey();
-
                         viewHolder.setCategoria(model.getCategoria());
                         viewHolder.setData(model.getData());
                         viewHolder.setValor(model.getValor());
@@ -131,17 +124,11 @@ public class MenuActivity extends AppCompatActivity
                             @Override
                             public void onClick(View view) {
                                 setId(key);
-                                //  TextView i = (TextView) findViewById(R.id.vendedor);
-                                //   i.setText(model.getNome());
                                 Intent intent = new Intent(MenuActivity.this, VisualizarAnuncioActivity.class);
                                 startActivity(intent);
-                                //Toast.makeText(MenuActivity.this, key, Toast.LENGTH_LONG).show();
                             }
                         });
-
-
                     }
-
                 };
                 MenuActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -152,7 +139,10 @@ public class MenuActivity extends AppCompatActivity
             }
         };
         mThread.start();
+        checkForConnection();
+    }
 
+    private void checkForConnection() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
@@ -163,7 +153,6 @@ public class MenuActivity extends AppCompatActivity
                 GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
             }
         }
-
     }
 
     public static String getId() {

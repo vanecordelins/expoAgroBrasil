@@ -1,7 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -19,7 +18,6 @@ import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.util.AnuncioViewPager;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -34,7 +32,6 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
-    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
