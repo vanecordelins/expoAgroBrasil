@@ -1,9 +1,12 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -23,6 +26,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 
@@ -61,14 +65,12 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -78,20 +80,21 @@ public class MenuActivity extends AppCompatActivity
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
 
-                final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                navigationView.setNavigationItemSelectedListener(MenuActivity.this);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(MenuActivity.this);
 
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(getString(R.string.default_web_client_id))
-                        .requestEmail()
-                        .build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
-                mGoogleApiClient = new GoogleApiClient.Builder(MenuActivity.this)
-                        .enableAutoManage(MenuActivity.this, MenuActivity.this)
-                        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                        .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(MenuActivity.this)
+                .enableAutoManage(MenuActivity.this, MenuActivity.this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
-                // ----------------------------------RecyclerView-----------------------------------------------------------
+        // ----------------------------------RecyclerView-----------------------------------------------------------
+
         progress.show();
         Thread mThread = new Thread() {
             @Override
@@ -107,12 +110,9 @@ public class MenuActivity extends AppCompatActivity
                         ListaViewHolder.class,
                         myref
                 ) {
-
                     @Override
                     protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
-
                         final String key = getRef(position).getKey();
-
                         viewHolder.setCategoria(model.getCategoria());
                         viewHolder.setData(model.getData());
                         viewHolder.setValor(model.getValor());
@@ -124,17 +124,11 @@ public class MenuActivity extends AppCompatActivity
                             @Override
                             public void onClick(View view) {
                                 setId(key);
-                                //  TextView i = (TextView) findViewById(R.id.vendedor);
-                                //   i.setText(model.getNome());
                                 Intent intent = new Intent(MenuActivity.this, VisualizarAnuncioActivity.class);
                                 startActivity(intent);
-                                //Toast.makeText(MenuActivity.this, key, Toast.LENGTH_LONG).show();
                             }
                         });
-
-
                     }
-
                 };
                 MenuActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -145,6 +139,20 @@ public class MenuActivity extends AppCompatActivity
             }
         };
         mThread.start();
+        checkForConnection();
+    }
+
+    private void checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(MenuActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            progress.dismiss();
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
+            }
+        }
     }
 
     public static String getId() {
@@ -193,8 +201,7 @@ public class MenuActivity extends AppCompatActivity
 
 
         public void setFoto(List<String> foto) {
-            if (foto == null) {
-            } else {
+            if (foto != null) {
                 Picasso.with(mView.getContext())
                         .load(foto.get(0))
                         .resize(100,100)
@@ -292,8 +299,7 @@ public class MenuActivity extends AppCompatActivity
             }
         } else if (id == R.id.menu_meus_anuncios) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
-                Intent telaLogin = new Intent(MenuActivity.this, VisualizarMeusAnunciosActivitty.class);
+                Intent telaLogin = new Intent(MenuActivity.this, VisualizarMeusAnunciosActivity.class);
                 startActivity(telaLogin);
                 finish();
             } else {

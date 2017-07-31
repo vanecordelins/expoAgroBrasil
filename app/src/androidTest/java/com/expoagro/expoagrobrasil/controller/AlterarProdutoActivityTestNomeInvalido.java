@@ -66,7 +66,7 @@ public class AlterarProdutoActivityTestNomeInvalido {
 
         Thread.sleep(3000);
         ViewInteraction appCompatButton4 = onView(
-                allOf(withId(R.id.btnAlterar), withText("Alterar"), isDisplayed()));
+                allOf(withId(R.id.btnCadastrar), withText("Alterar"), isDisplayed()));
         appCompatButton4.perform(scrollTo(),click());
 
 
