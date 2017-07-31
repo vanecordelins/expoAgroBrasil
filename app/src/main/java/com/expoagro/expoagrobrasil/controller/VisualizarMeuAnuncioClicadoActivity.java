@@ -1,6 +1,7 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -33,6 +34,7 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,6 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
 
         final String keyProduto = VisualizarMeusAnunciosActivity.getId();
 
-
-        System.out.println(keyProduto);
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -52,10 +52,10 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
                     if (prod.getKey().equals(keyProduto) ) {
                         Produto produto = prod.getValue(Produto.class);
                         ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
-                        ((TextView) findViewById(R.id.vendedorProduto)).setVisibility(View.GONE);
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
+                        findViewById(R.id.vendedorProduto).setVisibility(View.GONE);
 
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
 
@@ -79,7 +79,6 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
             }
         });
 
-        //System.out.println(img);
         Button alterar = (Button) findViewById(R.id.alterarProduto);
         alterar.setOnClickListener(new View.OnClickListener() {
             @Override

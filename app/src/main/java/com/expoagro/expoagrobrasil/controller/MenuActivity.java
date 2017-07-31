@@ -98,28 +98,6 @@ public class MenuActivity extends AppCompatActivity
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
-        /*DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
-
-        connectedRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                System.out.println(connected);
-                if (!connected) {
-                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                        GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
-                    }
-                    Toast.makeText(MenuActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
-                    progress.dismiss();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.out.println("Error");
-            }
-        }); */
-
         progress.show();
 
         Thread mThread = new Thread() {
@@ -234,8 +212,7 @@ public class MenuActivity extends AppCompatActivity
 
 
         public void setFoto(List<String> foto) {
-            if (foto == null) {
-            } else {
+            if (foto != null) {
                 Picasso.with(mView.getContext())
                         .load(foto.get(0))
                         .resize(100,100)
@@ -333,7 +310,6 @@ public class MenuActivity extends AppCompatActivity
             }
         } else if (id == R.id.menu_meus_anuncios) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
                 Intent telaLogin = new Intent(MenuActivity.this, VisualizarMeusAnunciosActivity.class);
                 startActivity(telaLogin);
                 finish();

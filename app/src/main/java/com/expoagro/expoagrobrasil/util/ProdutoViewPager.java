@@ -30,6 +30,14 @@ public class ProdutoViewPager extends PagerAdapter {
         this.fotosURL = fotosURL;
     }
 
+    public void addImage(Bitmap image) {
+        this.images.add(image);
+    }
+
+    public List<Bitmap> getImages() {
+       return images;
+    }
+
     @Override
     public int getCount() {
         if (images != null) {

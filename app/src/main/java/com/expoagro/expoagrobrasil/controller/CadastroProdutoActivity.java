@@ -41,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
@@ -137,15 +138,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             }
         });
 
-        viewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent chooseImageIntent = ImagePicker.getPickImageIntent(CadastroProdutoActivity.this);
-                if (chooseImageIntent != null) {
-                    startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
-                }
-            }
-        });
 
         imView.setOnClickListener(new View.OnClickListener() {
             @Override
