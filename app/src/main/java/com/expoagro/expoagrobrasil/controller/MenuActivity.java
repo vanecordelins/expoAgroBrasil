@@ -5,10 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 
 
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.support.annotation.RequiresApi;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 
@@ -23,17 +27,21 @@ import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
 
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.expoagro.expoagrobrasil.R;
 
 
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 
 
+import com.expoagro.expoagrobrasil.model.Anuncio;
+import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.expoagro.expoagrobrasil.util.Lista;
@@ -49,6 +57,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -96,6 +106,7 @@ public class MenuActivity extends AppCompatActivity
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
         progress.show();
+
         Thread mThread = new Thread() {
             @Override
             public void run() {
@@ -104,7 +115,7 @@ public class MenuActivity extends AppCompatActivity
                 recyclerView.setLayoutManager(new LinearLayoutManager(MenuActivity.this));
                 DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Produto");
 
-                final FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
+                final FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Lista,ListaViewHolder>(
                         Lista.class,
                         R.layout.linha,
                         ListaViewHolder.class,
@@ -147,7 +158,7 @@ public class MenuActivity extends AppCompatActivity
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
         if (!isConnected) {
-            Toast.makeText(MenuActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MenuActivity.this, "Você não está conectado a Internet", Toast.LENGTH_LONG).show();
             progress.dismiss();
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 GoogleSignIn.signOut(MenuActivity.this, mGoogleApiClient);
@@ -179,7 +190,6 @@ public class MenuActivity extends AppCompatActivity
             textView_valor = (TextView) itemView.findViewById(R.id.valorProduto);
             textView_categoria = (TextView) itemView.findViewById(R.id.categoriaProduto);
             imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);
-            //textView_nome2 = (TextView) itemView.findViewById(R.id.vendedorProduto);
         }
 
 
@@ -199,13 +209,15 @@ public class MenuActivity extends AppCompatActivity
             textView_categoria.setText(categoria);
         }
 
-
         public void setFoto(List<String> foto) {
             if (foto != null) {
-                Picasso.with(mView.getContext())
-                        .load(foto.get(0))
-                        .resize(100,100)
-                        .into(imageView);
+                    Picasso.with(mView.getContext())
+                            .load(foto.get(0))
+                            .fit()
+                            //.resize(100,100)
+                            .into(imageView);
+            } else {
+                imageView.setImageResource(R.drawable.sem_foto);
             }
         }
     }

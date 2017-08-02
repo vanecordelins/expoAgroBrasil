@@ -354,10 +354,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             mNomeView.setError(getString(R.string.error_field_required));
             focusView = mNomeView;
             cancelar = true;
-        } else if (!Regex.isNameValid(nome)) {
-            mNomeView.setError(getString(R.string.error_nome_invalido));
-            focusView = mNomeView;
-            cancelar = true;
         } else if (TextUtils.isEmpty(valor)) {
             mValorView.setError(getString(R.string.error_field_required));
             focusView = mValorView;

@@ -33,15 +33,6 @@
             android:text="Nome" />
 
         <TextView
-            android:id="@+id/categoriaProduto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="33dp"
-            android:layout_marginLeft="150dp"
-            android:textSize="5pt"
-            android:text="Categoria" />
-
-        <TextView
             android:id="@+id/dataProduto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,9 +45,18 @@
             android:id="@+id/valorProduto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="300dp"
+            android:layout_marginLeft="240dp"
             android:layout_marginTop="110dp"
             android:text="Valor"
             android:textSize="8pt" />
+
+        <TextView
+            android:id="@+id/categoriaProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="60dp"
+            android:text="Categoria"
+            android:textSize="5pt" />
     </android.support.v7.widget.CardView>
 </RelativeLayout>
