@@ -126,6 +126,7 @@
                     android:id="@+id/campoNomeProduto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
                     android:hint="@string/campo_nome"
                     android:inputType="textCapSentences" />
 
@@ -152,7 +153,7 @@
                     android:hint="@string/campo_valor"
                     android:inputType="numberDecimal"
                     android:lines="1"
-                    android:maxLength="20"
+                    android:maxLength="14"
                     android:text="R$0,00" />
             </android.support.design.widget.TextInputLayout>
 
@@ -188,8 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/campo_descricao"
-                    android:inputType="textCapSentences"
-                    android:singleLine="false" />
+                    android:inputType="textCapSentences|textMultiLine" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -210,8 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/campo_observacao"
-                    android:inputType="textCapSentences"
-                    android:singleLine="false" />
+                    android:inputType="textCapSentences|textMultiLine" />
             </android.support.design.widget.TextInputLayout>
 
             <Button

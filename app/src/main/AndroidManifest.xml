@@ -99,7 +99,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
         </activity>
-
     </application>
 
 </manifest>
