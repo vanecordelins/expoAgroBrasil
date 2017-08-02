@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import android.support.design.widget.NavigationView;
@@ -34,6 +35,7 @@ import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 
 
+import com.expoagro.expoagrobrasil.model.Servico;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.expoagro.expoagrobrasil.util.Lista;
@@ -48,6 +50,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -102,8 +105,24 @@ public class MenuActivity extends AppCompatActivity
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MenuActivity.this));
-                DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Produto");
+                Query myref = FirebaseDatabase.getInstance().getReference("Produto");
+                if (CategoriasActivity.isClick()) {
+                    myref = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("categoria").equalTo(CategoriasActivity.getUid());
+                    myref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue() == null) {
+                                Toast.makeText(MenuActivity.this, "Produtos não encontrados", Toast.LENGTH_LONG).show();
+                                progress.dismiss();
+                            }
+                        }
 
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
                 final FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
                         Lista.class,
                         R.layout.linha,
@@ -112,6 +131,7 @@ public class MenuActivity extends AppCompatActivity
                 ) {
                     @Override
                     protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
+                        System.out.println(model);
                         final String key = getRef(position).getKey();
                         viewHolder.setCategoria(model.getCategoria());
                         viewHolder.setData(model.getData());
@@ -215,8 +235,8 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
-        //getMenuInflater().inflate(R.menu.menu, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.teste_filtro, menu);
 
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
@@ -255,7 +275,7 @@ public class MenuActivity extends AppCompatActivity
                 System.out.println("The read failed: " + databaseError.getMessage());
             }
         });
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -264,7 +284,10 @@ public class MenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(MenuActivity.this, InicialArrobaActivity.class);
+            startActivity(intent);
+            finish();
+//            super.onBackPressed();
         }
     }
 
@@ -324,6 +347,18 @@ public class MenuActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.app_bar_filter:
+                Intent intent = new Intent(MenuActivity.this, CategoriasActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onConnectionFailed(ConnectionResult connectionResult) {
