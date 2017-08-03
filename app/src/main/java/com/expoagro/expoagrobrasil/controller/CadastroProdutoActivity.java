@@ -33,7 +33,6 @@ import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.ImagePicker;
 import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
 import com.expoagro.expoagrobrasil.util.ProdutoViewPager;
-import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -352,10 +351,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(nome)) {
             mNomeView.setError(getString(R.string.error_field_required));
-            focusView = mNomeView;
-            cancelar = true;
-        } else if (!Regex.isNameValid(nome)) {
-            mNomeView.setError(getString(R.string.error_nome_invalido));
             focusView = mNomeView;
             cancelar = true;
         } else if (TextUtils.isEmpty(valor)) {

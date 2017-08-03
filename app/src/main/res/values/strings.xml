@@ -87,6 +87,7 @@
         <item>Por Quinzena</item>
         <item>Outra</item>
     </string-array>
+    <string name="title_activity_">Activity</string>
 
 
 </resources>

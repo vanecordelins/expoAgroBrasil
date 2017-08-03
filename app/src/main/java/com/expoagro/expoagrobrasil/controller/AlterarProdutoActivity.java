@@ -2,7 +2,6 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Activity;
 import android.app.Dialog;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,10 +32,7 @@ import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.util.ImagePicker;
 import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
-
 import com.expoagro.expoagrobrasil.util.ProdutoViewPager;
-import com.expoagro.expoagrobrasil.util.Regex;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -430,10 +426,6 @@ public class AlterarProdutoActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(nome)) {
             mNomeView.setError(getString(R.string.error_field_required));
-            focusView = mNomeView;
-            cancelar = true;
-        } else if (!Regex.isNameValid(nome)) {
-            mNomeView.setError(getString(R.string.error_nome_invalido));
             focusView = mNomeView;
             cancelar = true;
         } else if (TextUtils.isEmpty(valor)) {
