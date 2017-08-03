@@ -19,7 +19,7 @@ public class Lista {
         this.valor = valor;
         this.categoria = categoria;
         this.frequencia = frequencia;
-        this.foto =foto;
+        this.foto = foto;
     }
     public String getNome() {
         return nome;

@@ -15,17 +15,47 @@ public class Anuncio {
     private String descricao;
     private String data;
     private String hora;
-    private float valor;
+    private String valor;
+    private String cidade;
+    private String idUsuario;
 
     public Anuncio() { }
 
-    public Anuncio(String nome, String observacao, String descricao, String data, String hora, float valor) {
+    public Anuncio(String nome, String observacao, String descricao, String data, String hora, String valor, String cidade, String idUsuario) {
+
         this.nome = nome;
         this.observacao = observacao;
         this.descricao = descricao;
         this.data = data;
         this.hora = hora;
         this.valor = valor;
+        this.cidade = cidade;
+        this.idUsuario = idUsuario;
+    }
+
+    public Anuncio(String nome, String observacao, String descricao, String valor, String idUsuario) {
+        this.nome = nome;
+        this.observacao = observacao;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.idUsuario = idUsuario;
+    }
+
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getId() {
@@ -76,11 +106,11 @@ public class Anuncio {
         this.hora = hora;
     }
 
-    public float getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 }

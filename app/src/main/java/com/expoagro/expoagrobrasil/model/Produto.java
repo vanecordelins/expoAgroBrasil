@@ -1,7 +1,5 @@
 package com.expoagro.expoagrobrasil.model;
 
-import android.graphics.Bitmap;
-
 import java.util.List;
 
 
@@ -14,8 +12,9 @@ public class Produto extends Anuncio {
     private String categoria;
     private List<String> fotos;
 
-    public Produto(String nome, String observacao, String descricao, String data, String hora, float valor, String categoria, List<String> fotos) {
-        super(nome, observacao, descricao, data, hora, valor);
+
+    public Produto(String nome, String observacao, String descricao, String valor, String idUsuario, String categoria, List<String> fotos) {
+        super(nome, observacao, descricao, valor, idUsuario);
         this.categoria = categoria;
         this.fotos = fotos;
     }
@@ -36,5 +35,6 @@ public class Produto extends Anuncio {
 
     public void setFoto(List<String> fotos) {
         this.fotos = fotos;
+
     }
 }

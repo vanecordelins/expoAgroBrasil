@@ -89,7 +89,7 @@ public class InicialArrobaActivity extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             if(valorNacional == null){
-                textValorNacional.setText(" @Nacional R$ "+"126,00");
+                textValorNacional.setText(" @Nacional R$ "+"126,00");  //valor médio anual deafult
             }else {
                 textValorNacional.setText(" @Nacional R$ " + valorNacional);
             }
