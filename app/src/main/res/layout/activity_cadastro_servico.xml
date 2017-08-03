@@ -8,8 +8,8 @@
     tools:context="com.expoagro.expoagrobrasil.controller.CadastroServicoActivity">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,14 +43,13 @@
                 android:id="@+id/textView4"
                 android:layout_width="135dp"
                 android:layout_height="32dp"
-                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="Tipo de anúncio:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="-2dp" />
+                tools:layout_editor_absoluteX="8dp" />
 
             <RadioGroup
                 android:id="@+id/tipoAnuncio"

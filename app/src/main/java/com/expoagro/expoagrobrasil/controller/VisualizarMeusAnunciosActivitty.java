@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
@@ -33,10 +34,19 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_meusanuncios);
+        setContentView(R.layout.activity_meus_anuncios);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico3);
+        rdoBtnServico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaCadastrarServico = new Intent(VisualizarMeusAnunciosActivitty.this, VisualizarMeusServicosActivity.class);
+                startActivity(telaCadastrarServico);
+                finish();
+            }
+        });
 
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
@@ -58,7 +68,7 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
             @Override
             protected void populateViewHolder(VisualizarMeusAnunciosActivitty.ListaViewHolder viewHolder, final Produto model, int position) {
 
-                final String key = getRef(position).getKey();
+                final String keyProduto = getRef(position).getKey();
 
                 viewHolder.setCategoria(model.getCategoria());
                 viewHolder.setData(model.getData());
@@ -70,7 +80,7 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        setId(key);
+                        setId(keyProduto);
                         //  TextView i = (TextView) findViewById(R.id.vendedor);
                         //   i.setText(model.getNome());
                         Intent intent = new Intent(VisualizarMeusAnunciosActivitty.this, VisualizarMeuAnuncio.class);

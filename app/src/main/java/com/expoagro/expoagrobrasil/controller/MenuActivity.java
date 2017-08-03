@@ -2,13 +2,7 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-
-
 import android.os.Bundle;
-
-import android.view.Menu;
-import android.view.View;
-
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,26 +11,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-
+import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
 import android.widget.ImageView;
-
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.expoagro.expoagrobrasil.R;
-
-
 import com.expoagro.expoagrobrasil.dao.UserDAO;
-
-
+import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
-import com.expoagro.expoagrobrasil.util.Servico;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
-
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -47,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class MenuActivity extends AppCompatActivity
@@ -76,7 +65,7 @@ public class MenuActivity extends AppCompatActivity
         uid = "";
         progress = new ProgressDialog(MenuActivity.this);
         progress.setCancelable(false);
-        progress.setIndeterminate(false);
+        progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
 
                 final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -112,14 +101,14 @@ public class MenuActivity extends AppCompatActivity
                 recyclerView.setLayoutManager(new LinearLayoutManager(MenuActivity.this));
                 DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Produto");
 
-                final FirebaseRecyclerAdapter<Servico, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Servico, ListaViewHolder>(
-                        Servico.class,
+                final FirebaseRecyclerAdapter<Produto, ProdutoViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, ProdutoViewHolder>(
+                        Produto.class,
                         R.layout.linha,
-                        ListaViewHolder.class,
+                        ProdutoViewHolder.class,
                         myref
                 ) {
                     @Override
-                    protected void populateViewHolder(ListaViewHolder viewHolder, Servico model, int position) {
+                    protected void populateViewHolder(ProdutoViewHolder viewHolder, Produto model, int position) {
 
                         final String key = getRef(position).getKey();
 
@@ -165,7 +154,7 @@ public class MenuActivity extends AppCompatActivity
         idClicado = id;
     }
 
-    public static class ListaViewHolder extends RecyclerView.ViewHolder {
+    public static class ProdutoViewHolder extends RecyclerView.ViewHolder {
         View mView;
         TextView textView_nome;
         TextView textView_data;
@@ -173,7 +162,7 @@ public class MenuActivity extends AppCompatActivity
         TextView textView_categoria;
         ImageView imageView;
 
-        public ListaViewHolder(View itemView) {
+        public ProdutoViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             textView_nome = (TextView) itemView.findViewById(R.id.nomeProduto);

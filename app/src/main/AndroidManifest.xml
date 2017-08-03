@@ -97,6 +97,12 @@
             android:name=".controller.AlterarProdutoActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".controller.MenuServicoActivity">
+        </activity>
+        <activity android:name=".controller.VisualizarMeusServicosActivity">
+        </activity>
+        <activity android:name=".controller.VisualizarServicoActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -7,19 +7,22 @@ import java.util.List;
  * Created by joao on 21/07/17.
  */
 
-public class Lista {
+public class Servico {
 
-    private String nome,data,valor,categoria,frequencia;
+    private String nome,data,valor,categoria,frequencia,descricao,observacao;
     private List<String> foto;
-    public Lista() {
+
+    public Servico() {
     }
-    public Lista(String nome, String data,String valor, String categoria,String frequencia, List<String> foto) {
+    public Servico(String nome, String data, String valor, String categoria, String frequencia, List<String> foto, String descricao,String observacao) {
         this.nome = nome;
         this.data = data;
         this.valor = valor;
         this.categoria = categoria;
         this.frequencia = frequencia;
         this.foto = foto;
+        this.descricao = descricao;
+        this.observacao = observacao;
     }
     public String getNome() {
         return nome;
@@ -58,5 +61,11 @@ public class Lista {
     }
 
 
+    public String getDescricao() {
+        return descricao;
+    }
 
+    public String getObservacao() {
+        return observacao;
+    }
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.expoagro.expoagrobrasil.controller.VisualizarServicoActivity">
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="370dp"
+        android:layout_height="250dp"
+        android:id="@+id/viewPager"
+        android:background="@drawable/sem_foto"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+    </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:id="@+id/nomeServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome"
+        android:layout_below="@+id/viewPager"
+        android:layout_alignLeft="@+id/viewPager"
+        android:layout_alignStart="@+id/viewPager"
+        android:layout_marginTop="15dp"
+        android:textSize="8pt"/>
+
+    <TextView
+        android:id="@+id/descricaoServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nomeServico"
+        android:layout_alignStart="@+id/nomeServico"
+        android:layout_below="@+id/nomeServico"
+        android:layout_marginTop="24dp"
+        android:text="Descriçao" />
+
+    <TextView
+        android:id="@+id/observacaoServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:text="Observação"
+        android:layout_below="@+id/descricaoServico"
+        android:layout_alignLeft="@+id/descricaoServico"
+        android:layout_alignStart="@+id/descricaoServico" />
+
+    <TextView
+        android:id="@+id/dataServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="Data"
+        android:layout_below="@+id/observacaoServico"
+        android:layout_alignLeft="@+id/observacaoServico"
+        android:layout_alignStart="@+id/observacaoServico" />
+
+    <TextView
+        android:id="@+id/fresquenciaServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Vendedor"
+        android:layout_below="@+id/dataServico"
+        android:layout_alignLeft="@+id/dataServico"
+        android:layout_alignStart="@+id/dataServico" />
+
+    <Button
+        android:id="@+id/alterarServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:text="Alterar"
+        android:layout_below="@+id/fresquenciaServico"
+        android:layout_toRightOf="@+id/fresquenciaServico"
+        android:layout_toEndOf="@+id/fresquenciaServico" />
+
+    <Button
+        android:id="@+id/excluirServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/alterarServico"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp"
+        android:layout_toEndOf="@+id/alterarServico"
+        android:layout_toRightOf="@+id/alterarServico"
+        android:text="Excluir" />
+
+</RelativeLayout>
