@@ -43,12 +43,15 @@
 
         <TextView
             android:id="@+id/valorProduto"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="240dp"
             android:layout_marginTop="110dp"
-            android:text="Valor"
-            android:textSize="8pt" />
+            android:ellipsize="none"
+            android:gravity="left"
+            android:maxLines="1"
+            android:textSize="7pt" /> <!-- maximum size -->
+            android:text="Valor"/>
 
         <TextView
             android:id="@+id/categoriaProduto"

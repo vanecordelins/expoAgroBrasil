@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
@@ -23,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import me.relex.circleindicator.CircleIndicator;
 
 /**
  * Created by Samir on 24/07/2017.
@@ -39,8 +39,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = MenuActivity.getId();
-//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -67,12 +66,12 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                                 System.out.println("Erro ao pesquisar vendedor");
                             }
                         });
-//                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + nome);
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
 
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
+                        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
 
                         if(produto.getFoto() != null){
                             if (!produto.getFoto().isEmpty()) {
@@ -84,6 +83,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                         }
                         testeViewPager = new AnuncioViewPager(VisualizarAnuncioActivity.this, img);
                         viewPager.setAdapter(testeViewPager);
+                        indicator.setViewPager(viewPager);
                     }
                 }
             }
