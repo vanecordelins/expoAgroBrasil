@@ -70,21 +70,15 @@ public class MenuProdutoActivity extends AppCompatActivity
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(MenuProdutoActivity.this);
+        ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(MenuProdutoActivity.this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
+                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(MenuProdutoActivity.this)
-                .enableAutoManage(MenuProdutoActivity.this, MenuProdutoActivity.this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                .enableAutoManage(MenuProdutoActivity.this, MenuProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         // ----------------------------------RadioButton-----------------------------------------------------------
-
         RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico2);
         rdoBtnServico.setOnClickListener(new View.OnClickListener() {
                                              @Override
@@ -94,14 +88,10 @@ public class MenuProdutoActivity extends AppCompatActivity
             finish();
                                              }
         });
-
         RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto2);
         rdoBtnProduto.setChecked(true);
-
         // ----------------------------------RecyclerView-----------------------------------------------------------
-
         progress.show();
-
         Thread mThread = new Thread() {
             @Override
             public void run() {
@@ -119,11 +109,8 @@ public class MenuProdutoActivity extends AppCompatActivity
                                 progress.dismiss();
                             }
                         }
-
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            databaseError.getMessage();
-                        }
+                        public void onCancelled(DatabaseError databaseError) { databaseError.getMessage(); }
                     });
                 }
                 final FirebaseRecyclerAdapter<Produto, ProdutoViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, ProdutoViewHolder>(
@@ -133,9 +120,7 @@ public class MenuProdutoActivity extends AppCompatActivity
                         myref
                 ) {
                     @Override
-
                     protected void populateViewHolder(ProdutoViewHolder viewHolder, Produto model, int position) {
-
                         final String key = getRef(position).getKey();
                         viewHolder.setCategoria(model.getCategoria());
                         viewHolder.setData(model.getData());
@@ -157,9 +142,7 @@ public class MenuProdutoActivity extends AppCompatActivity
                 };
                 MenuProdutoActivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
-                        recyclerView.setAdapter(recyclerAdapter);
-                    }
+                    public void run() { recyclerView.setAdapter(recyclerAdapter); }
                 });
             }
         };
@@ -189,12 +172,12 @@ public class MenuProdutoActivity extends AppCompatActivity
     }
 
     public static class ProdutoViewHolder extends RecyclerView.ViewHolder {
-        View mView;
-        TextView textView_nome;
-        TextView textView_data;
-        TextView textView_valor;
-        TextView textView_categoria;
-        ImageView imageView;
+        private View mView;
+        private TextView textView_nome;
+        private TextView textView_data;
+        private TextView textView_valor;
+        private TextView textView_categoria;
+        private ImageView imageView;
 
         public ProdutoViewHolder(View itemView) {
             super(itemView);

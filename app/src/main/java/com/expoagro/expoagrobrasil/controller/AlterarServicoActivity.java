@@ -21,7 +21,6 @@ import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ServicoDAO;
 import com.expoagro.expoagrobrasil.model.Servico;
 import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -115,7 +114,7 @@ public class AlterarServicoActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                System.out.println("OnCancelled");
             }
         });
     }

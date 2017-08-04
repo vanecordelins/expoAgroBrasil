@@ -45,7 +45,7 @@ public class VisualizarServicoActivity extends AppCompatActivity {
                         ((TextView) findViewById(R.id.dataServico)).setText("Data: " + servico.getData());
                         ((TextView) findViewById(R.id.descricaoServico)).setText("Descrição: " + servico.getDescricao());
                         ((TextView) findViewById(R.id.nomeServico)).setText("Nome: " + servico.getNome());
-                        ((TextView) findViewById(R.id.observacaoServico)).setText("Observação: " + servico.getObservacao());;
+                        ((TextView) findViewById(R.id.observacaoServico)).setText("Observação: " + servico.getObservacao());
                         UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {

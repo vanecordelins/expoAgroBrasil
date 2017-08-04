@@ -40,7 +40,6 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_meus_anuncios);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,12 +63,10 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
         rdoBtnProduto.setChecked(true);
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
-
         progress.show();
         Thread mThread = new Thread() {
             @Override
             public void run() {
-
                 final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(VisualizarMeusProdutosActivity.this));
@@ -83,23 +80,17 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                             Toast.makeText(VisualizarMeusProdutosActivity.this, "Você não possui produtos cadastrados.", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        databaseError.getMessage();
-                    }
+                    public void onCancelled(DatabaseError databaseError) { databaseError.getMessage(); }
                 });
-
                 final FirebaseRecyclerAdapter<Produto, VisualizarMeusProdutosActivity.ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, VisualizarMeusProdutosActivity.ListaViewHolder>(
                         Produto.class,
                         R.layout.linha,
                         VisualizarMeusProdutosActivity.ListaViewHolder.class,
                         myref
                 ) {
-
                     @Override
                     protected void populateViewHolder(VisualizarMeusProdutosActivity.ListaViewHolder viewHolder, final Produto model, int position) {
-
                         final String key = getRef(position).getKey();
 
                         viewHolder.setCategoria(model.getCategoria());
@@ -122,15 +113,15 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                 };
                 VisualizarMeusProdutosActivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
-                        progress.dismiss();
-                        recyclerView.setAdapter(recyclerAdapter);
-                    }
+                    public void run() { recyclerView.setAdapter(recyclerAdapter); }
                 });
             }
         };
         mThread.start();
+        checkForFirebaseConn();
+    }
 
+    private void checkForFirebaseConn() {
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
 
         connectedRef.addValueEventListener(new ValueEventListener() {
@@ -148,7 +139,6 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
             }
         });
     }
-
     public static String getId() {
         return idClicado;
     }

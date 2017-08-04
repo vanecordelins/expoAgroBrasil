@@ -13,10 +13,8 @@ import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
-import com.expoagro.expoagrobrasil.dao.ServicoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
-import com.expoagro.expoagrobrasil.model.Servico;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.AnuncioViewPager;
 import com.google.firebase.database.DataSnapshot;

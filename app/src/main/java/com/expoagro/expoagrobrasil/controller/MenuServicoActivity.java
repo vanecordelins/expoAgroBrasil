@@ -172,11 +172,11 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
     }
 
     public static class ServicoViewHolder extends RecyclerView.ViewHolder {
-        View mView;
-        TextView textView_nome;
-        TextView textView_data;
-        TextView textView_valor;
-        TextView textView_frequencia;
+        private View mView;
+        private TextView textView_nome;
+        private TextView textView_data;
+        private TextView textView_valor;
+        private TextView textView_frequencia;
         private ImageView imageView;
 
         public ServicoViewHolder(View itemView) {
