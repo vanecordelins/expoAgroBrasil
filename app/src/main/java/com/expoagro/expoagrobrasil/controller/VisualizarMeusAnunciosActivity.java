@@ -155,7 +155,6 @@ public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
             textView_valor = (TextView) itemView.findViewById(R.id.valorProduto);
             textView_categoria = (TextView) itemView.findViewById(R.id.categoriaProduto);
             imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);
-            //textView_nome2 = (TextView) itemView.findViewById(R.id.vendedorProduto);
         }
 
 
@@ -181,8 +180,10 @@ public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
             if (foto != null) {
                 Picasso.with(mView.getContext())
                         .load(foto.get(0))
-                        .resize(100,100)
+                        .fit()
                         .into(imageView);
+            } else {
+                imageView.setImageResource(R.drawable.sem_foto);
             }
         }
 
