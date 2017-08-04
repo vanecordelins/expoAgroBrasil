@@ -77,8 +77,13 @@
                 android:value="com.expoagro.expoagrobrasil.controller.MenuProdutoActivity" />
         </activity>
         <activity
-            android:name=".controller.VisualizarAnuncioActivity"
+            android:name=".controller.VisualizarProdutoActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".controller.VisualizarServicoActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".controller.VisualizarMeusProdutosActivity"
             android:screenOrientation="portrait"
@@ -99,10 +104,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.expoagro.expoagrobrasil.controller.MenuProdutoActivity" />
         </activity>
-        <activity android:name=".controller.MenuServicoActivity"></activity>
-        <activity android:name=".controller.VisualizarMeusServicosActivity"></activity>
-        <activity android:name=".controller.VisualizarMeuServicoClicadoActivity"></activity>
-        <activity android:name=".controller.AlterarServicoActivity"></activity>
+        <activity android:name=".controller.MenuServicoActivity" />
+        <activity android:name=".controller.VisualizarMeusServicosActivity" />
+        <activity android:name=".controller.VisualizarMeuServicoClicadoActivity" />
+        <activity android:name=".controller.AlterarServicoActivity" />
     </application>
 
 </manifest>

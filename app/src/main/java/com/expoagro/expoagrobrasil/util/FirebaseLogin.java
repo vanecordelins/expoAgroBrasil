@@ -10,8 +10,10 @@ import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.expoagro.expoagrobrasil.controller.MenuProdutoActivity;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
+import com.expoagro.expoagrobrasil.dao.ServicoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
+import com.expoagro.expoagrobrasil.model.Servico;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,17 +29,16 @@ import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseLogin {
 
-
     public static void deleteAccount(final Activity activity) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             UserDAO userDAO = new UserDAO();
-            userDAO.delete(user.getUid());
             user.delete().addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
                         final ProdutoDAO pdao = new ProdutoDAO();
+                        final ServicoDAO sdao = new ServicoDAO();
 
                         ProdutoDAO.getDatabaseReference().orderByChild("idUsuario").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -45,6 +46,21 @@ public class FirebaseLogin {
                                 for (DataSnapshot prod : dataSnapshot.getChildren()) {
                                     Produto produto = prod.getValue(Produto.class);
                                     pdao.delete(produto.getId());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("Não foi possível deletar os produtos deste usuário.");
+                            }
+                        });
+
+                        ServicoDAO.getDatabaseReference().orderByChild("idUsuario").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot serv: dataSnapshot.getChildren()) {
+                                    Servico servico = serv.getValue(Servico.class);
+                                    sdao.delete(servico.getId());
                                 }
                             }
 
@@ -63,6 +79,7 @@ public class FirebaseLogin {
                     }
                 }
             });
+            userDAO.delete(user.getUid());
         }
     }
 

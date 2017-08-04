@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import me.relex.circleindicator.CircleIndicator;
+
 /**
  * Created by Samir on 25/07/2017.
  */
@@ -55,6 +57,7 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity {
                         findViewById(R.id.vendedorProduto).setVisibility(View.GONE);
 
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
+                        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
 
                         if(produto.getFoto() != null){
                             if (!produto.getFoto().isEmpty()) {
@@ -66,6 +69,7 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity {
                         }
                         testeViewPager = new AnuncioViewPager(VisualizarMeuProdutoClicadoActivity.this, img);
                         viewPager.setAdapter(testeViewPager);
+                        indicator.setViewPager(viewPager);
                     }
                 }
             }
@@ -80,7 +84,7 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity {
         alterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, AlterarServicoActivity.class);
+                Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, AlterarProdutoActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -1,9 +1,12 @@
 package com.expoagro.expoagrobrasil.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by Fabricio on 7/16/2017.
  */
 
+@IgnoreExtraProperties
 public class Servico extends Anuncio {
 
     private String frequencia;

@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -12,8 +13,10 @@ import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
+import com.expoagro.expoagrobrasil.dao.ServicoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
+import com.expoagro.expoagrobrasil.model.Servico;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.AnuncioViewPager;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +31,7 @@ import me.relex.circleindicator.CircleIndicator;
  * Created by Samir on 24/07/2017.
  */
 
-public class VisualizarAnuncioActivity extends AppCompatActivity {
+public class VisualizarProdutoActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
 
@@ -81,7 +84,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                                 img.add(produto.getFoto().get(i));
                             }
                         }
-                        testeViewPager = new AnuncioViewPager(VisualizarAnuncioActivity.this, img);
+                        testeViewPager = new AnuncioViewPager(VisualizarProdutoActivity.this, img);
                         viewPager.setAdapter(testeViewPager);
                         indicator.setViewPager(viewPager);
                     }
@@ -90,19 +93,25 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(VisualizarAnuncioActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
+                Toast.makeText(VisualizarProdutoActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
             }
         });
 
-        //System.out.println(img);
+
         Button alterar = (Button) findViewById(R.id.alterarProduto);
         Button excluir = (Button) findViewById(R.id.excluirProduto);
 
         alterar.setVisibility(View.GONE);
         excluir.setVisibility(View.GONE);
 
-
-
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 }

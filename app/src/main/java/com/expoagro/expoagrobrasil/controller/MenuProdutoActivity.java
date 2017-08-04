@@ -52,7 +52,6 @@ public class MenuProdutoActivity extends AppCompatActivity
     private static String idClicado;
     private ProgressDialog progress;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,17 +83,20 @@ public class MenuProdutoActivity extends AppCompatActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        // ----------------------------------RecyclerView-----------------------------------------------------------
+        // ----------------------------------RadioButton-----------------------------------------------------------
 
         RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico2);
         rdoBtnServico.setOnClickListener(new View.OnClickListener() {
                                              @Override
                                              public void onClick(View view) {
-                                                 Intent telaCadastrarServico = new Intent(MenuProdutoActivity.this, MenuServicoActivity.class);
-                                                 startActivity(telaCadastrarServico);
-                                                 finish();
+            Intent telaCadastrarServico = new Intent(MenuProdutoActivity.this, MenuServicoActivity.class);
+            startActivity(telaCadastrarServico);
+            finish();
                                              }
-                                         });
+        });
+
+        RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto2);
+        rdoBtnProduto.setChecked(true);
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
@@ -146,8 +148,9 @@ public class MenuProdutoActivity extends AppCompatActivity
                             @Override
                             public void onClick(View view) {
                                 setId(key);
-                                Intent intent = new Intent(MenuProdutoActivity.this, VisualizarAnuncioActivity.class);
+                                Intent intent = new Intent(MenuProdutoActivity.this, VisualizarProdutoActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         });
                     }
@@ -290,7 +293,6 @@ public class MenuProdutoActivity extends AppCompatActivity
             Intent intent = new Intent(MenuProdutoActivity.this, InicialArrobaActivity.class);
             startActivity(intent);
             finish();
-//            super.onBackPressed();
         }
     }
 
@@ -358,6 +360,7 @@ public class MenuProdutoActivity extends AppCompatActivity
             case R.id.app_bar_filter:
                 Intent intent = new Intent(MenuProdutoActivity.this, CategoriasActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

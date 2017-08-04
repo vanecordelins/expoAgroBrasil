@@ -1,5 +1,7 @@
 package com.expoagro.expoagrobrasil.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.List;
 
 
@@ -7,6 +9,7 @@ import java.util.List;
  * Created by Fabricio on 7/16/2017.
  */
 
+@IgnoreExtraProperties
 public class Produto extends Anuncio {
 
     private String categoria;

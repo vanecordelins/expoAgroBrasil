@@ -1,10 +1,10 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,10 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
-import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.dao.ServicoDAO;
-import com.expoagro.expoagrobrasil.util.AnuncioViewPager;
-import com.expoagro.expoagrobrasil.util.Servico;
+import com.expoagro.expoagrobrasil.dao.UserDAO;
+import com.expoagro.expoagrobrasil.model.Servico;
+
+import com.expoagro.expoagrobrasil.model.Usuario;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -26,40 +27,25 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
-    private ViewPager viewPager;
-    private AnuncioViewPager testeViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_servico);
-      /*  final ArrayList<String> img = new ArrayList<>();*/
 
         final String keyServico = VisualizarMeusServicosActivity.getId();
 
-//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ServicoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot serv : dataSnapshot.getChildren()) {
                     if (serv.getKey().equals(keyServico) ) {
-                        Servico servico = serv.getValue(Servico.class);
+                        final Servico servico = serv.getValue(Servico.class);
                         ((TextView) findViewById(R.id.dataServico)).setText("Data: " + servico.getData());
-                     //   ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + servico.get);
                         ((TextView) findViewById(R.id.descricaoServico)).setText("Descrição: " + servico.getDescricao());
                         ((TextView) findViewById(R.id.nomeServico)).setText("Nome: " + servico.getNome());
                         ((TextView) findViewById(R.id.observacaoServico)).setText("Observação: " + servico.getObservacao());
-                        ((TextView) findViewById(R.id.frequenciaServico)).setText("Frequência: " + servico.getFrequencia());
-
-/*                        if(servico.getFoto() != null){
-                            for (int i =0; i<servico.getFoto().size(); i++){
-                                img.add(servico.getFoto().get(i));
-                            }
-                        }
-                        viewPager = (ViewPager)findViewById(R.id.viewPager);
-                        testeViewPager = new AnuncioViewPager(VisualizarMeuServicoClicadoActivity.this, img);
-                        viewPager.setAdapter(testeViewPager);*/
+                        ((TextView) findViewById(R.id.vendedorServico)).setText("Frequência: " + servico.getFrequencia());
                     }
                 }
             }
@@ -74,7 +60,7 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
         alterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, AlterarProdutoActivity.class);
+                Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, AlterarServicoActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -101,6 +87,13 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, VisualizarMeusServicosActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

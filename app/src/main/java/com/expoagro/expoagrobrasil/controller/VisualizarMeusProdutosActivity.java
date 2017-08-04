@@ -60,7 +60,8 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
             }
         });
 
-
+        RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto3);
+        rdoBtnProduto.setChecked(true);
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
 
@@ -74,6 +75,20 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(new LinearLayoutManager(VisualizarMeusProdutosActivity.this));
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 Query myref = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("idUsuario").equalTo(uid);
+
+                myref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() == null) {
+                            Toast.makeText(VisualizarMeusProdutosActivity.this, "Você não possui produtos cadastrados.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        databaseError.getMessage();
+                    }
+                });
 
                 final FirebaseRecyclerAdapter<Produto, VisualizarMeusProdutosActivity.ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, VisualizarMeusProdutosActivity.ListaViewHolder>(
                         Produto.class,
@@ -98,18 +113,12 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 setId(key);
-                                //  TextView i = (TextView) findViewById(R.id.vendedor);
-                                //   i.setText(model.getNome());
                                 Intent intent = new Intent(VisualizarMeusProdutosActivity.this, VisualizarMeuProdutoClicadoActivity.class);
                                 startActivity(intent);
                                 finish();
-                                //     Toast.makeText(VisualizarMeusProdutosActivity.this, key, Toast.LENGTH_LONG).show();
-
                             }
                         });
-
                     }
-
                 };
                 VisualizarMeusProdutosActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -148,8 +157,6 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
         idClicado = id;
     }
 
-
-
     public static class ListaViewHolder extends RecyclerView.ViewHolder{
         private View mView;
         private TextView textView_nome;
@@ -169,10 +176,7 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
         }
 
 
-        public void setNome(String nome) {
-
-            textView_nome.setText(nome);
-        }
+        public void setNome(String nome) { textView_nome.setText(nome); }
 
         public void setData(String data) {
             textView_data.setText(data);
@@ -182,10 +186,7 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
             textView_valor.setText(valor);
         }
 
-        public void setCategoria(String categoria) {
-            textView_categoria.setText(categoria);
-        }
-
+        public void setCategoria(String categoria) { textView_categoria.setText(categoria); }
 
         public void setFoto(List<String> foto) {
             if (foto != null) {

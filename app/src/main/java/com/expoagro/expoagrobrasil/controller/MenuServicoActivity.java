@@ -1,7 +1,10 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,12 +21,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
+import com.expoagro.expoagrobrasil.model.Servico;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
-import com.expoagro.expoagrobrasil.util.Servico;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -80,8 +84,11 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnProduto2);
-        rdoBtnServico.setOnClickListener(new View.OnClickListener() {
+        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico2);
+        rdoBtnServico.setChecked(true);
+
+        RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto2);
+        rdoBtnProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent telaCadastrarServico = new Intent(MenuServicoActivity.this, MenuProdutoActivity.class);
@@ -89,12 +96,14 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                 finish();
             }
         });
+
         // ----------------------------------RecyclerView-----------------------------------------------------------
         progress.show();
+
         Thread mThread = new Thread() {
             @Override
             public void run() {
-            recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MenuServicoActivity.this));
                 DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Serviço");
@@ -110,24 +119,21 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
 
                         final String keyServico = getRef(posit).getKey();
 
-                        viewHolder.setCategoria(model.getCategoria());
+                        viewHolder.setFrequencia(model.getFrequencia());
                         viewHolder.setData(model.getData());
                         viewHolder.setValor(model.getValor());
-                       /* viewHolder.setFoto(model.getFoto());*/
                         viewHolder.setNome(model.getNome());
+                        viewHolder.setFoto();
+                        progress.dismiss();
 
                         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 setId(keyServico);
-                                //  TextView i = (TextView) findViewById(R.id.vendedor);
-                                //   i.setText(model.getNome());
-                                Intent intent = new Intent(MenuServicoActivity.this, VisualizarMeuServicoClicadoActivity.class);
+                                Intent intent = new Intent(MenuServicoActivity.this, VisualizarServicoActivity.class);
                                 startActivity(intent);
-                                //Toast.makeText(MenuProdutoActivity.this, key, Toast.LENGTH_LONG).show();
                             }
                         });
-
 
                     }
 
@@ -136,12 +142,25 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                     @Override
                     public void run() {
                         recyclerView.setAdapter(recyclerAdapter);
-                        progress.dismiss();
                     }
                 });
             }
         };
         mThread.start();
+        checkForConnection();
+    }
+
+    private void checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(MenuServicoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_LONG).show();
+            progress.dismiss();
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                GoogleSignIn.signOut(MenuServicoActivity.this, mGoogleApiClient);
+            }
+        }
     }
 
     public static String getId() {
@@ -157,8 +176,8 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         TextView textView_nome;
         TextView textView_data;
         TextView textView_valor;
-        TextView textView_categoria;
-        ImageView imageView;
+        TextView textView_frequencia;
+        private ImageView imageView;
 
         public ServicoViewHolder(View itemView) {
             super(itemView);
@@ -166,9 +185,8 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
             textView_nome = (TextView) itemView.findViewById(R.id.nomeProduto);
             textView_data = (TextView) itemView.findViewById(R.id.dataProduto);
             textView_valor = (TextView) itemView.findViewById(R.id.valorProduto);
-            textView_categoria = (TextView) itemView.findViewById(R.id.categoriaProduto);
-           /* imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);*/
-            //textView_nome2 = (TextView) itemView.findViewById(R.id.vendedorProduto);
+            textView_frequencia = (TextView) itemView.findViewById(R.id.categoriaProduto);
+            imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);
         }
 
 
@@ -184,20 +202,11 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
             textView_valor.setText(valor);
         }
 
-        public void setCategoria(String categoria) {
-            textView_categoria.setText(categoria);
+        public void setFrequencia(String categoria) {
+            textView_frequencia.setText(categoria);
         }
 
-/*
-        public void setFoto(List<String> foto) {
-            if (foto == null) {
-            } else {
-                Picasso.with(mView.getContext())
-                        .load(foto.get(0))
-                        .resize(100,100)
-                        .into(imageView);
-            }
-        }*/
+        public void setFoto() { imageView.setImageResource(R.drawable.services); }
     }
 
 //---------------------------------------------------------------------------------------
@@ -279,7 +288,6 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                 finish();
             }
         } else if (id == R.id.menu_novo_anuncio) {
-
             if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
                 Intent telaCadastrarAnuncio = new Intent(MenuServicoActivity.this, CadastroProdutoActivity.class);
                 startActivity(telaCadastrarAnuncio);
@@ -313,10 +321,23 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.menu_sair) {
             GoogleSignIn.signOut(MenuServicoActivity.this, mGoogleApiClient);
         }  else if (id == R.id.menu_sobre) {
-          }
+            System.out.println("SOBRE");
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_2);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.app_bar_filter:
+            //    Intent intent = new Intent(MenuServicoActivity.this, FrequenciaActivity.class);
+            //    startActivity(intent);
+            //    return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onConnectionFailed(ConnectionResult connectionResult) {

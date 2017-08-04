@@ -60,16 +60,24 @@ public class CategoriasActivity extends AppCompatActivity {
                 acao();
             }
         });
-//        Button servico = (Button) findViewById(R.id.servico);
-//        servico.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setUid("Serviço");
-//                setIsClick(false);
-//                acao();
-//            }
-//        });
-//        Button produto = (Button) findViewById(R.id.produto);
+        Button outros = (Button) findViewById(R.id.outros);
+        outros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setUid("Outros");
+                setIsClick(true);
+                acao();
+            }
+        });
+        Button produto = (Button) findViewById(R.id.produto);
+        produto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setUid("Produto");
+                setIsClick(false);
+                acao();
+            }
+        });
 
     }
     public void acao(){
@@ -98,7 +106,6 @@ public class CategoriasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
                 Intent it = new Intent(CategoriasActivity.this, MenuProdutoActivity.class);
                 startActivity(it);
                 finish();

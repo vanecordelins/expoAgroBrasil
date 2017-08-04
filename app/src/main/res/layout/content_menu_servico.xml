@@ -6,31 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-<!--
-    <RadioButton
-        android:id="@+id/rdoBtnProduto2"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="Produto"
-        android:layout_marginTop="64dp"
-        android:layout_marginRight="59dp"
-        android:layout_marginEnd="59dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <RadioButton
-        android:id="@+id/rdoBtnServico2"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:text="Serviço"
-        android:layout_alignBottom="@+id/rdoBtnProduto2"
-        android:layout_toLeftOf="@+id/rdoBtnProduto2"
-        android:layout_toStartOf="@+id/rdoBtnProduto2"
-        android:layout_marginRight="80dp"
-        android:layout_marginEnd="80dp" />-->
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,8 +16,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
     </android.support.v7.widget.RecyclerView>
-
-
 
 
 </RelativeLayout>
