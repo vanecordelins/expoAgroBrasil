@@ -54,12 +54,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".controller.VisualizarUsuarioActivity"
-            android:parentActivityName=".controller.MenuActivity"
+            android:parentActivityName=".controller.MenuProdutoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
+                android:value="com.expoagro.expoagrobrasil.controller.MenuProdutoActivity" />
         </activity>
         <activity
             android:name=".controller.CadastroProdutoActivity"
@@ -68,37 +68,41 @@
             android:name=".controller.CadastroServicoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".controller.MenuActivity"
-            android:parentActivityName=".controller.MenuActivity"
+            android:name=".controller.MenuProdutoActivity"
+            android:parentActivityName=".controller.MenuProdutoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
+                android:value="com.expoagro.expoagrobrasil.controller.MenuProdutoActivity" />
         </activity>
         <activity
             android:name=".controller.VisualizarAnuncioActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".controller.VisualizarMeusAnunciosActivity"
+            android:name=".controller.VisualizarMeusProdutosActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".controller.VisualizarMeuAnuncioClicadoActivity"
+            android:name=".controller.VisualizarMeuProdutoClicadoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".controller.AlterarProdutoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".controller.CategoriasActivity"
-            android:parentActivityName=".controller.MenuActivity"
-            android:screenOrientation="portrait"
             android:label="Categorias"
+            android:parentActivityName=".controller.MenuProdutoActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.expoagro.expoagrobrasil.controller.MenuActivity" />
+                android:value="com.expoagro.expoagrobrasil.controller.MenuProdutoActivity" />
         </activity>
+        <activity android:name=".controller.MenuServicoActivity"></activity>
+        <activity android:name=".controller.VisualizarMeusServicosActivity"></activity>
+        <activity android:name=".controller.VisualizarMeuServicoClicadoActivity"></activity>
+        <activity android:name=".controller.AlterarServicoActivity"></activity>
     </application>
 
 </manifest>

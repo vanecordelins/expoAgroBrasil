@@ -73,7 +73,7 @@ public class CategoriasActivity extends AppCompatActivity {
 
     }
     public void acao(){
-        Intent intent = new Intent(CategoriasActivity.this, MenuActivity.class);
+        Intent intent = new Intent(CategoriasActivity.this, MenuProdutoActivity.class);
         startActivity(intent);
         finish();
     }
@@ -99,7 +99,7 @@ public class CategoriasActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 //NavUtils.navigateUpFromSameTask(this);
-                Intent it = new Intent(CategoriasActivity.this, MenuActivity.class);
+                Intent it = new Intent(CategoriasActivity.this, MenuProdutoActivity.class);
                 startActivity(it);
                 finish();
                 return true;

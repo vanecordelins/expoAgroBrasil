@@ -38,7 +38,7 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar_anuncio);
         final ArrayList<String> img = new ArrayList<>();
 
-        final String keyProduto = MenuActivity.getId();
+        final String keyProduto = MenuProdutoActivity.getId();
 
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

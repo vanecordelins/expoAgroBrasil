@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * Created by Samir on 25/07/2017.
  */
 
-public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
+public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
@@ -39,7 +39,7 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar_anuncio);
         final ArrayList<String> img = new ArrayList<>();
 
-        final String keyProduto = VisualizarMeusAnunciosActivity.getId();
+        final String keyProduto = VisualizarMeusProdutosActivity.getId();
 
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -64,7 +64,7 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
                                 img.add(produto.getFoto().get(i));
                             }
                         }
-                        testeViewPager = new AnuncioViewPager(VisualizarMeuAnuncioClicadoActivity.this, img);
+                        testeViewPager = new AnuncioViewPager(VisualizarMeuProdutoClicadoActivity.this, img);
                         viewPager.setAdapter(testeViewPager);
                     }
                 }
@@ -72,7 +72,7 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(VisualizarMeuAnuncioClicadoActivity.this, "Erro ao recuperar produto", Toast.LENGTH_SHORT);
+                Toast.makeText(VisualizarMeuProdutoClicadoActivity.this, "Erro ao recuperar produto", Toast.LENGTH_SHORT);
             }
         });
 
@@ -80,7 +80,7 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
         alterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VisualizarMeuAnuncioClicadoActivity.this, AlterarProdutoActivity.class);
+                Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, AlterarServicoActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -90,15 +90,15 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
         excluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog alertDialog = new AlertDialog.Builder(VisualizarMeuAnuncioClicadoActivity.this).setIcon(android.R.drawable.ic_delete).setTitle("EXCLUIR PRODUTO")
+                Dialog alertDialog = new AlertDialog.Builder(VisualizarMeuProdutoClicadoActivity.this).setIcon(android.R.drawable.ic_delete).setTitle("EXCLUIR PRODUTO")
                         .setMessage("Deseja realmente EXCLUIR este produto? Todos os seus dados serão perdidos!")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialog, int which) {
                                 ProdutoDAO pdao = new ProdutoDAO();
                                 pdao.delete(keyProduto);
-                                Toast.makeText(VisualizarMeuAnuncioClicadoActivity.this, "Produto deletado com sucesso.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(VisualizarMeuAnuncioClicadoActivity.this, VisualizarMeusAnunciosActivity.class);
+                                Toast.makeText(VisualizarMeuProdutoClicadoActivity.this, "Produto deletado com sucesso.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, VisualizarMeusProdutosActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -111,7 +111,7 @@ public class VisualizarMeuAnuncioClicadoActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(VisualizarMeuAnuncioClicadoActivity.this, VisualizarMeusAnunciosActivity.class);
+        Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, VisualizarMeusProdutosActivity.class);
         startActivity(intent);
         finish();
     }

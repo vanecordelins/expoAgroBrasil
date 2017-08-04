@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ import java.util.List;
  * Created by Samir on 25/07/2017.
  */
 
-public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
+public class VisualizarMeusProdutosActivity extends AppCompatActivity {
 
     private static String idClicado;
     private ProgressDialog progress;
@@ -44,10 +45,20 @@ public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        progress = new ProgressDialog(VisualizarMeusAnunciosActivity.this);
+        progress = new ProgressDialog(VisualizarMeusProdutosActivity.this);
         progress.setCancelable(false);
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
+
+        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico3);
+        rdoBtnServico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaCadastrarServico = new Intent(VisualizarMeusProdutosActivity.this, VisualizarMeusServicosActivity.class);
+                startActivity(telaCadastrarServico);
+                finish();
+            }
+        });
 
 
 
@@ -60,19 +71,19 @@ public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
 
                 final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
                 recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(VisualizarMeusAnunciosActivity.this));
+                recyclerView.setLayoutManager(new LinearLayoutManager(VisualizarMeusProdutosActivity.this));
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 Query myref = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("idUsuario").equalTo(uid);
 
-                final FirebaseRecyclerAdapter<Produto, VisualizarMeusAnunciosActivity.ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, VisualizarMeusAnunciosActivity.ListaViewHolder>(
+                final FirebaseRecyclerAdapter<Produto, VisualizarMeusProdutosActivity.ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, VisualizarMeusProdutosActivity.ListaViewHolder>(
                         Produto.class,
                         R.layout.linha,
-                        VisualizarMeusAnunciosActivity.ListaViewHolder.class,
+                        VisualizarMeusProdutosActivity.ListaViewHolder.class,
                         myref
                 ) {
 
                     @Override
-                    protected void populateViewHolder(VisualizarMeusAnunciosActivity.ListaViewHolder viewHolder, final Produto model, int position) {
+                    protected void populateViewHolder(VisualizarMeusProdutosActivity.ListaViewHolder viewHolder, final Produto model, int position) {
 
                         final String key = getRef(position).getKey();
 
@@ -89,10 +100,10 @@ public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
                                 setId(key);
                                 //  TextView i = (TextView) findViewById(R.id.vendedor);
                                 //   i.setText(model.getNome());
-                                Intent intent = new Intent(VisualizarMeusAnunciosActivity.this, VisualizarMeuAnuncioClicadoActivity.class);
+                                Intent intent = new Intent(VisualizarMeusProdutosActivity.this, VisualizarMeuProdutoClicadoActivity.class);
                                 startActivity(intent);
                                 finish();
-                                //     Toast.makeText(VisualizarMeusAnunciosActivity.this, key, Toast.LENGTH_LONG).show();
+                                //     Toast.makeText(VisualizarMeusProdutosActivity.this, key, Toast.LENGTH_LONG).show();
 
                             }
                         });
@@ -100,7 +111,7 @@ public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
                     }
 
                 };
-                VisualizarMeusAnunciosActivity.this.runOnUiThread(new Runnable() {
+                VisualizarMeusProdutosActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         progress.dismiss();
@@ -118,7 +129,7 @@ public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (!connected) {
-                    Toast.makeText(VisualizarMeusAnunciosActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VisualizarMeusProdutosActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -191,7 +202,7 @@ public class VisualizarMeusAnunciosActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(VisualizarMeusAnunciosActivity.this, MenuActivity.class);
+        Intent intent = new Intent(VisualizarMeusProdutosActivity.this, MenuProdutoActivity.class);
         startActivity(intent);
         finish();
     }
