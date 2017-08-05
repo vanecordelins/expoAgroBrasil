@@ -1,6 +1,5 @@
 package com.expoagro.expoagrobrasil;
 
-import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.expoagro.expoagrobrasil.util.Regex;
 
 import org.junit.Test;
