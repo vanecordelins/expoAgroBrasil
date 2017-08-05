@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.expoagro.expoagrobrasil.controller.MenuActivity">
+    tools:context="com.expoagro.expoagrobrasil.controller.MenuProdutoActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,5 +21,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_menu" />
+    <include layout="@layout/content_menu_servico" />
 
 </android.support.design.widget.CoordinatorLayout>

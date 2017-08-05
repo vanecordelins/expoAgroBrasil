@@ -5,14 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/recyclerview2">
-    </android.support.v7.widget.RecyclerView>
 
     <RadioButton
         android:id="@+id/rdoBtnProduto3"
@@ -35,5 +27,14 @@
         android:layout_toLeftOf="@+id/rdoBtnProduto3"
         android:layout_toStartOf="@+id/rdoBtnProduto3"
         android:layout_marginRight="46dp"
-        android:layout_marginEnd="46dp" />
+        android:layout_marginEnd="46dp"  />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:id="@+id/recyclerview4"
+        android:layout_below="@+id/rdoBtnServico3"
+        android:layout_centerHorizontal="true">
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

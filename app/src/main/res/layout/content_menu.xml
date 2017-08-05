@@ -9,8 +9,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:layout_marginTop="50dp"
-        android:id="@+id/recyclerview">
+        android:id="@+id/recyclerview"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/rdoBtnProduto2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
     </android.support.v7.widget.RecyclerView>
+
+    <RadioButton
+        android:id="@+id/rdoBtnProduto2"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="57dp"
+        android:layout_marginRight="57dp"
+        android:layout_marginTop="77dp"
+        android:text="Produtos" />
+
+    <RadioButton
+        android:id="@+id/rdoBtnServico2"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_alignBottom="@+id/rdoBtnProduto2"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_toLeftOf="@+id/rdoBtnProduto2"
+        android:layout_toStartOf="@+id/rdoBtnProduto2"
+        android:text="Serviços" />
 </RelativeLayout>
 

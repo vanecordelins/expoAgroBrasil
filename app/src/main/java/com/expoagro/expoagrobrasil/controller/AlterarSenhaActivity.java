@@ -61,7 +61,7 @@ public class AlterarSenhaActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent it = new Intent(AlterarSenhaActivity.this, MenuActivity.class);
+        Intent it = new Intent(AlterarSenhaActivity.this, MenuProdutoActivity.class);
         startActivity(it);
         finish();
     }

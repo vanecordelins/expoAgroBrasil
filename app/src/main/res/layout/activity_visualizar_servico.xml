@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.expoagro.expoagrobrasil.controller.VisualizarMeuServicoClicadoActivity">
+
+    <TextView
+        android:id="@+id/nomeServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome"
+        android:layout_below="@+id/viewServico"
+        android:layout_alignLeft="@+id/viewServico"
+        android:layout_alignStart="@+id/viewServico"
+        android:layout_marginTop="15dp"
+        android:textSize="8pt"/>
+
+    <TextView
+        android:id="@+id/descricaoServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nomeServico"
+        android:layout_alignStart="@+id/nomeServico"
+        android:layout_below="@+id/nomeServico"
+        android:layout_marginTop="24dp"
+        android:text="Descriçao" />
+
+    <TextView
+        android:id="@+id/observacaoServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:text="Observação"
+        android:layout_below="@+id/descricaoServico"
+        android:layout_alignLeft="@+id/descricaoServico"
+        android:layout_alignStart="@+id/descricaoServico" />
+
+    <TextView
+        android:id="@+id/dataServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="Data"
+        android:layout_below="@+id/observacaoServico"
+        android:layout_alignLeft="@+id/observacaoServico"
+        android:layout_alignStart="@+id/observacaoServico" />
+
+    <TextView
+        android:id="@+id/vendedorServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dataServico"
+        android:layout_alignStart="@+id/dataServico"
+        android:layout_below="@+id/dataServico"
+        android:layout_marginTop="16dp"
+        android:text="Vendedor" />
+
+    <Button
+        android:id="@+id/alterarServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alterar"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/vendedorServico"
+        android:layout_alignLeft="@+id/vendedorServico"
+        android:layout_alignStart="@+id/vendedorServico" />
+
+    <Button
+        android:id="@+id/excluirServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Excluir"
+        android:layout_alignBaseline="@+id/alterarServico"
+        android:layout_alignBottom="@+id/alterarServico"
+        android:layout_alignRight="@+id/viewServico"
+        android:layout_alignEnd="@+id/viewServico" />
+
+    <ImageView
+        android:id="@+id/viewServico"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@mipmap/eab_logo" />
+
+</RelativeLayout>

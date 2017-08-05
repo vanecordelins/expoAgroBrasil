@@ -115,7 +115,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mCancelarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent telaMenu = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
+                Intent telaMenu = new Intent(CadastroProdutoActivity.this, MenuProdutoActivity.class);
                 startActivity(telaMenu);
                 finish();
             }
@@ -162,7 +162,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent telaMenu = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
+        Intent telaMenu = new Intent(CadastroProdutoActivity.this, MenuProdutoActivity.class);
         startActivity(telaMenu);
         finish();
     }
@@ -329,7 +329,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(getApplicationContext(), R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
-                        Intent it = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
+                        Intent it = new Intent(CadastroProdutoActivity.this, MenuProdutoActivity.class);
                         startActivity(it);
                         finish();
                     }

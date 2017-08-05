@@ -34,7 +34,7 @@ public class ServicoDAO implements InterfaceDAO<Servico>{
     }
 
     @Override
-    public void delete(String idServico) {
+    public void delete(final String idServico) {
         getDatabaseReference().child(idServico).removeValue();
     }
 }

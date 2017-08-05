@@ -90,7 +90,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
         fotos = new ArrayList<>();
         fotosURLUp = new ArrayList<>();
 
-        keyProduto = VisualizarMeusAnunciosActivity.getId();
+        keyProduto = VisualizarMeusProdutosActivity.getId();
 
         dialog = new ProgressDialog(AlterarProdutoActivity.this);
         dialog = new ProgressDialog(this);
@@ -122,7 +122,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
         mCancelarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuAnuncioClicadoActivity.class);
+                Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuProdutoClicadoActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -314,7 +314,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
             Toast.makeText(AlterarProdutoActivity.this, "Produto atualizado com sucesso.", Toast.LENGTH_SHORT).show();
 
             dialog.dismiss();
-            Intent it = new Intent(AlterarProdutoActivity.this, VisualizarMeuAnuncioClicadoActivity.class);
+            Intent it = new Intent(AlterarProdutoActivity.this, VisualizarMeuProdutoClicadoActivity.class);
             startActivity(it);
             finish();
         }
@@ -410,7 +410,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuAnuncioClicadoActivity.class);
+        Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuProdutoClicadoActivity.class);
         startActivity(intent);
         finish();
     }

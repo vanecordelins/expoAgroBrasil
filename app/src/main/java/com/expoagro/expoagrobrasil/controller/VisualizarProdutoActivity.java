@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -22,11 +23,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import me.relex.circleindicator.CircleIndicator;
+
 /**
  * Created by Samir on 24/07/2017.
  */
 
-public class VisualizarAnuncioActivity extends AppCompatActivity {
+public class VisualizarProdutoActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
 
@@ -36,9 +39,8 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar_anuncio);
         final ArrayList<String> img = new ArrayList<>();
 
-        final String keyProduto = MenuActivity.getId();
-//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        final String nome = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        final String keyProduto = MenuProdutoActivity.getId();
+
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -65,12 +67,12 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                                 System.out.println("Erro ao pesquisar vendedor");
                             }
                         });
-//                        ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + nome);
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
                         ((TextView) findViewById(R.id.observacaoProduto)).setText("Observação: " + produto.getObservacao());
 
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
+                        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
 
                         if(produto.getFoto() != null){
                             if (!produto.getFoto().isEmpty()) {
@@ -80,27 +82,34 @@ public class VisualizarAnuncioActivity extends AppCompatActivity {
                                 img.add(produto.getFoto().get(i));
                             }
                         }
-                        testeViewPager = new AnuncioViewPager(VisualizarAnuncioActivity.this, img);
+                        testeViewPager = new AnuncioViewPager(VisualizarProdutoActivity.this, img);
                         viewPager.setAdapter(testeViewPager);
+                        indicator.setViewPager(viewPager);
                     }
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(VisualizarAnuncioActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
+                Toast.makeText(VisualizarProdutoActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
             }
         });
 
-        //System.out.println(img);
+
         Button alterar = (Button) findViewById(R.id.alterarProduto);
         Button excluir = (Button) findViewById(R.id.excluirProduto);
 
         alterar.setVisibility(View.GONE);
         excluir.setVisibility(View.GONE);
 
-
-
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 }

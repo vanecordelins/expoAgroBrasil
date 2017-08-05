@@ -69,25 +69,25 @@
         android:layout_alignStart="@+id/animal" />
 
     <Button
-        android:id="@+id/servico"
+        android:id="@+id/outros"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignBottom="@+id/maquinarios"
         android:layout_alignLeft="@+id/propriedade"
         android:layout_alignStart="@+id/propriedade"
-        android:text="Serviços"
-        android:textSize="5pt"
-        android:drawableTop="@drawable/services"/>
+        android:drawableTop="@drawable/outros"
+        android:text="Outros"
+        android:textSize="5pt" />
 
     <Button
         android:id="@+id/produto"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignBottom="@+id/servico"
+        android:layout_alignBottom="@+id/outros"
         android:layout_alignLeft="@+id/ferramenta"
         android:layout_alignStart="@+id/ferramenta"
-        android:text="Produtos"
-        android:textSize="5pt"
-        android:drawableTop="@drawable/product"/>
+        android:drawableTop="@drawable/product"
+        android:text="Todos os Produtos"
+        android:textSize="5pt" />
 
 </RelativeLayout>
