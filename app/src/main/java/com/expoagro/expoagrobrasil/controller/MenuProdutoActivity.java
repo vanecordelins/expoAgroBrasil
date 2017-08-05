@@ -105,7 +105,7 @@ public class MenuProdutoActivity extends AppCompatActivity
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() == null) {
-                                Toast.makeText(MenuProdutoActivity.this, "Produtos não encontrados", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MenuProdutoActivity.this, "Produtos não encontrados", Toast.LENGTH_SHORT).show();
                                 progress.dismiss();
                             }
                         }
@@ -272,11 +272,8 @@ public class MenuProdutoActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            Intent intent = new Intent(MenuProdutoActivity.this, InicialArrobaActivity.class);
-            startActivity(intent);
-            finish();
         }
+        finish();
     }
 
 

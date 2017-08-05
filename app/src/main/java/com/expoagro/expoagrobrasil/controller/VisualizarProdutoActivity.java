@@ -1,8 +1,12 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +21,12 @@ import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.AnuncioViewPager;
+import com.expoagro.expoagrobrasil.util.GoogleSignIn;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -29,9 +39,10 @@ import me.relex.circleindicator.CircleIndicator;
  * Created by Samir on 24/07/2017.
  */
 
-public class VisualizarProdutoActivity extends AppCompatActivity {
+public class VisualizarProdutoActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,13 @@ public class VisualizarProdutoActivity extends AppCompatActivity {
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = MenuProdutoActivity.getId();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(VisualizarProdutoActivity.this)
+                .enableAutoManage(VisualizarProdutoActivity.this, VisualizarProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+
 
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -102,6 +120,20 @@ public class VisualizarProdutoActivity extends AppCompatActivity {
         alterar.setVisibility(View.GONE);
         excluir.setVisibility(View.GONE);
 
+        checkForConnection();
+
+    }
+
+    private void checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(VisualizarProdutoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                GoogleSignIn.signOut(VisualizarProdutoActivity.this, mGoogleApiClient);
+            }
+        }
     }
 
     @Override
@@ -112,4 +144,8 @@ public class VisualizarProdutoActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        System.out.println("on Connection failed.");
+    }
 }

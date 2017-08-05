@@ -38,6 +38,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 /**
@@ -106,7 +107,21 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MenuServicoActivity.this));
-                DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Serviço");
+                Query myref = FirebaseDatabase.getInstance().getReference("Serviço");
+                if (FrequenciasActivity.isClick()) {
+                    myref = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("frequencia").equalTo(FrequenciasActivity.getUid());
+                    myref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue() == null) {
+                                Toast.makeText(MenuServicoActivity.this, "Serviços não encontrados", Toast.LENGTH_SHORT).show();
+                                progress.dismiss();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) { databaseError.getMessage(); }
+                    });
+                }
 
                 final FirebaseRecyclerAdapter<Servico, ServicoViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Servico, ServicoViewHolder>(
                         Servico.class,
@@ -262,11 +277,8 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_2);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            Intent intent = new Intent(MenuServicoActivity.this, InicialArrobaActivity.class);
-            startActivity(intent);
-            finish();
         }
+        finish();
     }
 
 
@@ -332,9 +344,10 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.app_bar_filter:
-            //    Intent intent = new Intent(MenuServicoActivity.this, FrequenciaActivity.class);
-            //    startActivity(intent);
-            //    return true;
+                Intent intent = new Intent(MenuServicoActivity.this, FrequenciasActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

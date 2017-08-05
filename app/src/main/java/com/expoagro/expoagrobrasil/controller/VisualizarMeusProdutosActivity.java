@@ -77,6 +77,7 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
+                            progress.dismiss();
                             Toast.makeText(VisualizarMeusProdutosActivity.this, "Você não possui produtos cadastrados.", Toast.LENGTH_SHORT).show();
                         }
                     }
