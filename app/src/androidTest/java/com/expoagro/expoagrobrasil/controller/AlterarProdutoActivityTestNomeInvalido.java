@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.allOf;
 public class AlterarProdutoActivityTestNomeInvalido {
 
     @Rule
-    public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
+    public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
 
     @Test
     public void alterarProdutoActivityTestNomeValido() throws InterruptedException {

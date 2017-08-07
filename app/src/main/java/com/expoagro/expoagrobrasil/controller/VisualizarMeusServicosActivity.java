@@ -10,17 +10,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
-import com.expoagro.expoagrobrasil.util.Servico;
+import com.expoagro.expoagrobrasil.model.Servico;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by joao on 03/08/17.
@@ -38,15 +39,18 @@ public class VisualizarMeusServicosActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnProduto3);
-        rdoBtnServico.setOnClickListener(new View.OnClickListener() {
+        RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto3);
+        rdoBtnProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent telaCadastrarServico = new Intent(VisualizarMeusServicosActivity.this, VisualizarMeusAnunciosActivitty.class);
+                Intent telaCadastrarServico = new Intent(VisualizarMeusServicosActivity.this, VisualizarMeusProdutosActivity.class);
                 startActivity(telaCadastrarServico);
                 finish();
             }
         });
+
+        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico3);
+        rdoBtnServico.setChecked(true);
 
 
         // ----------------------------------RecyclerView-----------------------------------------------------------
@@ -56,7 +60,21 @@ public class VisualizarMeusServicosActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Query myref = FirebaseDatabase.getInstance().getReference("Servico").orderByChild("idUsuario").equalTo(uid);
+        Query myref = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("idUsuario").equalTo(uid);
+
+        myref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    Toast.makeText(VisualizarMeusServicosActivity.this, "Você não possui serviços cadastrados.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                databaseError.getMessage();
+            }
+        });
 
         FirebaseRecyclerAdapter<Servico, VisualizarMeusServicosActivity.ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Servico, VisualizarMeusServicosActivity.ListaViewHolder>(
                 Servico.class,
@@ -70,12 +88,11 @@ public class VisualizarMeusServicosActivity extends AppCompatActivity {
 
                 final String keyServico = getRef(posit).getKey();
 
-                viewHolder.setCategoria(model.getCategoria());
+                viewHolder.setCategoria(model.getFrequencia());
                 viewHolder.setData(model.getData());
                 viewHolder.setValor(model.getValor());
-                viewHolder.setFoto(model.getFoto());
                 viewHolder.setNome(model.getNome());
-
+                viewHolder.setFoto();
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -83,7 +100,7 @@ public class VisualizarMeusServicosActivity extends AppCompatActivity {
                         setId(keyServico);
                         //  TextView i = (TextView) findViewById(R.id.vendedor);
                         //   i.setText(model.getNome());
-                        Intent intent = new Intent(VisualizarMeusServicosActivity.this, VisualizarServicoActivity.class);
+                        Intent intent = new Intent(VisualizarMeusServicosActivity.this, VisualizarMeuServicoClicadoActivity.class);
                         startActivity(intent);
                         finish();
                         //     Toast.makeText(VisualizarMeusAnunciosActivitty.this, key, Toast.LENGTH_LONG).show();
@@ -122,14 +139,9 @@ public class VisualizarMeusServicosActivity extends AppCompatActivity {
             textView_valor = (TextView) itemView.findViewById(R.id.valorProduto);
             textView_categoria = (TextView) itemView.findViewById(R.id.categoriaProduto);
             imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);
-            //textView_nome2 = (TextView) itemView.findViewById(R.id.vendedorProduto);
         }
 
-
-        public void setNome(String nome) {
-
-            textView_nome.setText(nome);
-        }
+        public void setNome(String nome) { textView_nome.setText(nome); }
 
         public void setData(String data) {
             textView_data.setText(data);
@@ -143,21 +155,12 @@ public class VisualizarMeusServicosActivity extends AppCompatActivity {
             textView_categoria.setText(categoria);
         }
 
-
-        public void setFoto(List<String> foto) {
-            if (foto == null) {
-            } else {
-                Picasso.with(mView.getContext())
-                        .load(foto.get(0))
-                        .resize(100,100)
-                        .into(imageView);
-            }
-        }
+        public void setFoto() { imageView.setImageResource(R.drawable.services); }
 
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(VisualizarMeusServicosActivity.this, MenuActivity.class);
+        Intent intent = new Intent(VisualizarMeusServicosActivity.this, MenuProdutoActivity.class);
         startActivity(intent);
         finish();
     }

@@ -2,7 +2,6 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Activity;
 import android.app.Dialog;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,10 +32,7 @@ import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.util.ImagePicker;
 import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
-
 import com.expoagro.expoagrobrasil.util.ProdutoViewPager;
-import com.expoagro.expoagrobrasil.util.Regex;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -94,7 +90,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
         fotos = new ArrayList<>();
         fotosURLUp = new ArrayList<>();
 
-        keyProduto = VisualizarMeusAnunciosActivity.getId();
+        keyProduto = VisualizarMeusProdutosActivity.getId();
 
         dialog = new ProgressDialog(AlterarProdutoActivity.this);
         dialog = new ProgressDialog(this);
@@ -126,7 +122,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
         mCancelarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuAnuncioClicadoActivity.class);
+                Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuProdutoClicadoActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -318,7 +314,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
             Toast.makeText(AlterarProdutoActivity.this, "Produto atualizado com sucesso.", Toast.LENGTH_SHORT).show();
 
             dialog.dismiss();
-            Intent it = new Intent(AlterarProdutoActivity.this, VisualizarMeuAnuncioClicadoActivity.class);
+            Intent it = new Intent(AlterarProdutoActivity.this, VisualizarMeuProdutoClicadoActivity.class);
             startActivity(it);
             finish();
         }
@@ -414,7 +410,7 @@ public class AlterarProdutoActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuAnuncioClicadoActivity.class);
+        Intent intent = new Intent(AlterarProdutoActivity.this, VisualizarMeuProdutoClicadoActivity.class);
         startActivity(intent);
         finish();
     }
@@ -430,10 +426,6 @@ public class AlterarProdutoActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(nome)) {
             mNomeView.setError(getString(R.string.error_field_required));
-            focusView = mNomeView;
-            cancelar = true;
-        } else if (!Regex.isNameValid(nome)) {
-            mNomeView.setError(getString(R.string.error_nome_invalido));
             focusView = mNomeView;
             cancelar = true;
         } else if (TextUtils.isEmpty(valor)) {

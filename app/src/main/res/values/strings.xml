@@ -76,6 +76,7 @@
         <item>Animal</item>
         <item>Ferramenta</item>
         <item>Propriedade</item>
+        <item>Maquinários</item>
         <item>Outros</item>
     </string-array>
 
@@ -87,6 +88,7 @@
         <item>Por Quinzena</item>
         <item>Outra</item>
     </string-array>
+    <string name="title_activity_">Activity</string>
 
 
 </resources>

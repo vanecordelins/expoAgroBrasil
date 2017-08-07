@@ -70,7 +70,7 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (!connected) {
                     Toast.makeText(VisualizarUsuarioActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(VisualizarUsuarioActivity.this, MenuActivity.class);
+                    Intent intent = new Intent(VisualizarUsuarioActivity.this, MenuProdutoActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -122,7 +122,7 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent it = new Intent(VisualizarUsuarioActivity.this, MenuActivity.class);
+        Intent it = new Intent(VisualizarUsuarioActivity.this, MenuProdutoActivity.class);
         startActivity(it);
         finish();
     }

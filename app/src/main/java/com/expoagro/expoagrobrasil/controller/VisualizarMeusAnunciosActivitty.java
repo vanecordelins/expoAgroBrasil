@@ -83,7 +83,7 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
                         setId(keyProduto);
                         //  TextView i = (TextView) findViewById(R.id.vendedor);
                         //   i.setText(model.getNome());
-                        Intent intent = new Intent(VisualizarMeusAnunciosActivitty.this, VisualizarMeuAnuncio.class);
+                        Intent intent = new Intent(VisualizarMeusAnunciosActivitty.this, VisualizarMeuProdutoClicadoActivity.class);
                         startActivity(intent);
                         finish();
                    //     Toast.makeText(VisualizarMeusAnunciosActivitty.this, key, Toast.LENGTH_LONG).show();
@@ -208,7 +208,7 @@ public class VisualizarMeusAnunciosActivitty extends AppCompatActivity {
 //
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(VisualizarMeusAnunciosActivitty.this, MenuActivity.class);
+        Intent intent = new Intent(VisualizarMeusAnunciosActivitty.this, MenuProdutoActivity.class);
         startActivity(intent);
         finish();
     }

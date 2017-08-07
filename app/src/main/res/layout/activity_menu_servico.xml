@@ -23,7 +23,5 @@
         app:menu="@menu/activity_menu_drawer">
     </android.support.design.widget.NavigationView>
 
-    <include layout="@layout/content_menu_servico"/>
-
 
 </android.support.v4.widget.DrawerLayout>
