@@ -2,6 +2,7 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.os.IBinder;
 import android.support.test.espresso.Root;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewInteraction;
 import android.view.WindowManager;
 
@@ -49,6 +50,22 @@ class TesteUtils {
         }
     }
 
+    static void espera(){
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+     }
+
+    static void espera(int tempo){
+        try {
+            Thread.sleep(tempo);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     static void fazerLogin(){
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
@@ -78,7 +95,7 @@ class TesteUtils {
         }
     }
 
-    private static void preencheCampo(int campo, String texto){
+    static void preencheCampo(int campo, String texto){
 
         ViewInteraction appCompatAutoCompleteTextView2 = onView(
                 allOf(withId(campo), isDisplayed()));
@@ -91,12 +108,19 @@ class TesteUtils {
         appCompatButton.perform(click());
     }
 
+    static void clicaEm(int botao, String texto,ViewAction scroll){
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(botao), withText(texto), isDisplayed()));
+        appCompatButton.perform(scroll, click());
+    }
+
     static void verificaTexto(String texto){
         ViewInteraction result = onView(withText(texto)).inRoot(new TesteUtils.ToastMatcher())
                 .check(matches(withText(texto)));
 
         Assert.assertNotNull(result);
     }
+
     static void vejaItem(int item) {
         ViewInteraction result = onView(withId(item));
         result.check(matches(isDisplayed()));
@@ -115,12 +139,11 @@ class TesteUtils {
                 allOf(withId(menu), withText(texto), isDisplayed()));
         appCompatCheckedTextView2.perform(click());
     }
-    static void selecionaItem(int item){
+
+    static void selecionaItem(int recycle, int item){
         ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.recyclerview2),
-                        withParent(allOf(withId(R.id.activity_meusanuncios),
-                                withParent(withId(android.R.id.content)))),
-                        isDisplayed()));
+                allOf(withId(recycle),isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(item, click()));
     }
+
 }
