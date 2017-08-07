@@ -6,77 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.expoagro.expoagrobrasil.controller.VisualizarMeuServicoClicadoActivity">
 
-    <TextView
-        android:id="@+id/nomeServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nome"
-        android:layout_below="@+id/viewServico"
-        android:layout_alignLeft="@+id/viewServico"
-        android:layout_alignStart="@+id/viewServico"
-        android:layout_marginTop="15dp"
-        android:textSize="8pt"/>
-
-    <TextView
-        android:id="@+id/descricaoServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/nomeServico"
-        android:layout_alignStart="@+id/nomeServico"
-        android:layout_below="@+id/nomeServico"
-        android:layout_marginTop="24dp"
-        android:text="Descriçao" />
-
-    <TextView
-        android:id="@+id/observacaoServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
-        android:text="Observação"
-        android:layout_below="@+id/descricaoServico"
-        android:layout_alignLeft="@+id/descricaoServico"
-        android:layout_alignStart="@+id/descricaoServico" />
-
-    <TextView
-        android:id="@+id/dataServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Data"
-        android:layout_below="@+id/observacaoServico"
-        android:layout_alignLeft="@+id/observacaoServico"
-        android:layout_alignStart="@+id/observacaoServico" />
-
-    <TextView
-        android:id="@+id/vendedorServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/dataServico"
-        android:layout_alignStart="@+id/dataServico"
-        android:layout_below="@+id/dataServico"
-        android:layout_marginTop="16dp"
-        android:text="Vendedor" />
-
-    <Button
-        android:id="@+id/alterarServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alterar"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/vendedorServico"
-        android:layout_alignLeft="@+id/vendedorServico"
-        android:layout_alignStart="@+id/vendedorServico" />
-
-    <Button
-        android:id="@+id/excluirServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Excluir"
-        android:layout_alignBaseline="@+id/alterarServico"
-        android:layout_alignBottom="@+id/alterarServico"
-        android:layout_alignRight="@+id/viewServico"
-        android:layout_alignEnd="@+id/viewServico" />
-
     <ImageView
         android:id="@+id/viewServico"
         android:layout_width="300dp"
@@ -85,4 +14,128 @@
         android:layout_centerHorizontal="true"
         app:srcCompat="@mipmap/eab_logo" />
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/viewServico">
+
+        <ImageButton
+            android:id="@+id/btnFavoritarServico"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintRight_toLeftOf="@+id/btnCompartilharServico"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <ImageButton
+            android:id="@+id/btnCompartilharServico"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="?attr/actionModeShareDrawable" />
+
+        <TextView
+            android:id="@+id/nomeServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="0dp"
+            android:text="Nome"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnFavoritarServico" />
+
+        <TextView
+            android:id="@+id/descricaoServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/nomeServico"
+            android:layout_alignStart="@+id/nomeServico"
+            android:layout_below="@+id/nomeServico"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Descriçao"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomeServico" />
+
+        <TextView
+            android:id="@+id/observacaoServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/descricaoServico"
+            android:layout_alignStart="@+id/descricaoServico"
+            android:layout_below="@+id/descricaoServico"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Observação"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descricaoServico" />
+
+        <TextView
+            android:id="@+id/dataServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/observacaoServico"
+            android:layout_alignStart="@+id/observacaoServico"
+            android:layout_below="@+id/observacaoServico"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Data"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/observacaoServico" />
+
+        <TextView
+            android:id="@+id/vendedorServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/dataServico"
+            android:layout_alignStart="@+id/dataServico"
+            android:layout_below="@+id/dataServico"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Vendedor"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dataServico" />
+
+        <Button
+            android:id="@+id/alterarServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:layout_marginLeft="64dp"
+            android:layout_toLeftOf="@+id/excluirServico"
+            android:layout_toStartOf="@+id/excluirServico"
+            android:text="Alterar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Button
+            android:id="@+id/excluirServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/alterarServico"
+            android:layout_alignBottom="@+id/alterarServico"
+            android:layout_marginBottom="32dp"
+            android:layout_marginRight="64dp"
+            android:text="Excluir"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+>>>>>>> 59b4358fd7ca35ad8cda75d81001b53a6d5eabc4
 </RelativeLayout>

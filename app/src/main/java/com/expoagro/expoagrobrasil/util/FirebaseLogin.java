@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.expoagro.expoagrobrasil.controller.MenuProdutoActivity;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
@@ -94,7 +93,7 @@ public class FirebaseLogin {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             // there was an error
-                            Toast.makeText(activity, R.string.error_login, Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, "Sem conexão com a internet. Tente novamente.", Toast.LENGTH_SHORT).show();
                             progress.dismiss();
                         } else {
                             if (task.getResult().getUser().isEmailVerified()) {

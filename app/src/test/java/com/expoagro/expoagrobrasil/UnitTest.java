@@ -1,6 +1,6 @@
 package com.expoagro.expoagrobrasil;
 
-import com.expoagro.expoagrobrasil.controller.LoginActivity;
+import com.expoagro.expoagrobrasil.util.Regex;
 
 import org.junit.Test;
 
@@ -15,15 +15,13 @@ public class UnitTest {
     
     @Test
     public void emailValido() throws Exception {
-        LoginActivity loginActivityEmail = new LoginActivity();
-        boolean email = loginActivityEmail.isEmailValid("nome@123.com");
+        boolean email = Regex.isEmailValid("nome@123.com");
         assertEquals(true, email);
     }
 
     @Test
     public void senhaValida() throws Exception {
-        LoginActivity loginActivitySenha = new LoginActivity();
-        boolean senha = loginActivitySenha.isPasswordValid("123456");
+        boolean senha = Regex.isPasswordValid("123456");
         assertEquals(true,senha);
     }
 

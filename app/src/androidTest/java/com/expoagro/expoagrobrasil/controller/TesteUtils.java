@@ -8,6 +8,8 @@ import android.view.WindowManager;
 import com.expoagro.expoagrobrasil.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import junit.framework.Assert;
+
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -15,8 +17,8 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -39,7 +41,7 @@ class TesteUtils {
             if ((type == WindowManager.LayoutParams.TYPE_TOAST)) {
                 IBinder windowToken = root.getDecorView().getWindowToken();
                 IBinder appToken = root.getDecorView().getApplicationWindowToken();
-                if (windowToken == appToken) {
+                if (windowToken.equals(appToken)) {
                     return true;
                 }
             }
@@ -47,19 +49,7 @@ class TesteUtils {
         }
     }
 
-    static public ViewInteraction matcherResult(int id ,String text){
-        ViewInteraction buttonCadastrar = onView(
-                allOf(withId(R.id.btnCadastrar), isDisplayed()));
-        buttonCadastrar.perform(scrollTo(), click());
-
-
-        ViewInteraction result = onView(
-                allOf(withId(id), isDisplayed()));
-        result.check(matches(withText(text)));
-        return result;
-    }
-
-    static public void fazerLogin(){
+    static void fazerLogin(){
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
             ViewInteraction appCompatImageButton2 = onView(
@@ -88,10 +78,49 @@ class TesteUtils {
         }
     }
 
-    static void preencheCampo(int campo, String texto){
+    private static void preencheCampo(int campo, String texto){
 
         ViewInteraction appCompatAutoCompleteTextView2 = onView(
                 allOf(withId(campo), isDisplayed()));
         appCompatAutoCompleteTextView2.perform(replaceText(texto), closeSoftKeyboard());
+    }
+
+    static void clicaEm(int botao, String texto){
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(botao), withText(texto), isDisplayed()));
+        appCompatButton.perform(click());
+    }
+
+    static void verificaTexto(String texto){
+        ViewInteraction result = onView(withText(texto)).inRoot(new TesteUtils.ToastMatcher())
+                .check(matches(withText(texto)));
+
+        Assert.assertNotNull(result);
+    }
+    static void vejaItem(int item) {
+        ViewInteraction result = onView(withId(item));
+        result.check(matches(isDisplayed()));
+
+        Assert.assertNotNull(result);
+    }
+
+    static void abreMenu(int menu, String texto){
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withContentDescription("Open navigation drawer"),
+                        withParent(withId(R.id.toolbar)),
+                        isDisplayed()));
+        appCompatImageButton2.perform(click());
+
+        ViewInteraction appCompatCheckedTextView2 = onView(
+                allOf(withId(menu), withText(texto), isDisplayed()));
+        appCompatCheckedTextView2.perform(click());
+    }
+    static void selecionaItem(int item){
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerview2),
+                        withParent(allOf(withId(R.id.activity_meusanuncios),
+                                withParent(withId(android.R.id.content)))),
+                        isDisplayed()));
+        recyclerView.perform(actionOnItemAtPosition(item, click()));
     }
 }
