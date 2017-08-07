@@ -179,39 +179,59 @@ public class MenuActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
-//        query.
-        Query q = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome").startAt(query);
-        final FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
-                Lista.class,
-                R.layout.linha,
-                ListaViewHolder.class,
-                q
-        ) {
+    public boolean onQueryTextSubmit(final String query) {
+//        System.out.println(query.substring(1));
+        final Query q = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome");
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
-                System.out.println(model);
-                final String key = getRef(position).getKey();
-                viewHolder.setCategoria(model.getCategoria());
-                viewHolder.setData(model.getData());
-                viewHolder.setValor(model.getValor());
-                viewHolder.setFoto(model.getFoto());
-                viewHolder.setNome(model.getNome());
-                progress.dismiss();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot prod : dataSnapshot.getChildren()){
+                    Produto produto = prod.getValue(Produto.class);
+                    System.out.println(produto.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1))));
+                    if(produto.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1)))){
+                        Query q1 = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome").equalTo(produto.getNome());
+                        final FirebaseRecyclerAdapter<Produto, ListaViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Produto, ListaViewHolder>(
+                                Produto.class,
+                                R.layout.linha,
+                                ListaViewHolder.class,
+                                q1
+                        ) {
+                            @Override
+                            protected void populateViewHolder(ListaViewHolder viewHolder, Produto model, int position) {
+                                final String key = getRef(position).getKey();
+                                viewHolder.setCategoria(model.getCategoria());
+                                viewHolder.setData(model.getData());
+                                viewHolder.setValor(model.getValor());
+                                viewHolder.setFoto(model.getFoto());
+                                viewHolder.setNome(model.getNome());
+                                progress.dismiss();
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        setId(key);
-                        Intent intent = new Intent(MenuActivity.this, VisualizarAnuncioActivity.class);
-                        startActivity(intent);
+                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        setId(key);
+                                        Intent intent = new Intent(MenuActivity.this, VisualizarAnuncioActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        };
+
+                        recyclerView.setAdapter(recyclerAdapter2);
                     }
-                });
+//                    else{
+//                        Toast.makeText(MenuActivity.this, "Produto não encontrado.", Toast.LENGTH_SHORT).show();
+//                    }
+                }
             }
-        };
 
-        recyclerView.setAdapter(recyclerAdapter2);
-        return false;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return true;
     }
 
     @Override
