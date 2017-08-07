@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
     private GoogleApiClient mGoogleApiClient;
+    private String shareProduto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,8 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = MenuProdutoActivity.getId();
+
+        shareProduto = "";
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
@@ -92,6 +96,10 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
                         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
 
+                        shareProduto = "Confira " + produto.getNome().toUpperCase() +
+                                       " por " + produto.getValor() +
+                                       " no aplicativo ExpoAgro Brasil!";
+
                         if(produto.getFoto() != null){
                             if (!produto.getFoto().isEmpty()) {
                                 viewPager.setBackground(null);
@@ -111,8 +119,22 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(VisualizarProdutoActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
             }
+
         });
 
+        ImageButton mBtnCompartilhar = (ImageButton) findViewById(R.id.btnCompartilharProduto);
+        mBtnCompartilhar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareBody = shareProduto + " https://play.google.com/store?hl=pt-BR&tab=w8";
+                String shareSub = "Baixe o aplicativo ExpoAgro Brasil e confira a oferta!";
+                myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                startActivity(Intent.createChooser(myIntent, "Compartilhar usando"));
+            }
+        });
 
         Button alterar = (Button) findViewById(R.id.alterarProduto);
         Button excluir = (Button) findViewById(R.id.excluirProduto);

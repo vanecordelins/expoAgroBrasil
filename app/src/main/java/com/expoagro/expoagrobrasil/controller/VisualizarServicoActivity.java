@@ -2,6 +2,8 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 public class VisualizarServicoActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private ProgressDialog progress;
     private GoogleApiClient mGoogleApiClient;
+    private String shareServico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,10 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                                 System.out.println("Error - recuperar usuario - Visualizar Anuncio");
                             }
                         });
+
+                        shareServico = "Confira " + servico.getNome().toUpperCase() +
+                                " por " + servico.getValor() +
+                                " no aplicativo ExpoAgro Brasil!";
                     }
                 }
             }
@@ -90,6 +98,20 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("Visualizar Servico database error");
+            }
+        });
+
+        ImageButton mBtnServico = (ImageButton) findViewById(R.id.btnCompartilharServico);
+        mBtnServico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareBody = shareServico + " https://play.google.com/store?hl=pt-BR&tab=w8";
+                String shareSub = "Baixe o aplicativo ExpoAgro Brasil e confira a oferta!";
+                myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                startActivity(Intent.createChooser(myIntent, "Compartilhar usando"));
             }
         });
 
