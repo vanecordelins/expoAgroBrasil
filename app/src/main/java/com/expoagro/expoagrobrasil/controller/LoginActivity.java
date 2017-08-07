@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.util.FirebaseLogin;
@@ -94,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             // Usuario ja esta logado, nÃ£o ir para a tela de login
-            Intent it = new Intent(LoginActivity.this, MenuActivity.class);
+            Intent it = new Intent(LoginActivity.this, MenuProdutoActivity.class);
             startActivity(it);
             finish();
         }
@@ -123,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btn_voltar.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(LoginActivity.this, MenuActivity.class);
+                Intent it = new Intent(LoginActivity.this, MenuProdutoActivity.class);
                 startActivity(it);
                 finish();
             }
@@ -133,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onBackPressed() {
-        Intent it = new Intent(LoginActivity.this, MenuActivity.class);
+        Intent it = new Intent(LoginActivity.this, MenuProdutoActivity.class);
         startActivity(it);
         finish();
     }
@@ -152,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             } else {
                 mProgressDialog.dismiss();
-                System.out.println("Não foi possível realizar o Login. Tente Novamente");
+                Toast.makeText(LoginActivity.this, "Sem conexão com a internet.", Toast.LENGTH_SHORT).show();
             }
         }
     }

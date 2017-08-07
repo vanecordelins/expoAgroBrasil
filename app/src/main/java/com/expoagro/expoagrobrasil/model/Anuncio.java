@@ -5,7 +5,6 @@ import com.google.firebase.database.IgnoreExtraProperties;
 /**
  * Created by Fabricio on 7/16/2017.
  */
-
 @IgnoreExtraProperties
 public class Anuncio {
 
@@ -32,6 +31,15 @@ public class Anuncio {
         this.cidade = cidade;
         this.idUsuario = idUsuario;
     }
+
+    public Anuncio(String nome, String observacao, String descricao, String valor, String idUsuario) {
+        this.nome = nome;
+        this.observacao = observacao;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.idUsuario = idUsuario;
+    }
+
 
     public String getIdUsuario() {
         return idUsuario;

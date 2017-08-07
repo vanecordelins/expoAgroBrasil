@@ -165,7 +165,7 @@ public class CompletarCadastroActivity extends AppCompatActivity implements Goog
 
                                 Toast.makeText(CompletarCadastroActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
 
-                                Intent it = new Intent(CompletarCadastroActivity.this, MenuActivity.class);
+                                Intent it = new Intent(CompletarCadastroActivity.this, MenuProdutoActivity.class);
 
                                 startActivity(it);
                                 finish();

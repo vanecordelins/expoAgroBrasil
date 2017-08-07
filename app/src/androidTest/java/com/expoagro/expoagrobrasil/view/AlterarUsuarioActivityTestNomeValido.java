@@ -61,8 +61,6 @@ public class AlterarUsuarioActivityTestNomeValido {
 
         Thread.sleep(3000);
 
-        //ViewInteraction appCompatButton5 = onView(allOf(withId(R.id.btn_sair), withText("SAIR"),isDisplayed()));
-        //appCompatButton5.perform(click());
 
         Assert.assertNotNull(result);
 

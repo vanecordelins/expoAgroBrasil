@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.controller.CompletarCadastroActivity;
-import com.expoagro.expoagrobrasil.controller.MenuActivity;
+import com.expoagro.expoagrobrasil.controller.MenuProdutoActivity;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -61,7 +61,7 @@ public class GoogleSignIn {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot user : dataSnapshot.getChildren()) {
                                 if (user.getKey().equals(uid)) {
-                                    Intent it = new Intent(activity, MenuActivity.class);
+                                    Intent it = new Intent(activity, MenuProdutoActivity.class);
                                     activity.startActivity(it);
                                     activity.finish();
                                     return;
