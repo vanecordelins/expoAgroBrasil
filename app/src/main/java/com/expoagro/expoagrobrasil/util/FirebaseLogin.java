@@ -9,12 +9,17 @@ import android.widget.Toast;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
 import com.expoagro.expoagrobrasil.controller.MenuActivity;
+import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
+import com.expoagro.expoagrobrasil.model.Produto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Fabricio on 6/22/2017.
@@ -24,7 +29,7 @@ public class FirebaseLogin {
 
 
     public static void deleteAccount(final Activity activity) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             UserDAO userDAO = new UserDAO();
             userDAO.delete(user.getUid());
@@ -32,6 +37,22 @@ public class FirebaseLogin {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
+                        final ProdutoDAO pdao = new ProdutoDAO();
+
+                        ProdutoDAO.getDatabaseReference().orderByChild("idUsuario").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot prod : dataSnapshot.getChildren()) {
+                                    Produto produto = prod.getValue(Produto.class);
+                                    pdao.delete(produto.getId());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("Não foi possível deletar os produtos deste usuário.");
+                            }
+                        });
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(activity, "Perfil deletado com sucesso.", Toast.LENGTH_SHORT).show();
                         Intent it = new Intent(activity, LoginActivity.class);

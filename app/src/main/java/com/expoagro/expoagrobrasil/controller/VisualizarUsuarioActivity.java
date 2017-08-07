@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
@@ -20,6 +22,8 @@ import com.expoagro.expoagrobrasil.util.FirebaseLogin;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class VisualizarUsuarioActivity extends AppCompatActivity {
@@ -55,6 +59,26 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                 Intent it = new Intent(VisualizarUsuarioActivity.this, AlterarSenhaActivity.class);
                 startActivity(it);
                 finish();
+            }
+        });
+
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (!connected) {
+                    Toast.makeText(VisualizarUsuarioActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(VisualizarUsuarioActivity.this, MenuActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.out.println("Error");
             }
         });
 
@@ -120,8 +144,8 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.acao_excluir:
-                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Excluir Conta")
-                        .setMessage("Tem certeza que deseja excluir sua conta? Todos os seus dados serão excluídos!")
+                Dialog alertDialog = new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_delete).setTitle("EXCLUIR CONTA")
+                        .setMessage("Tem certeza que deseja excluir sua conta? Todos os seus dados e anúncios serão excluídos!")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -129,6 +153,7 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                             }
                         })
                         .setNegativeButton("Não", null).show();
+                alertDialog.setCanceledOnTouchOutside(true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -8,11 +8,12 @@
 
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="370dp"
         android:layout_height="250dp"
-        android:id="@+id/viewPager"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/sem_foto">
 
     </android.support.v4.view.ViewPager>
 
@@ -71,22 +72,23 @@
         android:id="@+id/alterarProduto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
         android:text="Alterar"
         android:layout_below="@+id/vendedorProduto"
-        android:layout_toRightOf="@+id/observacaoProduto"
-        android:layout_toEndOf="@+id/observacaoProduto" />
+        android:layout_toLeftOf="@+id/excluirProduto"
+        android:layout_toStartOf="@+id/excluirProduto"
+        android:layout_marginRight="36dp"
+        android:layout_marginEnd="36dp" />
 
     <Button
         android:id="@+id/excluirProduto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/alterarProduto"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp"
-        android:layout_toEndOf="@+id/alterarProduto"
-        android:layout_toRightOf="@+id/alterarProduto"
-        android:text="Excluir" />
+        android:text="Excluir"
+        android:layout_marginRight="70dp"
+        android:layout_marginEnd="70dp"
+        android:layout_alignBaseline="@+id/alterarProduto"
+        android:layout_alignBottom="@+id/alterarProduto"
+        android:layout_alignRight="@+id/viewPager"
+        android:layout_alignEnd="@+id/viewPager" />
 
 </RelativeLayout>

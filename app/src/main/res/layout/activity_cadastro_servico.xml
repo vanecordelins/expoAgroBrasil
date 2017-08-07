@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.expoagro.expoagrobrasil.controller.CadastroServicoActivity">
+    tools:context="com.expoagro.expoagrobrasil.controller.CadastroServicoActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="0dp"
@@ -141,6 +143,7 @@
 
                 <EditText
                     android:id="@+id/campoDescricao"
+                    android:inputType="textCapSentences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/campo_descricao"
@@ -211,6 +214,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/campoNomeServico"
+                    android:inputType="textCapSentences"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
                     android:hint="@string/campo_nome" />
@@ -232,6 +236,7 @@
 
                 <EditText
                     android:id="@+id/campoObservacao"
+                    android:inputType="textCapSentences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/campo_observacao"

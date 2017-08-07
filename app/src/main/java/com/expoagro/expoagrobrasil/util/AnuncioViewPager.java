@@ -48,7 +48,6 @@ public class AnuncioViewPager extends PagerAdapter {
         container.addView(item_view);
         Glide.with(context).load(images.get(position)).into(photoView);
 
-
         return item_view;
     }
 
