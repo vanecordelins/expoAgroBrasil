@@ -17,7 +17,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -30,7 +29,7 @@ import static org.hamcrest.Matchers.allOf;
 public class CadastroProdutoActivityTestCategoriaVazia {
 
     @Rule
-    public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
+    public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
 
     @Test
     public void cadastroProdutoActivityTest() throws InterruptedException {
@@ -92,10 +91,6 @@ public class CadastroProdutoActivityTestCategoriaVazia {
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.btnCadastrar),isDisplayed()));
         appCompatButton2.perform(click());
-        Thread.sleep(3000);
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(android.R.id.button1), withText("Sim")));
-        appCompatButton3.perform(scrollTo(), click());
 
 
 

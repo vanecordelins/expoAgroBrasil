@@ -31,10 +31,10 @@ import static org.hamcrest.Matchers.allOf;
 public class CadastroServicoActivityTestNomeVazio {
 
     @Rule
-    public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
+    public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
 
     @Test
-    public void cadastroServicoActivityTest() {
+    public void CadastroServicoActivityTest() {
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
             ViewInteraction appCompatImageButton2 = onView(

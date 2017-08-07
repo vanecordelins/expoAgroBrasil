@@ -1,15 +1,18 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,7 +33,6 @@ import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.ImagePicker;
 import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
 import com.expoagro.expoagrobrasil.util.ProdutoViewPager;
-import com.expoagro.expoagrobrasil.util.Regex;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +40,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
@@ -46,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 
 public class CadastroProdutoActivity extends AppCompatActivity {
 
@@ -65,16 +67,14 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getSupportActionBar().hide();
         setContentView(R.layout.activity_cadastro_produto);
 
         mNomeView = (AutoCompleteTextView) findViewById(R.id.campoNomeProduto);
         mValorView = (EditText) findViewById(R.id.campoValor);
         mDescricaoView = (TextView) findViewById(R.id.campoDescricao);
         mObservacaoView = (TextView) findViewById(R.id.campoObservacao);
-        //imView = (ImageView) findViewById(R.id.viewProduto);
+        ImageView imView = (ImageView) findViewById(R.id.viewDelete);
         viewPager = (ViewPager) findViewById(R.id.viewProduto);
-
 
         mValorView.addTextChangedListener(new MoneyTextWatcher(mValorView));
 
@@ -87,13 +87,10 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         dialog.setMessage("Cadastrando novo produto. Aguarde alguns instantes...");
 
         // Cria um ArrayAdapter usando um array de string e um layout default do spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.categorias, android.R.layout.simple_spinner_item); //simple_spinner_dropdown_item
-        // Especifica o layout que será usado quando a lista de opções aparecer
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categorias, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerCategoria = (Spinner) findViewById(R.id.spinnerCategoria);
-        // Aplica o adapter ao spinner
         spinnerCategoria.setAdapter(adapter);
 
         RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico);
@@ -118,13 +115,13 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mCancelarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent telaMenu = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
+                Intent telaMenu = new Intent(CadastroProdutoActivity.this, MenuProdutoActivity.class);
                 startActivity(telaMenu);
                 finish();
             }
         });
 
-        Button mAddMoreButton = (Button) findViewById(R.id.btn_add_mais);
+        final ImageView mAddMoreButton = (ImageView) findViewById(R.id.btn_add_mais);
         mAddMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,26 +132,42 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             }
         });
 
-        viewPager.setOnClickListener(new View.OnClickListener() {
+        imView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent chooseImageIntent = ImagePicker.getPickImageIntent(CadastroProdutoActivity.this);
-                if (chooseImageIntent != null) {
-                    startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+                if (!fotos.isEmpty()) {
+                    Dialog alertDialog = new AlertDialog.Builder(CadastroProdutoActivity.this).setIcon(android.R.drawable.ic_input_delete).setTitle("Remover")
+                            .setMessage("Deseja remover esta foto?")
+                            .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                @Override
+                                public void onClick(final DialogInterface dialog, int which) {
+                                    fotos.remove(viewPager.getCurrentItem());
+                                    produtoViewPager = new ProdutoViewPager(CadastroProdutoActivity.this, fotos, null);
+                                    viewPager.setAdapter(produtoViewPager);
+                                    if(fotos.isEmpty()) {
+                                        viewPager.setBackground(CadastroProdutoActivity.this.getResources().getDrawable(R.drawable.sem_foto, null));
+                                    }
+                                    if (!mAddMoreButton.isEnabled()) {
+                                        mAddMoreButton.setEnabled(true);
+                                    }
+                                }
+                            }).setNegativeButton("Não", null).show();
+                    alertDialog.setCanceledOnTouchOutside(true);
                 }
             }
         });
-
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent telaMenu = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
+        Intent telaMenu = new Intent(CadastroProdutoActivity.this, MenuProdutoActivity.class);
         startActivity(telaMenu);
         finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -162,7 +175,11 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             switch (requestCode) {
                 case PICK_IMAGE_ID:
                     Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, viewPager.getWidth(), viewPager.getHeight(), true);
+
+                    Bitmap resizedBitmap = ImagePicker.resize(bitmap, 600, 400);
+                    viewPager.setBackground(null);
+                    //Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 600, 400, false);
+
                     fotos.add(resizedBitmap);
 
                     if(fotos.size() > 4) {
@@ -172,8 +189,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
 
                    // imView.setImageBitmap(resizedBitmap);
                     //viewPager = (ViewPager)findViewById(R.id.viewPager);
-                    produtoViewPager = new ProdutoViewPager(this, fotos);
-
+                    produtoViewPager = new ProdutoViewPager(this, fotos, null);
                     viewPager.setAdapter(produtoViewPager);
 
                     break;
@@ -203,7 +219,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             final String time = dfTime.format(Calendar.getInstance().getTime());
 
             if(fotos.isEmpty()) {
-                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
+                Dialog dialog = new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
                         .setMessage("Deseja continuar sem adicionar fotos?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             @Override
@@ -211,8 +227,9 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                 registrarProduto(nome, observacao, descricao, date, time, valor, categoria);
                             }
                         }).setNegativeButton("Não", null).show();
+                dialog.setCanceledOnTouchOutside(true);
             } else {
-                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
+                Dialog dialog = new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
                         .setMessage("Deseja continuar? Verifique se todos os dados estão corretos. ")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             @Override
@@ -220,11 +237,11 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                 registrarProduto(nome, observacao, descricao, date, time, valor, categoria);
                             }
                         }).setNegativeButton("Não", null).show();
+                dialog.setCanceledOnTouchOutside(true);
             }
 
         }
     }
-
 
     public void registrarProduto(final String nome, final String observacao, final String descricao, final String date, final String time,
                                  final String valor, final String categoria) {
@@ -250,7 +267,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                                     Usuario target = user.getValue(Usuario.class);
                                     produto.setCidade(target.getCidade());
                                     produto.setFoto(fotosURL);
-                                    pdao.save(produto);
+                                    pdao.update(produto);
                                 }
                             }
                         }
@@ -312,7 +329,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(getApplicationContext(), R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
-                        Intent it = new Intent(CadastroProdutoActivity.this, MenuActivity.class);
+                        Intent it = new Intent(CadastroProdutoActivity.this, MenuProdutoActivity.class);
                         startActivity(it);
                         finish();
                     }
@@ -322,7 +339,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mThread.start();
 
     }
-
 
     public boolean validateInfo(String nome, String valor, String categoria) {
 
@@ -335,10 +351,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(nome)) {
             mNomeView.setError(getString(R.string.error_field_required));
-            focusView = mNomeView;
-            cancelar = true;
-        } else if (!Regex.isNameValid(nome)) {
-            mNomeView.setError(getString(R.string.error_nome_invalido));
             focusView = mNomeView;
             cancelar = true;
         } else if (TextUtils.isEmpty(valor)) {

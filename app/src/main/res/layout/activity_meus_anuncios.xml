@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_meusanuncios"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/recyclerview2">
+    </android.support.v7.widget.RecyclerView>
+
+    <RadioButton
+        android:id="@+id/rdoBtnProduto3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Produtos"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="110dp"
+        android:layout_marginEnd="85dp" />
+
+    <RadioButton
+        android:id="@+id/rdoBtnServico3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Serviços"
+        android:layout_alignBottom="@+id/rdoBtnProduto3"
+        android:layout_toLeftOf="@+id/rdoBtnProduto3"
+        android:layout_toStartOf="@+id/rdoBtnProduto3"
+        android:layout_marginRight="46dp"
+        android:layout_marginEnd="46dp" />
+</RelativeLayout>

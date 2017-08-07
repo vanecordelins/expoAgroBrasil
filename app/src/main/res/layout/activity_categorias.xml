@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.expoagro.expoagrobrasil.controller.CategoriasActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <Button
+        android:id="@+id/animal"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="32dp"
+        android:drawableTop="@drawable/cow"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="100dp"
+        android:text="Animal"
+        android:textSize="5pt"/>
+
+    <Button
+        android:id="@+id/ferramenta"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/animal"
+        android:layout_centerHorizontal="true"
+        android:text="Ferramenta"
+        android:textSize="5pt"
+        android:drawableTop="@drawable/tool"/>
+
+    <Button
+        android:id="@+id/propriedade"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        android:text="Propriedade"
+        android:textSize="5pt"
+        android:drawableTop="@drawable/property"
+        android:layout_alignBottom="@+id/animal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/maquinarios"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="Maquinários"
+        android:textSize="5pt"
+        android:drawableTop="@drawable/tractor"
+        android:layout_below="@+id/ferramenta"
+        android:layout_alignLeft="@+id/animal"
+        android:layout_alignStart="@+id/animal" />
+
+    <Button
+        android:id="@+id/outros"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/maquinarios"
+        android:layout_alignLeft="@+id/propriedade"
+        android:layout_alignStart="@+id/propriedade"
+        android:drawableTop="@drawable/outros"
+        android:text="Outros"
+        android:textSize="5pt" />
+
+    <Button
+        android:id="@+id/produto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/outros"
+        android:layout_alignLeft="@+id/ferramenta"
+        android:layout_alignStart="@+id/ferramenta"
+        android:drawableTop="@drawable/product"
+        android:text="Todos os Produtos"
+        android:textSize="5pt" />
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -91,7 +92,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
         mCancelarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent telaMenu = new Intent(CadastroServicoActivity.this, MenuActivity.class);
+                Intent telaMenu = new Intent(CadastroServicoActivity.this, MenuProdutoActivity.class);
                 startActivity(telaMenu);
                 finish();
             }
@@ -102,7 +103,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent telaMenu = new Intent(CadastroServicoActivity.this, MenuActivity.class);
+        Intent telaMenu = new Intent(CadastroServicoActivity.this, MenuProdutoActivity.class);
         startActivity(telaMenu);
         finish();
     }
@@ -129,7 +130,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
             SimpleDateFormat dfTime = new SimpleDateFormat("HH:mm");
             final String time = dfTime.format(Calendar.getInstance().getTime());
 
-            new AlertDialog.Builder(CadastroServicoActivity.this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
+            Dialog alertDialog = new AlertDialog.Builder(CadastroServicoActivity.this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Cadastro")
                     .setMessage("Deseja continuar? Verifique se todos os dados estão corretos. ")
                     .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                         @Override
@@ -163,6 +164,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
                         }
                     })
                     .setNegativeButton("Não", null).show();
+            alertDialog.setCanceledOnTouchOutside(true);
             dialog.dismiss();
         }
 
@@ -171,7 +173,7 @@ public class CadastroServicoActivity extends AppCompatActivity {
     public void onSucessoCadastro() {
         Toast.makeText(CadastroServicoActivity.this, R.string.msg_cadastro_sucesso, Toast.LENGTH_SHORT).show();
         dialog.dismiss();
-        Intent it = new Intent(CadastroServicoActivity.this, MenuActivity.class);
+        Intent it = new Intent(CadastroServicoActivity.this, MenuProdutoActivity.class);
         startActivity(it);
         finish();
     }

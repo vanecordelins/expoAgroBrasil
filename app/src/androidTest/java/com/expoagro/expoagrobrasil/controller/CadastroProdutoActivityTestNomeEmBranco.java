@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.allOf;
 public class CadastroProdutoActivityTestNomeEmBranco {
 
     @Rule
-    public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
+    public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
 
     @Test
     public void cadastroProdutoActivityTest() throws InterruptedException {
@@ -44,7 +44,7 @@ public class CadastroProdutoActivityTestNomeEmBranco {
             appCompatImageButton2.perform(click());
 
             ViewInteraction appCompatTextView = onView(
-                    allOf(withId(R.id.menu_email), withText("Fazer Login"), isDisplayed()));
+                    allOf(withId(R.id.design_menu_item_text), withText("Meu perfil"), isDisplayed()));
             appCompatTextView.perform(click());
 
             ViewInteraction appCompatEditText = onView(
@@ -98,16 +98,11 @@ public class CadastroProdutoActivityTestNomeEmBranco {
         Thread.sleep(3000);
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.btnCadastrar),isDisplayed()));
-        appCompatButton2.perform(click());
-        Thread.sleep(3000);
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(android.R.id.button1), withText("Sim")));
-        appCompatButton3.perform(scrollTo(), click());
+        appCompatButton2.perform(scrollTo(), click());
 
-
-
-        ViewInteraction result = onView(withText(R.string.error_field_required)).inRoot(new TesteUtils.ToastMatcher())
-                .check(matches(withText("Campo obrigatório")));
+        ViewInteraction result = onView(
+                allOf(withId(R.id.campoNomeProduto), isDisplayed()));
+                result.check(matches(withText("")));
 
 
 

@@ -8,13 +8,20 @@ import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.controller.LoginActivity;
-import com.expoagro.expoagrobrasil.controller.MenuActivity;
+import com.expoagro.expoagrobrasil.controller.MenuProdutoActivity;
+import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
+import com.expoagro.expoagrobrasil.dao.ServicoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
+import com.expoagro.expoagrobrasil.model.Produto;
+import com.expoagro.expoagrobrasil.model.Servico;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Fabricio on 6/22/2017.
@@ -22,16 +29,46 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class FirebaseLogin {
 
-
     public static void deleteAccount(final Activity activity) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             UserDAO userDAO = new UserDAO();
-            userDAO.delete(user.getUid());
             user.delete().addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
+                        final ProdutoDAO pdao = new ProdutoDAO();
+                        final ServicoDAO sdao = new ServicoDAO();
+
+                        ProdutoDAO.getDatabaseReference().orderByChild("idUsuario").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot prod : dataSnapshot.getChildren()) {
+                                    Produto produto = prod.getValue(Produto.class);
+                                    pdao.delete(produto.getId());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("Não foi possível deletar os produtos deste usuário.");
+                            }
+                        });
+
+                        ServicoDAO.getDatabaseReference().orderByChild("idUsuario").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot serv: dataSnapshot.getChildren()) {
+                                    Servico servico = serv.getValue(Servico.class);
+                                    sdao.delete(servico.getId());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("Não foi possível deletar os produtos deste usuário.");
+                            }
+                        });
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(activity, "Perfil deletado com sucesso.", Toast.LENGTH_SHORT).show();
                         Intent it = new Intent(activity, LoginActivity.class);
@@ -42,6 +79,7 @@ public class FirebaseLogin {
                     }
                 }
             });
+            userDAO.delete(user.getUid());
         }
     }
 
@@ -61,7 +99,7 @@ public class FirebaseLogin {
                         } else {
                             if (task.getResult().getUser().isEmailVerified()) {
                                 System.out.println("Autorizado.");
-                                Intent it = new Intent(activity, MenuActivity.class);
+                                Intent it = new Intent(activity, MenuProdutoActivity.class);
                                 activity.startActivity(it);
                                 activity.finish();
                             } else {

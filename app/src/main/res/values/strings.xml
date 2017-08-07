@@ -75,14 +75,20 @@
         <item>Selecione a Categoria...</item>
         <item>Animal</item>
         <item>Ferramenta</item>
-
+        <item>Propriedade</item>
+        <item>Maquinários</item>
+        <item>Outros</item>
     </string-array>
 
     <string-array name="frequencias">
         <item>Selecione a Frequência...</item>
-        <item>Diária</item>
+        <item>Por Dia</item>
         <item>Por Hora</item>
+        <item>Por Semana</item>
+        <item>Por Quinzena</item>
+        <item>Outra</item>
     </string-array>
+    <string name="title_activity_">Activity</string>
 
 
 </resources>
