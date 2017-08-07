@@ -8,11 +8,14 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SearchViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
+import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
 import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.expoagro.expoagrobrasil.util.Lista;
@@ -40,10 +44,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, SearchView.OnQueryTextListener {
 
     private GoogleApiClient mGoogleApiClient;
     private String uid;
@@ -137,7 +142,9 @@ public class MenuActivity extends AppCompatActivity
                             }
                         });
                     }
+
                 };
+
                 MenuActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -169,6 +176,69 @@ public class MenuActivity extends AppCompatActivity
 
     public static void setId(String id) {
         idClicado = id;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+//        query.
+        Query q = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome").startAt(query);
+        final FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
+                Lista.class,
+                R.layout.linha,
+                ListaViewHolder.class,
+                q
+        ) {
+            @Override
+            protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
+                System.out.println(model);
+                final String key = getRef(position).getKey();
+                viewHolder.setCategoria(model.getCategoria());
+                viewHolder.setData(model.getData());
+                viewHolder.setValor(model.getValor());
+                viewHolder.setFoto(model.getFoto());
+                viewHolder.setNome(model.getNome());
+                progress.dismiss();
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setId(key);
+                        Intent intent = new Intent(MenuActivity.this, VisualizarAnuncioActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        };
+
+        recyclerView.setAdapter(recyclerAdapter2);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        //newText.toLowerCase();
+//        Query q = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome").startAt(newText).endAt("~");
+//        final FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
+//                Lista.class,
+//                R.layout.linha,
+//                ListaViewHolder.class,
+//                q
+//        ) {
+//            @Override
+//            protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
+//                System.out.println(model);
+//                //final String key = getRef(position).getKey();
+//                viewHolder.setCategoria(model.getCategoria());
+//                viewHolder.setData(model.getData());
+//                viewHolder.setValor(model.getValor());
+//                viewHolder.setFoto(model.getFoto());
+//                viewHolder.setNome(model.getNome());
+//                progress.dismiss();
+//            }
+//        };
+//
+//        recyclerView.setAdapter(recyclerAdapter2);
+        return false;
     }
 
     public static class ListaViewHolder extends RecyclerView.ViewHolder {
@@ -226,6 +296,9 @@ public class MenuActivity extends AppCompatActivity
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.teste_filtro, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
 
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
