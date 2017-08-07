@@ -4,13 +4,18 @@ apply plugin: 'jacoco-android'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
+
+    sourceSets {
+        androidTest { assets.srcDirs = ['src/androidTest/assets'] }
+    }
     defaultConfig {
         applicationId "com.expoagro.expoagrobrasil"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testApplicationId "com.expoagro.expoagrobrasil.controller"
+        testInstrumentationRunner "com.expoagro.expoagrobrasil.controller.Instrumentation"
     }
 
     buildTypes {
@@ -33,7 +38,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+    androidTestCompile('info.cukes:cucumber-android:1.2.4') {
+        exclude module: 'cucumber-jvm-deps'
+        exclude module: 'guava'
+    }
+    androidTestCompile 'info.cukes:cucumber-jvm-deps:1.0.3'
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestCompile('com.android.support.test:runner:0.5', {
@@ -76,10 +88,14 @@ dependencies {
 
 }
 
+
+
 sourceSets {
     unitTest {
         java.srcDir file('src/androidTest/java')
+
     }
+
 }
 
 apply plugin: 'com.google.gms.google-services'
