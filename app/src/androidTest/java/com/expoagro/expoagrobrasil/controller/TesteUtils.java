@@ -17,7 +17,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -50,18 +49,6 @@ class TesteUtils {
         }
     }
 
-    static public ViewInteraction matcherResult(int id ,String text){
-        ViewInteraction buttonCadastrar = onView(
-                allOf(withId(R.id.btnCadastrar), isDisplayed()));
-        buttonCadastrar.perform(scrollTo(), click());
-
-
-        ViewInteraction result = onView(
-                allOf(withId(id), isDisplayed()));
-        result.check(matches(withText(text)));
-        return result;
-    }
-
     static void fazerLogin(){
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
@@ -91,7 +78,7 @@ class TesteUtils {
         }
     }
 
-    static void preencheCampo(int campo, String texto){
+    private static void preencheCampo(int campo, String texto){
 
         ViewInteraction appCompatAutoCompleteTextView2 = onView(
                 allOf(withId(campo), isDisplayed()));

@@ -30,7 +30,7 @@ public class PesquisarProdutoActivityTeste {
     public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
 
     @Test
-    public void buscar() {
+    public void pesquisarProdutoActivityTeste() {
 
         fazerLogin();
 
