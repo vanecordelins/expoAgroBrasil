@@ -19,6 +19,7 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -61,7 +62,7 @@ class TesteUtils {
         return result;
     }
 
-    static public void fazerLogin(){
+    static void fazerLogin(){
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
             ViewInteraction appCompatImageButton2 = onView(
@@ -109,6 +110,12 @@ class TesteUtils {
 
         Assert.assertNotNull(result);
     }
+    static void vejaItem(int item) {
+        ViewInteraction result = onView(withId(item));
+        result.check(matches(isDisplayed()));
+
+        Assert.assertNotNull(result);
+    }
 
     static void abreMenu(int menu, String texto){
         ViewInteraction appCompatImageButton2 = onView(
@@ -120,5 +127,13 @@ class TesteUtils {
         ViewInteraction appCompatCheckedTextView2 = onView(
                 allOf(withId(menu), withText(texto), isDisplayed()));
         appCompatCheckedTextView2.perform(click());
+    }
+    static void selecionaItem(int item){
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerview2),
+                        withParent(allOf(withId(R.id.activity_meusanuncios),
+                                withParent(withId(android.R.id.content)))),
+                        isDisplayed()));
+        recyclerView.perform(actionOnItemAtPosition(item, click()));
     }
 }
