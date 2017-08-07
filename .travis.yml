@@ -6,7 +6,7 @@ install: true
 android:
   components:
     - build-tools-25.0.3
-    - android-22
+    - android-25
     - extra-android-m2repository
     - extra-android-support
     - extra-google-m2repository
