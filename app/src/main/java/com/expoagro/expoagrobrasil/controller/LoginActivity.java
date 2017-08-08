@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.util.FirebaseLogin;
@@ -152,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             } else {
                 mProgressDialog.dismiss();
-                System.out.println("Não foi possível realizar o Login. Tente Novamente");
+                Toast.makeText(LoginActivity.this, "Sem conexão com a internet.", Toast.LENGTH_SHORT).show();
             }
         }
     }

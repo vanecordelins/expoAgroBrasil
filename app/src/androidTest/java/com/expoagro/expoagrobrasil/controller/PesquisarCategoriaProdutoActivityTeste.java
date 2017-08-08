@@ -18,6 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.clicaEm;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.espera;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogin;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.vejaItem;
 import static org.hamcrest.Matchers.allOf;
@@ -31,7 +32,7 @@ public class PesquisarProdutoActivityTeste {
 
     @Test
     public void pesquisarProdutoActivityTeste() {
-
+        espera();
         fazerLogin();
 
         ViewInteraction actionMenuItemView = onView(

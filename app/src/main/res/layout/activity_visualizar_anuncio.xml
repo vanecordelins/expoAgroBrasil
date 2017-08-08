@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.expoagro.expoagrobrasil.controller.VisualizarProdutoActivity">
 
-
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="370dp"
@@ -17,84 +16,134 @@
 
     </android.support.v4.view.ViewPager>
 
-    <TextView
-        android:id="@+id/nomeProduto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nome"
-        android:layout_below="@+id/viewPager"
-        android:layout_alignLeft="@+id/viewPager"
-        android:layout_alignStart="@+id/viewPager"
-        android:layout_marginTop="15dp"
-        android:textSize="8pt"/>
-
-    <TextView
-        android:id="@+id/descricaoProduto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/nomeProduto"
-        android:layout_alignStart="@+id/nomeProduto"
-        android:layout_below="@+id/nomeProduto"
-        android:layout_marginTop="24dp"
-        android:text="Descriçao" />
-
-    <TextView
-        android:id="@+id/observacaoProduto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
-        android:text="Observação"
-        android:layout_below="@+id/descricaoProduto"
-        android:layout_alignLeft="@+id/descricaoProduto"
-        android:layout_alignStart="@+id/descricaoProduto" />
-
-    <TextView
-        android:id="@+id/dataProduto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Data"
-        android:layout_below="@+id/observacaoProduto"
-        android:layout_alignLeft="@+id/observacaoProduto"
-        android:layout_alignStart="@+id/observacaoProduto" />
-
-    <TextView
-        android:id="@+id/vendedorProduto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Vendedor"
-        android:layout_below="@+id/dataProduto"
-        android:layout_alignLeft="@+id/dataProduto"
-        android:layout_alignStart="@+id/dataProduto" />
-
-    <Button
-        android:id="@+id/alterarProduto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alterar"
-        android:layout_below="@+id/vendedorProduto"
-        android:layout_toLeftOf="@+id/excluirProduto"
-        android:layout_toStartOf="@+id/excluirProduto"
-        android:layout_marginRight="36dp"
-        android:layout_marginEnd="36dp" />
-
-    <Button
-        android:id="@+id/excluirProduto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Excluir"
-        android:layout_marginRight="70dp"
-        android:layout_marginEnd="70dp"
-        android:layout_alignBaseline="@+id/alterarProduto"
-        android:layout_alignBottom="@+id/alterarProduto"
-        android:layout_alignRight="@+id/viewPager"
-        android:layout_alignEnd="@+id/viewPager" />
-
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_marginTop="200dp"
         android:layout_height="48dp"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/viewPager">
+
+        <ImageButton
+            android:id="@+id/btnFavoritarProduto"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintRight_toLeftOf="@+id/btnCompartilharProduto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <ImageButton
+            android:id="@+id/btnCompartilharProduto"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="?attr/actionModeShareDrawable" />
+
+        <TextView
+            android:id="@+id/nomeProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="0dp"
+            android:text="Nome"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnFavoritarProduto" />
+
+        <TextView
+            android:id="@+id/descricaoProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/nomeProduto"
+            android:layout_alignStart="@+id/nomeProduto"
+            android:layout_below="@+id/nomeProduto"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Descriçao"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomeProduto" />
+
+        <TextView
+            android:id="@+id/observacaoProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/descricaoProduto"
+            android:layout_alignStart="@+id/descricaoProduto"
+            android:layout_below="@+id/descricaoProduto"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Observação"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descricaoProduto" />
+
+        <TextView
+            android:id="@+id/dataProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/observacaoProduto"
+            android:layout_alignStart="@+id/observacaoProduto"
+            android:layout_below="@+id/observacaoProduto"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Data"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/observacaoProduto" />
+
+        <TextView
+            android:id="@+id/vendedorProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/dataProduto"
+            android:layout_alignStart="@+id/dataProduto"
+            android:layout_below="@+id/dataProduto"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Vendedor"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dataProduto" />
+
+        <Button
+            android:id="@+id/alterarProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:layout_marginLeft="64dp"
+            android:layout_toLeftOf="@+id/excluirProduto"
+            android:layout_toStartOf="@+id/excluirProduto"
+            android:text="Alterar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Button
+            android:id="@+id/excluirProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/alterarProduto"
+            android:layout_alignBottom="@+id/alterarProduto"
+            android:layout_marginBottom="32dp"
+            android:layout_marginRight="64dp"
+            android:text="Excluir"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
 
 </RelativeLayout>
