@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Servico;
@@ -209,7 +208,6 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                                 });
                             }
                         };
-
                         recyclerView.setAdapter(recyclerAdapter2);
                     }
                 }
