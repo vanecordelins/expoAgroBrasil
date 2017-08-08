@@ -8,12 +8,15 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.expoagro.expoagrobrasil.R;
 
+import junit.framework.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -40,7 +43,13 @@ public class PesquisarCategoriaProdutoActivityTeste {
         actionMenuItemView.perform(click());
 
         clicaEm(R.id.animal,"Animal");
-        vejaItem(R.id.recyclerview);
+
+        ViewInteraction result = onView(withId(R.id.recyclerview));
+        result.check(matches(isDisplayed()));
+
+        Assert.assertNotNull(result);
+
+      //  vejaItem(R.id.recyclerview);
     }
 
 }
