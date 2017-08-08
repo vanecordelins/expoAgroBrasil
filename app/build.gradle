@@ -75,7 +75,6 @@ dependencies {
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'me.relex:circleindicator:1.2.2@aar'
 
-
 }
 
 sourceSets {
