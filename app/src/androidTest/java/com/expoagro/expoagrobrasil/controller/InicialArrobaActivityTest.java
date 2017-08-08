@@ -35,206 +35,147 @@ public class InicialArrobaActivityTest {
 
     @Test
     public void inicialArrobaActivityTest() {
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(60000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction button = onView(
-                allOf(withId(R.id.buttonAnuncios), withText("Ver Anúncios"), isDisplayed()));
+        ViewInteraction button = onView(allOf(withId(R.id.buttonAnuncios), withText("Ver Anúncios"), isDisplayed()));
         button.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(5339);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withContentDescription("Open navigation drawer"),
-                        withParent(withId(R.id.toolbar)),
-                        isDisplayed()));
+        ViewInteraction appCompatImageButton = onView(allOf(withContentDescription("Open navigation drawer"),
+                        withParent(withId(R.id.toolbar)), isDisplayed()));
         appCompatImageButton.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(60000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatCheckedTextView = onView(
-                allOf(withId(R.id.design_menu_item_text), withText("Meus anúncios"), isDisplayed()));
+        ViewInteraction appCompatCheckedTextView = onView(allOf(withId(R.id.design_menu_item_text), withText("Meus anúncios"), isDisplayed()));
         appCompatCheckedTextView.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(3582178);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.campoEmail), isDisplayed()));
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.campoEmail), isDisplayed()));
         appCompatEditText.perform(replaceText("diego.nos@gmail.com"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.campoEmail), withText("diego.nos@gmail.com"), isDisplayed()));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.campoEmail), withText("diego.nos@gmail.com"), isDisplayed()));
         appCompatEditText2.perform(click());
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.campoEmail), withText("diego.nos@gmail.com"), isDisplayed()));
+        ViewInteraction appCompatEditText3 = onView(allOf(withId(R.id.campoEmail), withText("diego.nos@gmail.com"), isDisplayed()));
         appCompatEditText3.perform(replaceText("dinego.nos@gmail.com"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.campoSenha), isDisplayed()));
+        ViewInteraction appCompatEditText4 = onView(allOf(withId(R.id.campoSenha), isDisplayed()));
         appCompatEditText4.perform(replaceText("123456"), closeSoftKeyboard());
 
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.btnEntrar), withText("Entrar"),
-                        withParent(withId(R.id.email_login_form)),
-                        isDisplayed()));
+        ViewInteraction appCompatButton = onView(allOf(withId(R.id.btnEntrar), withText("Entrar"),
+                        withParent(withId(R.id.email_login_form)), isDisplayed()));
         appCompatButton.perform(click());
 
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.btnEntrar), withText("Entrar"),
-                        withParent(withId(R.id.email_login_form)),
-                        isDisplayed()));
+        ViewInteraction appCompatButton2 = onView(allOf(withId(R.id.btnEntrar), withText("Entrar"),
+                        withParent(withId(R.id.email_login_form)), isDisplayed()));
         appCompatButton2.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(3528798);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatImageButton2 = onView(
-                allOf(withContentDescription("Open navigation drawer"),
-                        withParent(withId(R.id.toolbar)),
-                        isDisplayed()));
+        ViewInteraction appCompatImageButton2 = onView(allOf(withContentDescription("Open navigation drawer"),
+                        withParent(withId(R.id.toolbar)), isDisplayed()));
         appCompatImageButton2.perform(click());
 
-        ViewInteraction appCompatCheckedTextView2 = onView(
-                allOf(withId(R.id.design_menu_item_text), withText("Meus anúncios"), isDisplayed()));
+        ViewInteraction appCompatCheckedTextView2 = onView(allOf(withId(R.id.design_menu_item_text), withText("Meus anúncios"), isDisplayed()));
         appCompatCheckedTextView2.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        inicialArrobaActivityCont();
+
+
+    }
+
+    private void inicialArrobaActivityCont() {
+
         try {
             Thread.sleep(3520540);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        ViewInteraction appCompatRadioButton = onView(
-                allOf(withId(R.id.rdoBtnServico3), withText("Serviços"),
-                        withParent(allOf(withId(R.id.activity_meusanuncios),
-                                withParent(withId(android.R.id.content)))),
-                        isDisplayed()));
+        
+        ViewInteraction appCompatRadioButton = onView(allOf(withId(R.id.rdoBtnServico3), withText("Serviços"),
+                withParent(allOf(withId(R.id.activity_meusanuncios), withParent(withId(android.R.id.content)))), isDisplayed()));
         appCompatRadioButton.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        ViewInteraction appCompatRadioButton2 = onView(
-                allOf(withId(R.id.rdoBtnServico3), withText("Serviços"),
-                        withParent(allOf(withId(R.id.activity_meusanuncios),
-                                withParent(withId(android.R.id.content)))),
-                        isDisplayed()));
+        ViewInteraction appCompatRadioButton2 = onView(allOf(withId(R.id.rdoBtnServico3), withText("Serviços"),
+                withParent(allOf(withId(R.id.activity_meusanuncios), withParent(withId(android.R.id.content)))), isDisplayed()));
         appCompatRadioButton2.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(3515939);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatRadioButton3 = onView(
-                allOf(withId(R.id.rdoBtnProduto3), withText("Produtos"),
-                        withParent(allOf(withId(R.id.activity_meusanuncios),
-                                withParent(withId(android.R.id.content)))),
-                        isDisplayed()));
+        ViewInteraction appCompatRadioButton3 = onView(allOf(withId(R.id.rdoBtnProduto3), withText("Produtos"),
+                withParent(allOf(withId(R.id.activity_meusanuncios), withParent(withId(android.R.id.content)))), isDisplayed()));
         appCompatRadioButton3.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(3511614);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.recyclerview2),
-                        withParent(allOf(withId(R.id.activity_meusanuncios),
-                                withParent(withId(android.R.id.content)))),
-                        isDisplayed()));
+        ViewInteraction recyclerView = onView(allOf(withId(R.id.recyclerview2), withParent(allOf(withId(R.id.activity_meusanuncios),
+                withParent(withId(android.R.id.content)))), isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(1, click()));
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(3507408);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(R.id.alterarProduto), withText("Alterar"), isDisplayed()));
+        ViewInteraction appCompatButton3 = onView(allOf(withId(R.id.alterarProduto), withText("Alterar"), isDisplayed()));
         appCompatButton3.perform(click());
 
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(3504236);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatAutoCompleteTextView = onView(
-                allOf(withId(R.id.campoNomeProduto), withText("Nov")));
+        ViewInteraction appCompatAutoCompleteTextView = onView(allOf(withId(R.id.campoNomeProduto), withText("Nov")));
         appCompatAutoCompleteTextView.perform(scrollTo(), replaceText("Novoo"), closeSoftKeyboard());
 
-        ViewInteraction appCompatAutoCompleteTextView2 = onView(
-                allOf(withId(R.id.campoNomeProduto), withText("Novoo")));
+        ViewInteraction appCompatAutoCompleteTextView2 = onView(allOf(withId(R.id.campoNomeProduto), withText("Novoo")));
         appCompatAutoCompleteTextView2.perform(scrollTo(), click());
 
         pressBack();
 
-        ViewInteraction appCompatButton4 = onView(
-                allOf(withId(R.id.btnAlterar), withText("Confirmar")));
+        ViewInteraction appCompatButton4 = onView(allOf(withId(R.id.btnAlterar), withText("Confirmar")));
         appCompatButton4.perform(scrollTo(), click());
 
-        ViewInteraction appCompatButton5 = onView(
-                allOf(withId(android.R.id.button1), withText("Sim")));
+        ViewInteraction appCompatButton5 = onView(allOf(withId(android.R.id.button1), withText("Sim")));
         appCompatButton5.perform(scrollTo(), click());
-
     }
 
 }

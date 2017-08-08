@@ -36,7 +36,7 @@ public class ExcluirProdutoActivityTestComSucesso {
         espera();
         clicaEm(android.R.id.button1,"Sim");
         verificaTexto("Produto deletado com sucesso.");
-        
+
     }
 
 }
