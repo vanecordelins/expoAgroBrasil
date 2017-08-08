@@ -5,25 +5,25 @@ import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.*;
+import static android.support.test.espresso.assertion.ViewAssertions.*;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 import com.expoagro.expoagrobrasil.R;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
@@ -35,147 +35,85 @@ public class InicialArrobaActivityTest {
 
     @Test
     public void inicialArrobaActivityTest() {
+         // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(60000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction button = onView(allOf(withId(R.id.buttonAnuncios), withText("Ver Anúncios"), isDisplayed()));
+        ViewInteraction button = onView(
+                allOf(withId(R.id.buttonAnuncios), withText("Ver Anúncios"), isDisplayed()));
         button.perform(click());
 
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(5339);
+            Thread.sleep(5710);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatImageButton = onView(allOf(withContentDescription("Open navigation drawer"),
-                        withParent(withId(R.id.toolbar)), isDisplayed()));
-        appCompatImageButton.perform(click());
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.search), withContentDescription("Busca"), isDisplayed()));
+        actionMenuItemView.perform(click());
 
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
             Thread.sleep(60000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatCheckedTextView = onView(allOf(withId(R.id.design_menu_item_text), withText("Meus anúncios"), isDisplayed()));
-        appCompatCheckedTextView.perform(click());
+        ViewInteraction searchAutoComplete = onView(
+                allOf(withId(R.id.search_src_text),
+                        withParent(allOf(withId(R.id.search_plate),
+                                withParent(withId(R.id.search_edit_frame)))),
+                        isDisplayed()));
+        searchAutoComplete.perform(replaceText("caixa"), closeSoftKeyboard());
 
-        try {
-            Thread.sleep(3582178);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ViewInteraction searchAutoComplete2 = onView(
+                allOf(withId(R.id.search_src_text), withText("caixa"),
+                        withParent(allOf(withId(R.id.search_plate),
+                                withParent(withId(R.id.search_edit_frame)))),
+                        isDisplayed()));
+        searchAutoComplete2.perform(pressImeActionButton());
 
-        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.campoEmail), isDisplayed()));
-        appCompatEditText.perform(replaceText("diego.nos@gmail.com"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.campoEmail), withText("diego.nos@gmail.com"), isDisplayed()));
-        appCompatEditText2.perform(click());
-
-        ViewInteraction appCompatEditText3 = onView(allOf(withId(R.id.campoEmail), withText("diego.nos@gmail.com"), isDisplayed()));
-        appCompatEditText3.perform(replaceText("dinego.nos@gmail.com"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText4 = onView(allOf(withId(R.id.campoSenha), isDisplayed()));
-        appCompatEditText4.perform(replaceText("123456"), closeSoftKeyboard());
-
-        ViewInteraction appCompatButton = onView(allOf(withId(R.id.btnEntrar), withText("Entrar"),
-                        withParent(withId(R.id.email_login_form)), isDisplayed()));
-        appCompatButton.perform(click());
-
-        ViewInteraction appCompatButton2 = onView(allOf(withId(R.id.btnEntrar), withText("Entrar"),
-                        withParent(withId(R.id.email_login_form)), isDisplayed()));
-        appCompatButton2.perform(click());
-
-        try {
-            Thread.sleep(3528798);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatImageButton2 = onView(allOf(withContentDescription("Open navigation drawer"),
-                        withParent(withId(R.id.toolbar)), isDisplayed()));
-        appCompatImageButton2.perform(click());
-
-        ViewInteraction appCompatCheckedTextView2 = onView(allOf(withId(R.id.design_menu_item_text), withText("Meus anúncios"), isDisplayed()));
-        appCompatCheckedTextView2.perform(click());
-
-        inicialArrobaActivityCont();
-
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.nomeProduto), withText("Caixa de lenços"),
+                        childAtPosition(
+                                allOf(withId(R.id.card_view),
+                                        childAtPosition(
+                                                IsInstanceOf.<View>instanceOf(android.widget.RelativeLayout.class),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        textView.check(matches(withText("Caixa de lenços")));
 
     }
 
-    private void inicialArrobaActivityCont() {
+    private static Matcher<View> childAtPosition(
+            final Matcher<View> parentMatcher, final int position) {
 
-        try {
-            Thread.sleep(3520540);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Child at position " + position + " in parent ");
+                parentMatcher.describeTo(description);
+            }
 
-        ViewInteraction appCompatRadioButton = onView(allOf(withId(R.id.rdoBtnServico3), withText("Serviços"),
-                withParent(allOf(withId(R.id.activity_meusanuncios), withParent(withId(android.R.id.content)))), isDisplayed()));
-        appCompatRadioButton.perform(click());
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        ViewInteraction appCompatRadioButton2 = onView(allOf(withId(R.id.rdoBtnServico3), withText("Serviços"),
-                withParent(allOf(withId(R.id.activity_meusanuncios), withParent(withId(android.R.id.content)))), isDisplayed()));
-        appCompatRadioButton2.perform(click());
-
-        try {
-            Thread.sleep(3515939);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatRadioButton3 = onView(allOf(withId(R.id.rdoBtnProduto3), withText("Produtos"),
-                withParent(allOf(withId(R.id.activity_meusanuncios), withParent(withId(android.R.id.content)))), isDisplayed()));
-        appCompatRadioButton3.perform(click());
-
-        try {
-            Thread.sleep(3511614);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction recyclerView = onView(allOf(withId(R.id.recyclerview2), withParent(allOf(withId(R.id.activity_meusanuncios),
-                withParent(withId(android.R.id.content)))), isDisplayed()));
-        recyclerView.perform(actionOnItemAtPosition(1, click()));
-
-        try {
-            Thread.sleep(3507408);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatButton3 = onView(allOf(withId(R.id.alterarProduto), withText("Alterar"), isDisplayed()));
-        appCompatButton3.perform(click());
-
-        try {
-            Thread.sleep(3504236);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatAutoCompleteTextView = onView(allOf(withId(R.id.campoNomeProduto), withText("Nov")));
-        appCompatAutoCompleteTextView.perform(scrollTo(), replaceText("Novoo"), closeSoftKeyboard());
-
-        ViewInteraction appCompatAutoCompleteTextView2 = onView(allOf(withId(R.id.campoNomeProduto), withText("Novoo")));
-        appCompatAutoCompleteTextView2.perform(scrollTo(), click());
-
-        pressBack();
-
-        ViewInteraction appCompatButton4 = onView(allOf(withId(R.id.btnAlterar), withText("Confirmar")));
-        appCompatButton4.perform(scrollTo(), click());
-
-        ViewInteraction appCompatButton5 = onView(allOf(withId(android.R.id.button1), withText("Sim")));
-        appCompatButton5.perform(scrollTo(), click());
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup && parentMatcher.matches(parent)
+                        && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
     }
 
 }

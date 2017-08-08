@@ -26,7 +26,7 @@ import static com.expoagro.expoagrobrasil.controller.TesteUtils.preencheCampo;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.selecionaItem;
 
 @RunWith(AndroidJUnit4.class)
-public class AlterarServicoActivityTestNomeValido {
+public class AlterarServicoActivityTestDadoValido {
 
     @Rule
     public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);

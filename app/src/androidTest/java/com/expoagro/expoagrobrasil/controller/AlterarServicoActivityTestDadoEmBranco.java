@@ -28,7 +28,7 @@ import static com.expoagro.expoagrobrasil.controller.TesteUtils.selecionaItem;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class AlterarServicoActivityTestNomeEmBranco {
+public class AlterarServicoActivityTestDadoEmBranco {
 
     @Rule
     public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
