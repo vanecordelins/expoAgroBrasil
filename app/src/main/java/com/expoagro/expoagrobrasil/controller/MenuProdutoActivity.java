@@ -91,8 +91,7 @@ public class MenuProdutoActivity extends AppCompatActivity
             finish();
                                              }
         });
-        RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto2);
-        rdoBtnProduto.setChecked(true);
+        ((RadioButton) findViewById(R.id.rdoBtnProduto2)).setChecked(true);
         // ----------------------------------RecyclerView-----------------------------------------------------------
         progress.show();
         Thread mThread = new Thread() {
@@ -112,10 +111,8 @@ public class MenuProdutoActivity extends AppCompatActivity
                                 progress.dismiss();
                             }
                         }
-
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            databaseError.getMessage();
+                        public void onCancelled(DatabaseError databaseError) { databaseError.getMessage();
                         }
                     });
                 }
@@ -145,9 +142,7 @@ public class MenuProdutoActivity extends AppCompatActivity
                             }
                         });
                     }
-
                 };
-
                 MenuProdutoActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -230,7 +225,7 @@ public class MenuProdutoActivity extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                System.out.println(databaseError.getMessage());
             }
         });
 
