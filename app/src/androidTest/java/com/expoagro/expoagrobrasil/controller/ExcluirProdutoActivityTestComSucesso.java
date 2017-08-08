@@ -21,8 +21,6 @@ import static com.expoagro.expoagrobrasil.controller.TesteUtils.clicaEm;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.espera;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogin;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.selecionaItem;
-import static com.expoagro.expoagrobrasil.controller.TesteUtils.verificaTexto;
-
 @RunWith(AndroidJUnit4.class)
 public class ExcluirProdutoActivityTestComSucesso {
 

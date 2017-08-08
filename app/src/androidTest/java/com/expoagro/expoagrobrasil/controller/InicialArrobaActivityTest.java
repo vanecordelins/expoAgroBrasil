@@ -94,8 +94,9 @@ public class InicialArrobaActivityTest {
                                                 0)),
                                 1),
                         isDisplayed()));
-        textView.check(matches(withText("Caixa de lenços")));
+        ViewInteraction result =  textView.check(matches(withText("Caixa de lenços")));
 
+        Assert.assertNotNull(result);
     }
 
     private static Matcher<View> childAtPosition(
