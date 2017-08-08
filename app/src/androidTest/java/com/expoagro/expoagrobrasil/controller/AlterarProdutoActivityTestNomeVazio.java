@@ -71,8 +71,8 @@ public class AlterarProdutoActivityTestNomeVazio {
 
 
         ViewInteraction result = onView(
-                allOf(withId(R.id.campoNomeProduto), isDisplayed()));
-        result.check(matches(withText("")));
+                allOf(withId(R.string.error_field_required), isDisplayed()));
+        result.check(matches(withText("Campo obrigatório!")));
 
 
 

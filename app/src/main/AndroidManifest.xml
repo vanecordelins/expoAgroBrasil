@@ -104,10 +104,28 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.expoagro.expoagrobrasil.controller.MenuProdutoActivity" />
         </activity>
-        <activity android:name=".controller.MenuServicoActivity" />
-        <activity android:name=".controller.VisualizarMeusServicosActivity" />
-        <activity android:name=".controller.VisualizarMeuServicoClicadoActivity" />
-        <activity android:name=".controller.AlterarServicoActivity" />
+        <activity
+            android:name=".controller.MenuServicoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".controller.VisualizarMeusServicosActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".controller.VisualizarMeuServicoClicadoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".controller.FrequenciasActivity"
+            android:label="Frequências"
+            android:parentActivityName=".controller.MenuServicoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.MenuServicoActivity" />
+        </activity>
+        <activity
+            android:name=".controller.AlterarServicoActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

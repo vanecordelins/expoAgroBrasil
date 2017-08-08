@@ -10,79 +10,83 @@ import android.widget.Button;
 
 import com.expoagro.expoagrobrasil.R;
 
-public class CategoriasActivity extends AppCompatActivity {
+/**
+ * Created by Fabricio on 8/4/2017.
+ */
 
+public class FrequenciasActivity extends AppCompatActivity {
     private static String uid;
     private static boolean isClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categorias);
+        setContentView(R.layout.activity_frequencia);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button animal = (Button) findViewById(R.id.animal);
-        animal.setOnClickListener(new View.OnClickListener() {
+        Button diaria = (Button) findViewById(R.id.diaria);
+        diaria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUid("Animal");
+                setUid("Por Dia");
                 setIsClick(true);
                 acao();
             }
         });
-        Button ferramenta = (Button) findViewById(R.id.ferramenta);
-        ferramenta.setOnClickListener(new View.OnClickListener() {
+        Button horaria = (Button) findViewById(R.id.horaria);
+        horaria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUid("Ferramenta");
+                setUid("Por Hora");
                 setIsClick(true);
                 acao();
             }
         });
-        Button propriedade = (Button) findViewById(R.id.propriedade);
-        propriedade.setOnClickListener(new View.OnClickListener() {
+        Button semanal = (Button) findViewById(R.id.semanal);
+        semanal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUid("Propriedade");
+                setUid("Por Semana");
                 setIsClick(true);
                 acao();
             }
         });
-        Button maquinario = (Button) findViewById(R.id.maquinarios);
-        maquinario.setOnClickListener(new View.OnClickListener() {
+        Button quinzenal = (Button) findViewById(R.id.quinzenal);
+        quinzenal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUid("Maquinários");
+                setUid("Por Quinzena");
                 setIsClick(true);
                 acao();
             }
         });
-        Button outros = (Button) findViewById(R.id.outros);
+
+        Button outros = (Button) findViewById(R.id.outra);
         outros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUid("Outros");
+                setUid("Outra");
                 setIsClick(true);
                 acao();
             }
         });
-        Button produto = (Button) findViewById(R.id.produto);
-        produto.setOnClickListener(new View.OnClickListener() {
+        Button servico = (Button) findViewById(R.id.servico);
+        servico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUid("Produto");
+                setUid("Serviço");
                 setIsClick(false);
                 acao();
             }
         });
-
     }
 
     public void acao(){
-        Intent intent = new Intent(CategoriasActivity.this, MenuProdutoActivity.class);
+        Intent intent = new Intent(FrequenciasActivity.this, MenuServicoActivity.class);
         startActivity(intent);
         finish();
     }
@@ -91,8 +95,8 @@ public class CategoriasActivity extends AppCompatActivity {
         return uid;
     }
 
-    public static void setUid(String categoria) {
-        uid = categoria;
+    public static void setUid(String frequencia) {
+        uid = frequencia;
     }
 
     public static boolean isClick() {
@@ -107,7 +111,7 @@ public class CategoriasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent it = new Intent(CategoriasActivity.this, MenuProdutoActivity.class);
+                Intent it = new Intent(FrequenciasActivity.this, MenuServicoActivity.class);
                 startActivity(it);
                 finish();
                 return true;
@@ -119,9 +123,8 @@ public class CategoriasActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(CategoriasActivity.this, MenuProdutoActivity.class);
+        Intent intent = new Intent(FrequenciasActivity.this, MenuServicoActivity.class);
         startActivity(intent);
         finish();
     }
-
 }

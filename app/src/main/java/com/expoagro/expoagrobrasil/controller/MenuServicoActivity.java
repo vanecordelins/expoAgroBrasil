@@ -8,11 +8,13 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Servico;
@@ -36,8 +37,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 /**
@@ -45,7 +46,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class MenuServicoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener, SearchView.OnQueryTextListener{
     private GoogleApiClient mGoogleApiClient;
     private String uid;
     private RecyclerView recyclerView;
@@ -55,37 +56,31 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_menu_servico);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_2);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
         uid = "";
         progress = new ProgressDialog(MenuServicoActivity.this);
         progress.setCancelable(false);
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener( MenuServicoActivity.this);
+        ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(MenuServicoActivity.this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
+                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(MenuServicoActivity.this)
                 .enableAutoManage(MenuServicoActivity.this, MenuServicoActivity.this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
-        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico2);
-        rdoBtnServico.setChecked(true);
+        ((RadioButton) findViewById(R.id.rdoBtnServico2)).setChecked(true);
 
         RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto2);
         rdoBtnProduto.setOnClickListener(new View.OnClickListener() {
@@ -96,17 +91,29 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                 finish();
             }
         });
-
         // ----------------------------------RecyclerView-----------------------------------------------------------
         progress.show();
-
         Thread mThread = new Thread() {
             @Override
             public void run() {
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerview2);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MenuServicoActivity.this));
-                DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Serviço");
+                Query myref = FirebaseDatabase.getInstance().getReference("Serviço");
+                if (FrequenciasActivity.isClick()) {
+                    myref = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("frequencia").equalTo(FrequenciasActivity.getUid());
+                    myref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue() == null) {
+                                Toast.makeText(MenuServicoActivity.this, "Serviços não encontrados", Toast.LENGTH_SHORT).show();
+                                progress.dismiss();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) { databaseError.getMessage(); }
+                    });
+                }
 
                 final FirebaseRecyclerAdapter<Servico, ServicoViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Servico, ServicoViewHolder>(
                         Servico.class,
@@ -116,9 +123,7 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                 ) {
                     @Override
                     protected void populateViewHolder(ServicoViewHolder viewHolder, Servico model, int posit) {
-
                         final String keyServico = getRef(posit).getKey();
-
                         viewHolder.setFrequencia(model.getFrequencia());
                         viewHolder.setData(model.getData());
                         viewHolder.setValor(model.getValor());
@@ -134,15 +139,11 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                                 startActivity(intent);
                             }
                         });
-
                     }
-
                 };
                 MenuServicoActivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void run() {
-                        recyclerView.setAdapter(recyclerAdapter);
-                    }
+                    public void run() {recyclerView.setAdapter(recyclerAdapter);}
                 });
             }
         };
@@ -169,6 +170,61 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
 
     public static void setId(String id) {
         idClicado = id;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(final String query) {
+        final Query q = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome");
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot serv : dataSnapshot.getChildren()){
+                    Servico servico = serv.getValue(Servico.class);
+                    System.out.println(servico.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1))));
+                    if(servico.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1)))){
+                        Query q1 = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome").equalTo(servico.getNome());
+                        final FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder>(
+                                Servico.class,
+                                R.layout.linha,
+                                MenuServicoActivity.ServicoViewHolder.class,
+                                q1
+                        ) {
+                            @Override
+                            protected void populateViewHolder(MenuServicoActivity.ServicoViewHolder viewHolder, Servico model, int position) {
+                                final String keyServico = getRef(position).getKey();
+                                viewHolder.setFrequencia(model.getFrequencia());
+                                viewHolder.setData(model.getData());
+                                viewHolder.setValor(model.getValor());
+                                viewHolder.setNome(model.getNome());
+                                viewHolder.setFoto();
+
+                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        setId(keyServico);
+                                        Intent intent = new Intent(MenuServicoActivity.this, VisualizarProdutoActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        };
+                        recyclerView.setAdapter(recyclerAdapter2);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getMessage());
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 
     public static class ServicoViewHolder extends RecyclerView.ViewHolder {
@@ -216,6 +272,9 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.teste_filtro, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
 
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
@@ -262,11 +321,8 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_2);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            Intent intent = new Intent(MenuServicoActivity.this, InicialArrobaActivity.class);
-            startActivity(intent);
-            finish();
         }
+        finish();
     }
 
 
@@ -332,9 +388,10 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.app_bar_filter:
-            //    Intent intent = new Intent(MenuServicoActivity.this, FrequenciaActivity.class);
-            //    startActivity(intent);
-            //    return true;
+                Intent intent = new Intent(MenuServicoActivity.this, FrequenciasActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
