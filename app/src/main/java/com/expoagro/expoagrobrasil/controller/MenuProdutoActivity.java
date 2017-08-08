@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
@@ -112,7 +112,8 @@ public class MenuProdutoActivity extends AppCompatActivity
                             }
                         }
                         @Override
-                        public void onCancelled(DatabaseError databaseError) { databaseError.getMessage();
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.println(databaseError.getMessage());
                         }
                     });
                 }
@@ -178,7 +179,6 @@ public class MenuProdutoActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextSubmit(final String query) {
-//        System.out.println(query.substring(1));
         final Query q = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome");
         q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
