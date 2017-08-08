@@ -8,11 +8,13 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,7 +47,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class MenuServicoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener, SearchView.OnQueryTextListener{
     private GoogleApiClient mGoogleApiClient;
     private String uid;
     private RecyclerView recyclerView;
@@ -171,6 +173,62 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         idClicado = id;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(final String query) {
+        final Query q = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome");
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot serv : dataSnapshot.getChildren()){
+                    Servico servico = serv.getValue(Servico.class);
+                    System.out.println(servico.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1))));
+                    if(servico.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1)))){
+                        Query q1 = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome").equalTo(servico.getNome());
+                        final FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder>(
+                                Servico.class,
+                                R.layout.linha,
+                                MenuServicoActivity.ServicoViewHolder.class,
+                                q1
+                        ) {
+                            @Override
+                            protected void populateViewHolder(MenuServicoActivity.ServicoViewHolder viewHolder, Servico model, int position) {
+                                final String keyServico = getRef(position).getKey();
+                                viewHolder.setFrequencia(model.getFrequencia());
+                                viewHolder.setData(model.getData());
+                                viewHolder.setValor(model.getValor());
+                                viewHolder.setNome(model.getNome());
+                                viewHolder.setFoto();
+
+                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        setId(keyServico);
+                                        Intent intent = new Intent(MenuServicoActivity.this, VisualizarProdutoActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        };
+
+                        recyclerView.setAdapter(recyclerAdapter2);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getMessage());
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
     public static class ServicoViewHolder extends RecyclerView.ViewHolder {
         private View mView;
         private TextView textView_nome;
@@ -216,6 +274,9 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.teste_filtro, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
 
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
