@@ -8,21 +8,22 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
@@ -44,13 +45,14 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class MenuProdutoActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, SearchView.OnQueryTextListener {
 
     private GoogleApiClient mGoogleApiClient;
     private String uid;
     private RecyclerView recyclerView;
     private static String idClicado;
     private ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,28 +72,23 @@ public class MenuProdutoActivity extends AppCompatActivity
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
 
-        ((NavigationView) findViewById(R.id.nav_view)).setNavigationItemSelectedListener(MenuProdutoActivity.this);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(MenuProdutoActivity.this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(MenuProdutoActivity.this)
-                .enableAutoManage(MenuProdutoActivity.this, MenuProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+                .enableAutoManage(MenuProdutoActivity.this, MenuProdutoActivity.this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
-        // ----------------------------------RadioButton-----------------------------------------------------------
-        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico2);
-        rdoBtnServico.setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View view) {
-            Intent telaCadastrarServico = new Intent(MenuProdutoActivity.this, MenuServicoActivity.class);
-            startActivity(telaCadastrarServico);
-            finish();
-                                             }
-        });
-        RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto2);
-        rdoBtnProduto.setChecked(true);
         // ----------------------------------RecyclerView-----------------------------------------------------------
+
         progress.show();
+
         Thread mThread = new Thread() {
             @Override
             public void run() {
@@ -109,18 +106,21 @@ public class MenuProdutoActivity extends AppCompatActivity
                                 progress.dismiss();
                             }
                         }
+
                         @Override
-                        public void onCancelled(DatabaseError databaseError) { databaseError.getMessage(); }
+                        public void onCancelled(DatabaseError databaseError) {
+                            databaseError.getMessage();
+                        }
                     });
                 }
-                final FirebaseRecyclerAdapter<Produto, ProdutoViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, ProdutoViewHolder>(
+                final FirebaseRecyclerAdapter<Produto, ListaViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, ListaViewHolder>(
                         Produto.class,
                         R.layout.linha,
-                        ProdutoViewHolder.class,
+                        ListaViewHolder.class,
                         myref
                 ) {
                     @Override
-                    protected void populateViewHolder(ProdutoViewHolder viewHolder, Produto model, int position) {
+                    protected void populateViewHolder(ListaViewHolder viewHolder,Produto model, int position) {
                         final String key = getRef(position).getKey();
                         viewHolder.setCategoria(model.getCategoria());
                         viewHolder.setData(model.getData());
@@ -135,14 +135,17 @@ public class MenuProdutoActivity extends AppCompatActivity
                                 setId(key);
                                 Intent intent = new Intent(MenuProdutoActivity.this, VisualizarProdutoActivity.class);
                                 startActivity(intent);
-                                finish();
                             }
                         });
                     }
+
                 };
+
                 MenuProdutoActivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void run() { recyclerView.setAdapter(recyclerAdapter); }
+                    public void run() {
+                        recyclerView.setAdapter(recyclerAdapter);
+                    }
                 });
             }
         };
@@ -171,15 +174,98 @@ public class MenuProdutoActivity extends AppCompatActivity
         idClicado = id;
     }
 
-    public static class ProdutoViewHolder extends RecyclerView.ViewHolder {
-        private View mView;
-        private TextView textView_nome;
-        private TextView textView_data;
-        private TextView textView_valor;
-        private TextView textView_categoria;
-        private ImageView imageView;
+    @Override
+    public boolean onQueryTextSubmit(final String query) {
+//        System.out.println(query.substring(1));
+        final Query q = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome");
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot prod : dataSnapshot.getChildren()){
+                    Produto produto = prod.getValue(Produto.class);
+                    System.out.println(produto.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1))));
+                    if(produto.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1)))){
+                        Query q1 = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome").equalTo(produto.getNome());
+                        final FirebaseRecyclerAdapter<Produto, ListaViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Produto, ListaViewHolder>(
+                                Produto.class,
+                                R.layout.linha,
+                                ListaViewHolder.class,
+                                q1
+                        ) {
+                            @Override
+                            protected void populateViewHolder(ListaViewHolder viewHolder, Produto model, int position) {
+                                final String key = getRef(position).getKey();
+                                viewHolder.setCategoria(model.getCategoria());
+                                viewHolder.setData(model.getData());
+                                viewHolder.setValor(model.getValor());
+                                viewHolder.setFoto(model.getFoto());
+                                viewHolder.setNome(model.getNome());
+                                progress.dismiss();
 
-        public ProdutoViewHolder(View itemView) {
+                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        setId(key);
+                                        Intent intent = new Intent(MenuProdutoActivity.this, VisualizarProdutoActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        };
+
+                        recyclerView.setAdapter(recyclerAdapter2);
+                    }
+//                    else{
+//                        Toast.makeText(MenuActivity.this, "Produto não encontrado.", Toast.LENGTH_SHORT).show();
+//                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        //newText.toLowerCase();
+//        Query q = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome").startAt(newText).endAt("~");
+//        final FirebaseRecyclerAdapter<Lista, ListaViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Lista, ListaViewHolder>(
+//                Lista.class,
+//                R.layout.linha,
+//                ListaViewHolder.class,
+//                q
+//        ) {
+//            @Override
+//            protected void populateViewHolder(ListaViewHolder viewHolder, Lista model, int position) {
+//                System.out.println(model);
+//                //final String key = getRef(position).getKey();
+//                viewHolder.setCategoria(model.getCategoria());
+//                viewHolder.setData(model.getData());
+//                viewHolder.setValor(model.getValor());
+//                viewHolder.setFoto(model.getFoto());
+//                viewHolder.setNome(model.getNome());
+//                progress.dismiss();
+//            }
+//        };
+//
+//        recyclerView.setAdapter(recyclerAdapter2);
+        return false;
+    }
+
+    public static class ListaViewHolder extends RecyclerView.ViewHolder {
+        View mView;
+        TextView textView_nome;
+        TextView textView_data;
+        TextView textView_valor;
+        TextView textView_categoria;
+        ImageView imageView;
+
+        public ListaViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             textView_nome = (TextView) itemView.findViewById(R.id.nomeProduto);
@@ -226,6 +312,9 @@ public class MenuProdutoActivity extends AppCompatActivity
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.teste_filtro, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
 
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
@@ -276,6 +365,7 @@ public class MenuProdutoActivity extends AppCompatActivity
             Intent intent = new Intent(MenuProdutoActivity.this, InicialArrobaActivity.class);
             startActivity(intent);
             finish();
+//            super.onBackPressed();
         }
     }
 
@@ -310,7 +400,7 @@ public class MenuProdutoActivity extends AppCompatActivity
             }
         } else if (id == R.id.menu_meus_anuncios) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                Intent telaLogin = new Intent(MenuProdutoActivity.this, VisualizarMeusProdutosActivity.class);
+                Intent telaLogin = new Intent(MenuProdutoActivity.this, VisualizarProdutoActivity.class);
                 startActivity(telaLogin);
                 finish();
             } else {
@@ -343,7 +433,6 @@ public class MenuProdutoActivity extends AppCompatActivity
             case R.id.app_bar_filter:
                 Intent intent = new Intent(MenuProdutoActivity.this, CategoriasActivity.class);
                 startActivity(intent);
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
