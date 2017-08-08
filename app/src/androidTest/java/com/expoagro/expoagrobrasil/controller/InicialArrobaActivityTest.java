@@ -114,7 +114,7 @@ public class InicialArrobaActivityTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
+
         ViewInteraction appCompatRadioButton = onView(allOf(withId(R.id.rdoBtnServico3), withText("Serviços"),
                 withParent(allOf(withId(R.id.activity_meusanuncios), withParent(withId(android.R.id.content)))), isDisplayed()));
         appCompatRadioButton.perform(click());
