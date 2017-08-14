@@ -40,7 +40,8 @@
     <string name="error_categoria_nao_selecionada">Selecione a categoria do produto</string>
 
     <string name="menu_perfil">Meu perfil</string>
-    <string name="menu_novo_anuncio">Novo anúncio</string>
+    <string name="menu_novo_produto">Novo produto</string>
+    <string name="menu_novo_servico">Novo serviço</string>
     <string name="menu_meus_anuncios">Meus anúncios</string>
     <string name="menu_arroba">"@" hoje</string>
     <string name="menu_favoritos">Favoritos</string>

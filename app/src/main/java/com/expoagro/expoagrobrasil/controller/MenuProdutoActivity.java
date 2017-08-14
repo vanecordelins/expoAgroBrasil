@@ -365,11 +365,22 @@ public class MenuProdutoActivity extends AppCompatActivity
                 startActivity(telaLogin);
                 finish();
             }
-        } else if (id == R.id.menu_novo_anuncio) {
+        } else if (id == R.id.menu_novo_produto) {
 
             if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
-                Intent telaCadastrarAnuncio = new Intent(MenuProdutoActivity.this, CadastroProdutoActivity.class);
-                startActivity(telaCadastrarAnuncio);
+                Intent telaCadastrarProduto = new Intent(MenuProdutoActivity.this, CadastroProdutoActivity.class);
+                startActivity(telaCadastrarProduto);
+                finish();
+            } else {
+                Intent telaLogin = new Intent(MenuProdutoActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
+        } else if (id == R.id.menu_novo_servico) {
+
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
+                Intent telaCadastrarServico = new Intent(MenuProdutoActivity.this, CadastroServicoActivity.class);
+                startActivity(telaCadastrarServico);
                 finish();
             } else {
                 Intent telaLogin = new Intent(MenuProdutoActivity.this, LoginActivity.class);

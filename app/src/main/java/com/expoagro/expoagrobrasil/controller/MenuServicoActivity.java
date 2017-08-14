@@ -343,10 +343,20 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                 startActivity(telaLogin);
                 finish();
             }
-        } else if (id == R.id.menu_novo_anuncio) {
+        } else if (id == R.id.menu_novo_produto) {
             if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
-                Intent telaCadastrarAnuncio = new Intent(MenuServicoActivity.this, CadastroProdutoActivity.class);
-                startActivity(telaCadastrarAnuncio);
+                Intent telaCadastrarProduto = new Intent(MenuServicoActivity.this, CadastroProdutoActivity.class);
+                startActivity(telaCadastrarProduto);
+                finish();
+            } else {
+                Intent telaLogin = new Intent(MenuServicoActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
+        } else if (id == R.id.menu_novo_servico) {
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
+                Intent telaCadastrarServico = new Intent(MenuServicoActivity.this, CadastroServicoActivity.class);
+                startActivity(telaCadastrarServico);
                 finish();
             } else {
                 Intent telaLogin = new Intent(MenuServicoActivity.this, LoginActivity.class);
