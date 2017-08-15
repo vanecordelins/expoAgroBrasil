@@ -79,11 +79,9 @@
         <activity
             android:name=".controller.VisualizarProdutoActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".controller.VisualizarServicoActivity"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controller.VisualizarMeusProdutosActivity"
             android:screenOrientation="portrait"
@@ -109,7 +107,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".controller.VisualizarMeusServicosActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controller.VisualizarMeuServicoClicadoActivity"
             android:screenOrientation="portrait" />
@@ -125,7 +123,13 @@
         </activity>
         <activity
             android:name=".controller.AlterarServicoActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".controller.VisualizarAnuncianteActivity"
+            android:label="Anunciante"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
