@@ -8,11 +8,13 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,9 +45,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
 public class MenuProdutoActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, SearchView.OnQueryTextListener {
+
 
     private GoogleApiClient mGoogleApiClient;
     private String uid;
@@ -79,21 +81,17 @@ public class MenuProdutoActivity extends AppCompatActivity
         mGoogleApiClient = new GoogleApiClient.Builder(MenuProdutoActivity.this)
                 .enableAutoManage(MenuProdutoActivity.this, MenuProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
-
+        // ----------------------------------RadioButton-----------------------------------------------------------
         RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico2);
         rdoBtnServico.setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View view) {
-            Intent telaCadastrarServico = new Intent(MenuProdutoActivity.this, MenuServicoActivity.class);
-            startActivity(telaCadastrarServico);
-            finish();
-                                             }
-                                         });
-
-                // ----------------------------------RadioButton-----------------------------------------------------------
-
-        RadioButton rdoBtnProduto = (RadioButton) findViewById(R.id.rdoBtnProduto2);
-        rdoBtnProduto.setChecked(true);
+            @Override
+            public void onClick(View view) {
+                Intent telaCadastrarServico = new Intent(MenuProdutoActivity.this, MenuServicoActivity.class);
+                startActivity(telaCadastrarServico);
+                finish();
+            }
+        });
+        ((RadioButton) findViewById(R.id.rdoBtnProduto2)).setChecked(true);
         // ----------------------------------RecyclerView-----------------------------------------------------------
         progress.show();
         Thread mThread = new Thread() {
@@ -114,7 +112,9 @@ public class MenuProdutoActivity extends AppCompatActivity
                             }
                         }
                         @Override
-                        public void onCancelled(DatabaseError databaseError) { databaseError.getMessage(); }
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.println(databaseError.getMessage());
+                        }
                     });
                 }
                 final FirebaseRecyclerAdapter<Produto, ProdutoViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, ProdutoViewHolder>(
@@ -146,7 +146,9 @@ public class MenuProdutoActivity extends AppCompatActivity
                 };
                 MenuProdutoActivity.this.runOnUiThread(new Runnable() {
                     @Override
-                    public void run() { recyclerView.setAdapter(recyclerAdapter); }
+                    public void run() {
+                        recyclerView.setAdapter(recyclerAdapter);
+                    }
                 });
             }
         };
@@ -175,6 +177,66 @@ public class MenuProdutoActivity extends AppCompatActivity
         idClicado = id;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(final String query) {
+        final Query q = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome");
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot prod : dataSnapshot.getChildren()){
+                    Produto produto = prod.getValue(Produto.class);
+                    System.out.println(produto.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1))));
+                    if(produto.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1)))){
+                        Query q1 = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("nome").equalTo(produto.getNome());
+                        final FirebaseRecyclerAdapter<Produto, ProdutoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Produto, ProdutoViewHolder>(
+                                Produto.class,
+                                R.layout.linha,
+                                ProdutoViewHolder.class,
+                                q1
+                        ) {
+                            @Override
+                            protected void populateViewHolder(ProdutoViewHolder viewHolder, Produto model, int position) {
+                                final String key = getRef(position).getKey();
+                                viewHolder.setCategoria(model.getCategoria());
+                                viewHolder.setData(model.getData());
+                                viewHolder.setValor(model.getValor());
+                                viewHolder.setFoto(model.getFoto());
+                                viewHolder.setNome(model.getNome());
+                                progress.dismiss();
+
+                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        setId(key);
+                                        Intent intent = new Intent(MenuProdutoActivity.this, VisualizarProdutoActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        };
+
+                        recyclerView.setAdapter(recyclerAdapter2);
+                    }
+//                    else{
+//                        Toast.makeText(MenuActivity.this, "Produto não encontrado.", Toast.LENGTH_SHORT).show();
+//                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError.getMessage());
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
     public static class ProdutoViewHolder extends RecyclerView.ViewHolder {
         private View mView;
         private TextView textView_nome;
@@ -192,7 +254,6 @@ public class MenuProdutoActivity extends AppCompatActivity
             textView_categoria = (TextView) itemView.findViewById(R.id.categoriaProduto);
             imageView = (ImageView) itemView.findViewById(R.id.fotoProduto);
         }
-
 
         public void setNome(String nome) {
             textView_nome.setText(nome);
@@ -212,16 +273,19 @@ public class MenuProdutoActivity extends AppCompatActivity
 
         public void setFoto(List<String> foto) {
             if (foto != null) {
-                    Picasso.with(mView.getContext())
-                            .load(foto.get(0))
-                            .fit()
-                            //.resize(100,100)
-                            .into(imageView);
+                Picasso.with(mView.getContext())
+                        .load(foto.get(0))
+                        .fit()
+                        //.resize(100,100)
+                        .into(imageView);
             } else {
                 imageView.setImageResource(R.drawable.sem_foto);
             }
         }
     }
+
+
+
 
 //---------------------------------------------------------------------------------------
 
@@ -230,6 +294,9 @@ public class MenuProdutoActivity extends AppCompatActivity
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.teste_filtro, menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
 
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
@@ -358,5 +425,4 @@ public class MenuProdutoActivity extends AppCompatActivity
     }
 
 }
-
 

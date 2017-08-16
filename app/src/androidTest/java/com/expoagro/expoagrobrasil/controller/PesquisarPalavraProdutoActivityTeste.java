@@ -1,6 +1,5 @@
 package com.expoagro.expoagrobrasil.controller;
 
-
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -21,36 +20,44 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.clicaEm;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.espera;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogin;
-import static com.expoagro.expoagrobrasil.controller.TesteUtils.selecionaItem;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.vejaItem;
+
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class VisualizarProdutoActivityTeste {
+public class PesquisarPalavraProdutoActivityTeste {
 
     @Rule
     public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
 
     @Test
-    public void visualizarProduto() {
-
+    public void pesquisarCategoriaProdutoActivityTeste() {
         espera();
         fazerLogin();
 
-        espera();
-        clicaEm(R.id.rdoBtnProduto2,"Produtos");
-        espera();
-        selecionaItem(R.id.recyclerview,0);
-        espera();
-        vejaItem(R.id.observacaoProduto);
-        espera();
+     //   filtro();
 
-        ViewInteraction result = onView(withId(R.id.descricaoProduto));
+        clicaEm(R.id.animal,"Animal");
+        vejaItem(R.id.recyclerview);
+     //   filtro();
+        clicaEm(R.id.ferramenta,"Ferramenta");
+        vejaItem(R.id.recyclerview);
+     //   filtro();
+        clicaEm(R.id.produto,"Todos os Produtos");
+        vejaItem(R.id.recyclerview);
+     //   filtro();
+        clicaEm(R.id.propriedade,"Propriedade");
+        vejaItem(R.id.recyclerview);
+     //   filtro();
+        clicaEm(R.id.maquinarios,"Maquinários");
+        vejaItem(R.id.recyclerview);
+     //   filtro();
+        clicaEm(R.id.outros,"Outros");
+
+        ViewInteraction result = onView(withId(R.id.recyclerview));
         result.check(matches(isDisplayed()));
-
         Assert.assertNotNull(result);
-       // vejaItem(R.id.descricaoProduto);
-
+     //   vejaItem(R.id.recyclerview);
     }
 
 }
