@@ -93,7 +93,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         spinnerCategoria = (Spinner) findViewById(R.id.spinnerCategoria);
         spinnerCategoria.setAdapter(adapter);
 
-        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico);
+        /*RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico);
         rdoBtnServico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +101,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 startActivity(telaCadastrarServico);
                 finish();
             }
-        });
+        });*/
 
         Button mCadastrarButton = (Button) findViewById(R.id.btnCadastrar);
         mCadastrarButton.setOnClickListener(new View.OnClickListener() {

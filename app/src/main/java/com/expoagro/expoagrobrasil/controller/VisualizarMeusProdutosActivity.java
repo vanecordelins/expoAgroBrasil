@@ -15,8 +15,12 @@ import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.model.Produto;
+import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,10 +36,11 @@ import java.util.List;
  * Created by Samir on 25/07/2017.
  */
 
-public class VisualizarMeusProdutosActivity extends AppCompatActivity {
+public class VisualizarMeusProdutosActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static String idClicado;
     private ProgressDialog progress;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,12 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
         progress.setCancelable(false);
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(VisualizarMeusProdutosActivity.this)
+                .enableAutoManage(VisualizarMeusProdutosActivity.this, VisualizarMeusProdutosActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico3);
         rdoBtnServico.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +142,9 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (!connected) {
                     Toast.makeText(VisualizarMeusProdutosActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                        GoogleSignIn.signOut(VisualizarMeusProdutosActivity.this, mGoogleApiClient);
+                    }
                 }
             }
 

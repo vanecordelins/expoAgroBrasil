@@ -2,6 +2,7 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -10,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -46,6 +46,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     private AnuncioViewPager testeViewPager;
     private GoogleApiClient mGoogleApiClient;
     private String shareProduto;
+    private static String idAnunciante;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         final String keyProduto = MenuProdutoActivity.getId();
 
         shareProduto = "";
+        idAnunciante = null;
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
@@ -77,9 +79,18 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot user : dataSnapshot.getChildren()) {
                                     if (user.getKey().equals(produto.getIdUsuario())) {
-                                        Usuario target = user.getValue(Usuario.class);
-                                        System.out.println(target.getNome());
+                                        final Usuario target = user.getValue(Usuario.class);
                                         ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + target.getNome());
+                                        ((TextView) findViewById(R.id.vendedorProduto)).setTypeface(null, Typeface.BOLD);
+                                        ((TextView) findViewById(R.id.vendedorProduto)).setTextColor(getResources().getColor(R.color.colorAccent));
+                                        findViewById(R.id.vendedorProduto).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                VisualizarProdutoActivity.setIdAnunciante(target.getId());
+                                                Intent intent = new Intent(VisualizarProdutoActivity.this, VisualizarAnuncianteActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        });
                                         break;
                                     }
                                 }
@@ -170,5 +181,13 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.out.println("on Connection failed.");
+    }
+
+    public static void setIdAnunciante(String id) {
+        idAnunciante = id;
+    }
+
+    public static String getIdAnunciante() {
+        return idAnunciante;
     }
 }
