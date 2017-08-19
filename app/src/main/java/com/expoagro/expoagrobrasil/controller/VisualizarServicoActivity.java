@@ -146,6 +146,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 GoogleSignIn.signOut(VisualizarServicoActivity.this, mGoogleApiClient);
             }
+            progress.dismiss();
             finish();
         }
     }

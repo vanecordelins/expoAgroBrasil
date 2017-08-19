@@ -107,7 +107,6 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                                 setId(key);
                                 Intent intent = new Intent(VisualizarMeusProdutosActivity.this, VisualizarMeuProdutoClicadoActivity.class);
                                 startActivity(intent);
-                                finish();
                             }
                         });
                     }
@@ -131,6 +130,7 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (!connected) {
                     Toast.makeText(VisualizarMeusProdutosActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+
                 }
             }
 

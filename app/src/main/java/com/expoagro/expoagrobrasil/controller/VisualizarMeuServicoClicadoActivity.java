@@ -1,8 +1,11 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -84,13 +87,24 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
             }
         });
 
+        checkForConnection();
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, VisualizarMeusServicosActivity.class);
-        startActivity(intent);
+      //  Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, VisualizarMeusServicosActivity.class);
+      //  startActivity(intent);
         finish();
+    }
+
+    private void checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(VisualizarMeuServicoClicadoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
 }

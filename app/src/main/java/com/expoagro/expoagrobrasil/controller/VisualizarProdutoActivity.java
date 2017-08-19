@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -47,6 +48,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     private GoogleApiClient mGoogleApiClient;
     private String shareProduto;
     private static String idAnunciante;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,11 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = MenuProdutoActivity.getId();
+
+        progress = new ProgressDialog(VisualizarProdutoActivity.this);
+        progress.setCancelable(false);
+        progress.setIndeterminate(true);
+        progress.setMessage("Carregando anúncio...");
 
         shareProduto = "";
         idAnunciante = null;
@@ -65,7 +72,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarProdutoActivity.this)
                 .enableAutoManage(VisualizarProdutoActivity.this, VisualizarProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
-
+        progress.show();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -91,6 +98,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                                                 startActivity(intent);
                                             }
                                         });
+                                        progress.dismiss();
                                         break;
                                     }
                                 }
@@ -164,16 +172,18 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
         if (!isConnected) {
             Toast.makeText(VisualizarProdutoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            //Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
+            //startActivity(intent);
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 GoogleSignIn.signOut(VisualizarProdutoActivity.this, mGoogleApiClient);
             }
+            progress.dismiss();
+            finish();
         }
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
-        startActivity(intent);
         finish();
     }
 
