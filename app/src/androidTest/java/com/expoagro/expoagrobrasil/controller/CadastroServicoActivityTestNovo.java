@@ -74,11 +74,11 @@ public class CadastroServicoActivityTestNovo {
         appCompatCheckedTextView4.perform(click());
 
 
-        ViewInteraction appCompatRadioButton2 = onView(
+/*        ViewInteraction appCompatRadioButton2 = onView(
                 allOf(withId(R.id.rdoBtnServico), withText("Serviço"),
                         withParent(withId(R.id.tipoAnuncio)),
                         isDisplayed()));
-        appCompatRadioButton2.perform(click());
+        appCompatRadioButton2.perform(click());*/
 
 
         ViewInteraction appCompatAutoCompleteTextView2 = onView(

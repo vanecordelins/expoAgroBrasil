@@ -84,3 +84,9 @@ sourceSets {
 }
 
 apply plugin: 'com.google.gms.google-services'
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}

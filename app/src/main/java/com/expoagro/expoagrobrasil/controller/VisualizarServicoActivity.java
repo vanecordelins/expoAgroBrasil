@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
     private ProgressDialog progress;
     private GoogleApiClient mGoogleApiClient;
     private String shareServico;
+    private static String idAnunciante;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarServicoActivity.this)
                 .enableAutoManage(VisualizarServicoActivity.this, VisualizarServicoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
+        idAnunciante = null;
 
         progress = new ProgressDialog(VisualizarServicoActivity.this);
         progress.setCancelable(false);
@@ -74,8 +77,18 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot user : dataSnapshot.getChildren()) {
                                     if (user.getKey().equals(servico.getIdUsuario())) {
-                                        Usuario target = user.getValue(Usuario.class);
+                                        final Usuario target = user.getValue(Usuario.class);
                                         ((TextView) findViewById(R.id.vendedorServico)).setText("Vendedor: " + target.getNome());
+                                        ((TextView) findViewById(R.id.vendedorServico)).setTextColor(getResources().getColor(R.color.colorAccent));
+                                        ((TextView) findViewById(R.id.vendedorServico)).setTypeface(null, Typeface.BOLD);
+                                        findViewById(R.id.vendedorServico).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                setIdAnunciante(target.getId());
+                                                Intent intent = new Intent(VisualizarServicoActivity.this, VisualizarAnuncianteActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        });
                                         progress.dismiss();
                                         break;
                                     }
@@ -140,5 +153,13 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.out.println("onConnection Failed Listener");
+    }
+
+    public static void setIdAnunciante(String id) {
+        idAnunciante = id;
+    }
+
+    public static String getIdAnunciante() {
+        return idAnunciante;
     }
 }
