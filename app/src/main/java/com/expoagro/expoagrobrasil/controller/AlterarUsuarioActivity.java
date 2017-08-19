@@ -1,7 +1,10 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -63,9 +66,13 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
         mAtualizarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progress.setMessage("Atualizando Dados...");
-                progress.show();
-                alterar(); //Aqui chamar o método para alterar usuario *****************
+                if (checkForConnection()) {
+                    progress.setMessage("Atualizando Dados...");
+                    progress.show();
+                    alterar(); //Aqui chamar o método para alterar usuario *****************
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -79,6 +86,18 @@ public class AlterarUsuarioActivity extends AppCompatActivity implements GoogleA
             }
         });
 
+    }
+
+    private boolean checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(AlterarUsuarioActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            finish();
+            return false;
+        }
+        return true;
     }
 
     private void fillForm() {

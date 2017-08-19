@@ -70,8 +70,7 @@ public class VisualizarUsuarioActivity extends AppCompatActivity {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (!connected) {
                     Toast.makeText(VisualizarUsuarioActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(VisualizarUsuarioActivity.this, MenuProdutoActivity.class);
-                    startActivity(intent);
+
                     finish();
                 }
             }

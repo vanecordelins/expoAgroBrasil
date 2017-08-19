@@ -93,7 +93,7 @@ public class FirebaseLogin {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             // there was an error
-                            Toast.makeText(activity, "Sem conexão com a internet. Tente novamente.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Ocorreu um erro ao realizar o login. Tente Novamente.", Toast.LENGTH_SHORT).show();
                             progress.dismiss();
                         } else {
                             if (task.getResult().getUser().isEmailVerified()) {

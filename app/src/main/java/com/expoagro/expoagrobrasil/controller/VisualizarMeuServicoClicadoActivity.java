@@ -60,9 +60,11 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
         alterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, AlterarServicoActivity.class);
-                startActivity(intent);
-                finish();
+                if (checkForConnection()) {
+                    Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, AlterarServicoActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -97,14 +99,16 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
         finish();
     }
 
-    private void checkForConnection() {
+    private boolean checkForConnection() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
         if (!isConnected) {
             Toast.makeText(VisualizarMeuServicoClicadoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
             finish();
+            return false;
         }
+        return true;
     }
 
 }

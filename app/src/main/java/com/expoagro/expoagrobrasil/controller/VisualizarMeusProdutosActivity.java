@@ -73,7 +73,7 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 Query myref = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("idUsuario").equalTo(uid);
 
-                myref.addValueEventListener(new ValueEventListener() {
+                myref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {

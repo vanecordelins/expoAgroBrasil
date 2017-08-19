@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Usuario;
-import com.expoagro.expoagrobrasil.util.GoogleSignIn;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;

@@ -2,8 +2,11 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -69,7 +72,9 @@ public class AlterarServicoActivity extends AppCompatActivity {
         mAlterarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alterar();
+                if(checkForConnection()) {
+                    alterar();
+                }
             }
         });
 
@@ -82,6 +87,18 @@ public class AlterarServicoActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private boolean checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(AlterarServicoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            finish();
+            return false;
+        }
+        return true;
     }
 
     private void carregarServico() {
