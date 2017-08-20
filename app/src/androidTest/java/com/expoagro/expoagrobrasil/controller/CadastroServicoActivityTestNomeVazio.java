@@ -73,11 +73,11 @@ public class CadastroServicoActivityTestNomeVazio {
         appCompatCheckedTextView4.perform(click());
 
 
-        ViewInteraction appCompatRadioButton2 = onView(
+        /*ViewInteraction appCompatRadioButton2 = onView(
                 allOf(withId(R.id.rdoBtnServico), withText("Serviço"),
                         withParent(withId(R.id.tipoAnuncio)),
                         isDisplayed()));
-        appCompatRadioButton2.perform(click());
+        appCompatRadioButton2.perform(click());*/
 
 
         ViewInteraction appCompatAutoCompleteTextView2 = onView(
@@ -96,7 +96,6 @@ public class CadastroServicoActivityTestNomeVazio {
         ViewInteraction appCompatEditText12 = onView(
                 allOf(withId(R.id.campoObservacao), isDisplayed()));
         appCompatEditText12.perform(replaceText("aceito dinheiro em forma de pagamento"), closeSoftKeyboard());
-
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.btnCadastrar), isDisplayed()));

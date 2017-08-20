@@ -130,6 +130,22 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".controller.ComentariosActivity"
+            android:label="@string/title_activity_comentarios"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".controller.NovoComentarioActivity"
+            android:label="Novo Comentário"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".controller.ComentariosActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.ComentariosActivity" />
+        </activity>
     </application>
 
 </manifest>

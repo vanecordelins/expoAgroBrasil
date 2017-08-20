@@ -80,7 +80,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                 for (DataSnapshot prod : dataSnapshot.getChildren()) {
                     if (prod.getKey().equals(keyProduto) ) {
                         final Produto produto = prod.getValue(Produto.class);
-                        ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
+                        ((TextView) findViewById(R.id.dataProduto)).setText("Publicado em: " + produto.getData());
                         UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -142,6 +142,15 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
 
         });
 
+        TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
+        verComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaComentarios = new Intent(VisualizarProdutoActivity.this, ComentariosActivity.class);
+                startActivity(telaComentarios);
+            }
+        });
+
         ImageButton mBtnCompartilhar = (ImageButton) findViewById(R.id.btnCompartilharProduto);
         mBtnCompartilhar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,6 +193,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
 
     @Override
     public void onBackPressed() {
+        MenuProdutoActivity.setId(null);
         finish();
     }
 
