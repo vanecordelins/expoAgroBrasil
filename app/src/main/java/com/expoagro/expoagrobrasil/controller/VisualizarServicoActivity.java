@@ -68,7 +68,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                 for (DataSnapshot serv : dataSnapshot.getChildren()) {
                     if (serv.getKey().equals(keyServico)) {
                         final Servico servico = serv.getValue(Servico.class);
-                        ((TextView) findViewById(R.id.dataServico)).setText("Data: " + servico.getData());
+                        ((TextView) findViewById(R.id.dataServico)).setText("Publicado em: " + servico.getData());
                         ((TextView) findViewById(R.id.descricaoServico)).setText("Descrição: " + servico.getDescricao());
                         ((TextView) findViewById(R.id.nomeServico)).setText("Nome: " + servico.getNome());
                         ((TextView) findViewById(R.id.observacaoServico)).setText("Observação: " + servico.getObservacao());
@@ -114,6 +114,16 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
             }
         });
 
+        TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
+        verComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaComentarios = new Intent(VisualizarServicoActivity.this, ComentariosActivity.class);
+                startActivity(telaComentarios);
+                finish();
+            }
+        });
+
         ImageButton mBtnServico = (ImageButton) findViewById(R.id.btnCompartilharServico);
         mBtnServico.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +156,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 GoogleSignIn.signOut(VisualizarServicoActivity.this, mGoogleApiClient);
             }
+            progress.dismiss();
             finish();
         }
     }

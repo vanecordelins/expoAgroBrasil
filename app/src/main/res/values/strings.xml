@@ -13,6 +13,7 @@
     <string name="campo_valor">Valor</string>
     <string name="campo_descricao">Descrição</string>
     <string name="campo_observacao">Observação</string>
+    <string name="campo_comentario">Seu comentário</string>
 
     <string name="acao_login">Entrar</string>
     <string name="acao_voltar">Voltar</string>
@@ -22,6 +23,8 @@
     <string name="acao_alterar_senha">Alterar Senha</string>
     <string name="acao_editar">Editar Conta</string>
     <string name="acao_excluir">Excluir Conta</string>
+    <string name="acao_salvar">Salvar</string>
+    <string name="acao_comentar">Adicionar Comentário</string>
 
     <string name="msg_cadastro_sucesso">Cadastro realizado com sucesso</string>
 
@@ -53,6 +56,7 @@
 
     <string name="cotacao_do_boi"><u>Cotação do Boi Gordo</u></string>
 
+    <string name="ver_comentarios"><u>VER COMENTÁRIOS</u></string>
     <string name="cadastre_se">NÃO É CADASTRADO? <u>CADASTRE-SE</u></string>
     <string name="esqueceu_senha"><u>ESQUECEU SUA SENHA?</u></string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
@@ -60,6 +64,9 @@
     </string>
     <string name="title_activity_visualizar_usuario"></string>
     <string name="title_activity_menu"></string>
+    <string name="title_activity_">Activity</string>
+    <string name="title_activity_visualizar_anunciante">VisualizarAnuncianteActivity</string>
+    <string name="title_activity_comentarios">Comentários</string>
 
     <string name="title_activity_alterar_usuario">AlterarUsuarioActivity</string>
     <string name="title_activity_completar_cadastro">CompletarCadastroActivity</string>
@@ -89,8 +96,5 @@
         <item>Por Quinzena</item>
         <item>Outra</item>
     </string-array>
-    <string name="title_activity_">Activity</string>
-    <string name="title_activity_visualizar_anunciante">VisualizarAnuncianteActivity</string>
-
 
 </resources>
