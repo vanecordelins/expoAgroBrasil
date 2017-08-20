@@ -31,8 +31,8 @@
             android:id="@+id/btnFavoritarProduto"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginRight="-184dp"
+            android:layout_marginTop="-380dp"
             app:layout_constraintRight_toLeftOf="@+id/btnCompartilharProduto"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/btn_star" />

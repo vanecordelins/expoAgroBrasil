@@ -3,7 +3,6 @@ package com.expoagro.expoagrobrasil.controller;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,6 +28,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 /**
@@ -40,6 +41,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
     private GoogleApiClient mGoogleApiClient;
     private String shareServico;
     private static String idAnunciante;
+    private Servico servico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,21 +55,21 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
 
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarServicoActivity.this)
                 .enableAutoManage(VisualizarServicoActivity.this, VisualizarServicoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
-
+        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         idAnunciante = null;
 
-        progress = new ProgressDialog(VisualizarServicoActivity.this);
-        progress.setCancelable(false);
-        progress.setIndeterminate(true);
-        progress.setMessage("Carregando anúncio...");
-        progress.show();
+//        progress = new ProgressDialog(VisualizarServicoActivity.this);
+//        progress.setCancelable(false);
+//        progress.setIndeterminate(true);
+//        progress.setMessage("Carregando anúncio...");
+//        progress.show();
 
         ServicoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot serv : dataSnapshot.getChildren()) {
                     if (serv.getKey().equals(keyServico)) {
-                        final Servico servico = serv.getValue(Servico.class);
+                        servico = serv.getValue(Servico.class);
                         ((TextView) findViewById(R.id.dataServico)).setText("Data: " + servico.getData());
                         ((TextView) findViewById(R.id.descricaoServico)).setText("Descrição: " + servico.getDescricao());
                         ((TextView) findViewById(R.id.nomeServico)).setText("Nome: " + servico.getNome());
@@ -89,7 +91,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                                                 startActivity(intent);
                                             }
                                         });
-                                        progress.dismiss();
+//                                        progress.dismiss();
                                         break;
                                     }
                                 }
@@ -127,6 +129,53 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                 startActivity(Intent.createChooser(myIntent, "Compartilhar usando"));
             }
         });
+
+        final ImageButton mBtnFavoritoServico = (ImageButton) findViewById(R.id.btnFavoritarServico);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            mBtnFavoritoServico.setVisibility(View.GONE);
+        } else {
+            Query ref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(keyServico);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(final DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        mBtnFavoritoServico.setImageResource(R.drawable.if_star_285661);
+                        mBtnFavoritoServico.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mBtnFavoritoServico.setImageResource(R.drawable.star_vazio);
+                                FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(servico.getId()).removeValue();
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        mBtnFavoritoServico.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mBtnFavoritoServico.setImageResource(R.drawable.if_star_285661);
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(servico.getId()).setValue(servico);
+                                /*atualização da activity*/
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            mBtnFavoritoServico.setVisibility(View.VISIBLE);
+
+        }
 
         Button alterar = (Button) findViewById(R.id.alterarServico);
         Button excluir = (Button) findViewById(R.id.excluirServico);

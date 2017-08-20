@@ -365,7 +365,6 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
             }
         } else if (id == R.id.menu_meus_anuncios) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
                 Intent telaLogin = new Intent(MenuServicoActivity.this, VisualizarMeusServicosActivity.class);
                 startActivity(telaLogin);
                 finish();
@@ -378,7 +377,9 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
             finish();
         } else if (id == R.id.menu_favoritos) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU FAVORITOS"); // Ja esta logado
+                Intent intent = new Intent(MenuServicoActivity.this, FavoritosActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 Intent telaLogin = new Intent(MenuServicoActivity.this, LoginActivity.class);
                 startActivity(telaLogin);

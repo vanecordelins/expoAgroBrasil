@@ -31,6 +31,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     private GoogleApiClient mGoogleApiClient;
     private String shareProduto;
     private static String idAnunciante;
+    private Produto produto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
 
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarProdutoActivity.this)
                 .enableAutoManage(VisualizarProdutoActivity.this, VisualizarProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
-
+        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -72,7 +75,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot prod : dataSnapshot.getChildren()) {
                     if (prod.getKey().equals(keyProduto) ) {
-                        final Produto produto = prod.getValue(Produto.class);
+                        produto = prod.getValue(Produto.class);
                         ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
                         UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -148,6 +151,54 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
             }
         });
 
+        final ImageButton mBtnFavorito = (ImageButton) findViewById(R.id.btnFavoritarProduto);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            mBtnFavorito.setVisibility(View.GONE);
+        } else {
+            Query ref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(keyProduto);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(final DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        mBtnFavorito.setImageResource(R.drawable.if_star_285661);
+                        mBtnFavorito.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mBtnFavorito.setImageResource(R.drawable.star_vazio);
+                                FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(produto.getId()).removeValue();
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        mBtnFavorito.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mBtnFavorito.setImageResource(R.drawable.if_star_285661);
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(produto.getId()).setValue(produto);
+                                /*atualização da activity*/
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            mBtnFavorito.setVisibility(View.VISIBLE);
+
+        }
+
         Button alterar = (Button) findViewById(R.id.alterarProduto);
         Button excluir = (Button) findViewById(R.id.excluirProduto);
 
@@ -170,12 +221,12 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
-        startActivity(intent);
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 
 
     @Override

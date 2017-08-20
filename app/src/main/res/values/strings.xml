@@ -91,6 +91,7 @@
     </string-array>
     <string name="title_activity_">Activity</string>
     <string name="title_activity_visualizar_anunciante">VisualizarAnuncianteActivity</string>
+    <string name="title_activity_favoritos">FavoritosActivity</string>
 
 
 </resources>
