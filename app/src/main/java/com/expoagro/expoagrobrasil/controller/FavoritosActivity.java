@@ -40,8 +40,8 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
     private GoogleApiClient mGoogleApiClient;
     private RecyclerView recyclerView;
     private static String idClicado;
+    private static String keyAnuncio;
     private ProgressDialog progress;
-    Query myQuery1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                 ) {
                     @Override
                     protected void populateViewHolder(final FavoritosActivity.AnuncioViewHolder viewHolder, Produto model, int posit) {
-                        final String keyAnuncio = getRef(posit).getKey();
+                        keyAnuncio = getRef(posit).getKey();
                         viewHolder.setCategoria(model.getCategoria());
                         viewHolder.setData(model.getData());
                         viewHolder.setValor(model.getValor());
@@ -111,7 +111,6 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                                 myQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        Produto data = dataSnapshot.getValue(Produto.class);
                                         System.out.println("CONSULTA: " + myQuery1);
                                         System.out.println("NÃO Existe: " + !dataSnapshot.exists());
                                         if (!dataSnapshot.exists()) {
@@ -218,7 +217,22 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                         .fit()
                         .into(imageView);
             } else {
-                imageView.setImageResource(R.drawable.services);
+                final Query myQuery1 = ProdutoDAO.getDatabaseReference().child(keyAnuncio);
+                myQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                         if (!dataSnapshot.exists()) {
+                             imageView.setImageResource(R.drawable.services);
+                         } else {
+                             imageView.setImageResource(R.drawable.sem_foto);
+                         }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println(databaseError.getMessage());
+                    }
+                });
             }
         }
 

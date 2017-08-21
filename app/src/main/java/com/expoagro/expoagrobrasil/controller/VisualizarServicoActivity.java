@@ -58,11 +58,11 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
 
         idAnunciante = null;
 
-//        progress = new ProgressDialog(VisualizarServicoActivity.this);
-//        progress.setCancelable(false);
-//        progress.setIndeterminate(true);
-//        progress.setMessage("Carregando anúncio...");
-//        progress.show();
+        progress = new ProgressDialog(VisualizarServicoActivity.this);
+        progress.setCancelable(false);
+        progress.setIndeterminate(true);
+        progress.setMessage("Carregando anúncio...");
+        progress.show();
 
         ServicoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -92,7 +92,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                                                 startActivity(intent);
                                             }
                                         });
-//                                        progress.dismiss();
+                                        progress.dismiss();
                                         break;
                                     }
                                 }
@@ -205,7 +205,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 GoogleSignIn.signOut(VisualizarServicoActivity.this, mGoogleApiClient);
             }
-          //  progress.dismiss();
+            progress.dismiss();
             finish();
         }
     }
