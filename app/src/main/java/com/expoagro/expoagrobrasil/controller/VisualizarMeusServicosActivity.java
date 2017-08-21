@@ -102,7 +102,7 @@ public class VisualizarMeusServicosActivity extends AppCompatActivity {
                         //   i.setText(model.getNome());
                         Intent intent = new Intent(VisualizarMeusServicosActivity.this, VisualizarMeuServicoClicadoActivity.class);
                         startActivity(intent);
-                        finish();
+                      //  finish();
                         //     Toast.makeText(VisualizarMeusAnunciosActivitty.this, key, Toast.LENGTH_LONG).show();
 
                     }

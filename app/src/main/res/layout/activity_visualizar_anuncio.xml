@@ -32,17 +32,15 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="0dp"
             app:layout_constraintRight_toLeftOf="@+id/btnCompartilharProduto"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/btn_star" />
+            app:srcCompat="@android:drawable/btn_star"
+            android:layout_marginEnd="8dp" />
 
         <ImageButton
             android:id="@+id/btnCompartilharProduto"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="0dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="?attr/actionModeShareDrawable" />
@@ -52,16 +50,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="0dp"
             android:text="Nome"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnFavoritarProduto" />
+            app:layout_constraintTop_toBottomOf="@+id/btnFavoritarProduto"
+            android:layout_marginStart="16dp" />
 
         <TextView
             android:id="@+id/descricaoProduto"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/nomeProduto"
             android:layout_alignStart="@+id/nomeProduto"
@@ -75,11 +73,13 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nomeProduto" />
+            app:layout_constraintTop_toBottomOf="@+id/nomeProduto"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
 
         <TextView
             android:id="@+id/observacaoProduto"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/descricaoProduto"
             android:layout_alignStart="@+id/descricaoProduto"
@@ -93,7 +93,9 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descricaoProduto" />
+            app:layout_constraintTop_toBottomOf="@+id/descricaoProduto"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
 
         <TextView
             android:id="@+id/dataProduto"
@@ -108,7 +110,8 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/observacaoProduto" />
+            app:layout_constraintTop_toBottomOf="@+id/observacaoProduto"
+            android:layout_marginStart="16dp" />
 
         <TextView
             android:id="@+id/vendedorProduto"
@@ -123,7 +126,8 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dataProduto" />
+            app:layout_constraintTop_toBottomOf="@+id/dataProduto"
+            android:layout_marginStart="16dp" />
 
         <Button
             android:id="@+id/alterarProduto"
@@ -135,7 +139,8 @@
             android:layout_toStartOf="@+id/excluirProduto"
             android:text="Alterar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="64dp" />
 
         <Button
             android:id="@+id/excluirProduto"
@@ -147,7 +152,8 @@
             android:layout_marginRight="64dp"
             android:text="Excluir"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="64dp" />
 
     </android.support.constraint.ConstraintLayout>
 

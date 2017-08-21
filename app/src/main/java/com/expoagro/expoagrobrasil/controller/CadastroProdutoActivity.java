@@ -2,9 +2,12 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +33,7 @@ import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.model.Usuario;
+import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.expoagro.expoagrobrasil.util.ImagePicker;
 import com.expoagro.expoagrobrasil.util.MoneyTextWatcher;
 import com.expoagro.expoagrobrasil.util.ProdutoViewPager;
@@ -107,7 +111,11 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         mCadastrarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cadastrar(); //Aqui chamar o método para cadastrar *****************
+                if (checkForConnection()) {
+                    cadastrar(); //Aqui chamar o método para cadastrar *****************
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -157,6 +165,17 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(CadastroProdutoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     @Override

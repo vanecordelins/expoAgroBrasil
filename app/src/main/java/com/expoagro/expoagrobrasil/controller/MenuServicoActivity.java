@@ -41,6 +41,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by joao on 31/07/17.
  */
@@ -52,6 +55,7 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
     private RecyclerView recyclerView;
     private static String idClicado;
     private ProgressDialog progress;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,53 +176,51 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         idClicado = id;
     }
 
+
     @Override
     public boolean onQueryTextSubmit(final String query) {
-        final Query q = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome");
+        String newQuery = query.substring(0,1).toUpperCase().concat(query.substring(1));
+
+        final Query q = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome").startAt(newQuery).endAt(newQuery+"\uf8ff");
+
         q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot serv : dataSnapshot.getChildren()){
-                    Servico servico = serv.getValue(Servico.class);
-                    System.out.println(servico.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1))));
-                    if(servico.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1)))){
-                        Query q1 = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome").equalTo(servico.getNome());
-                        final FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder>(
-                                Servico.class,
-                                R.layout.linha,
-                                MenuServicoActivity.ServicoViewHolder.class,
-                                q1
-                        ) {
-                            @Override
-                            protected void populateViewHolder(MenuServicoActivity.ServicoViewHolder viewHolder, Servico model, int position) {
-                                final String keyServico = getRef(position).getKey();
-                                viewHolder.setFrequencia(model.getFrequencia());
-                                viewHolder.setData(model.getData());
-                                viewHolder.setValor(model.getValor());
-                                viewHolder.setNome(model.getNome());
-                                viewHolder.setFoto();
-
-                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        setId(keyServico);
-                                        Intent intent = new Intent(MenuServicoActivity.this, VisualizarProdutoActivity.class);
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
-                        };
-                        recyclerView.setAdapter(recyclerAdapter2);
-                    }
+                if (dataSnapshot.getValue() == null) {
+                    Toast.makeText(MenuServicoActivity.this, "Serviços não encontrados", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println(databaseError.getMessage());
             }
         });
+        final FirebaseRecyclerAdapter<Servico, ServicoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Servico, ServicoViewHolder>(
+                Servico.class,
+                R.layout.linha,
+                ServicoViewHolder.class,
+                q
+        ) {
+            @Override
+            protected void populateViewHolder(ServicoViewHolder viewHolder, Servico model, int position) {
+                final String keyServico = getRef(position).getKey();
+                viewHolder.setFrequencia(model.getFrequencia());
+                viewHolder.setData(model.getData());
+                viewHolder.setValor(model.getValor());
+                viewHolder.setNome(model.getNome());
+                viewHolder.setFoto();
 
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setId(keyServico);
+                        Intent intent = new Intent(MenuServicoActivity.this, VisualizarServicoActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        };
+        recyclerView.setAdapter(recyclerAdapter2);
         return true;
     }
 
@@ -273,9 +275,45 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.teste_filtro, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(this);
+        searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                System.out.println("opened");
+            }
 
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                Query q1 = FirebaseDatabase.getInstance().getReference("Serviço");
+                final FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder>(
+                        Servico.class,
+                        R.layout.linha,
+                        MenuServicoActivity.ServicoViewHolder.class,
+                        q1
+                ) {
+                    @Override
+                    protected void populateViewHolder(MenuServicoActivity.ServicoViewHolder viewHolder, Servico model, int position) {
+                        final String keyServico = getRef(position).getKey();
+                        viewHolder.setFrequencia(model.getFrequencia());
+                        viewHolder.setData(model.getData());
+                        viewHolder.setValor(model.getValor());
+                        viewHolder.setNome(model.getNome());
+                        viewHolder.setFoto();
+
+                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                setId(keyServico);
+                                Intent intent = new Intent(MenuServicoActivity.this, VisualizarServicoActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                };
+                recyclerView.setAdapter(recyclerAdapter2);
+            }
+        });
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
 
@@ -322,6 +360,7 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+        super.onBackPressed();
         finish();
     }
 
