@@ -118,7 +118,12 @@ class TesteUtils {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(botao), withText(texto), isDisplayed()));
         appCompatButton.perform(scroll, click());
-        espera();
+    }
+
+    public static void clicaEm(int botao){
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(botao), isDisplayed()));
+        appCompatButton.perform(click());
     }
 
     public static void vejaTexto(String texto){

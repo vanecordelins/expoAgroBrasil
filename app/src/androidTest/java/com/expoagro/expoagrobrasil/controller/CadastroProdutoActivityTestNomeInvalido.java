@@ -24,6 +24,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.abreMenu;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.clicaEm;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogin;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.preencheCampo;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.vejaErro;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -35,78 +40,16 @@ public class CadastroProdutoActivityTestNomeInvalido {
     @Test
     public void cadastroProdutoActivityTest() throws InterruptedException {
 
-        if(FirebaseAuth.getInstance().getCurrentUser()==null){
-
-            ViewInteraction appCompatImageButton2 = onView(
-                    allOf(withContentDescription("Open navigation drawer"),
-                            withParent(withId(R.id.toolbar)),
-                            isDisplayed()));
-            appCompatImageButton2.perform(click());
-
-            ViewInteraction appCompatTextView = onView(
-                    allOf(withId(R.id.menu_email), withText("Fazer Login"), isDisplayed()));
-            appCompatTextView.perform(click());
-
-            ViewInteraction appCompatEditText = onView(
-                    allOf(withId(R.id.campoEmail), isDisplayed()));
-            appCompatEditText.perform(replaceText("dinego.nos@gmail.com"), closeSoftKeyboard());
-
-            ViewInteraction appCompatEditText2 = onView(
-                    allOf(withId(R.id.campoSenha), isDisplayed()));
-            appCompatEditText2.perform(replaceText("123456"), closeSoftKeyboard());
-
-            ViewInteraction appCompatButton = onView(
-                    allOf(withId(R.id.btnEntrar), withText("Entrar"),
-                            withParent(withId(R.id.email_login_form)),
-                            isDisplayed()));
-            appCompatButton.perform(click());
-        }
-
-        ViewInteraction appCompatImageButton2 = onView(
-                allOf(withContentDescription("Open navigation drawer"),
-                        withParent(withId(R.id.toolbar)),
-                        isDisplayed()));
-        appCompatImageButton2.perform(click());
-
-        ViewInteraction appCompatCheckedTextView = onView(
-                allOf(withId(R.id.design_menu_item_text), withText("Novo anúncio"), isDisplayed()));
-        appCompatCheckedTextView.perform(click());
-
-        ViewInteraction appCompatAutoCompleteTextView = onView(
-                allOf(withId(R.id.campoNomeProduto), isDisplayed()));
-        appCompatAutoCompleteTextView.perform(replaceText("Papa-Capim"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(R.id.campoValor), isDisplayed()));
-        appCompatEditText5.perform(replaceText("$600.00"), closeSoftKeyboard());
-
-        ViewInteraction appCompatSpinner = onView(
-                allOf(withId(R.id.spinnerCategoria), isDisplayed()));
-        appCompatSpinner.perform(click());
-
-        ViewInteraction appCompatCheckedTextView2 = onView(
-                allOf(withId(android.R.id.text1), withText("Animal"), isDisplayed()));
-        appCompatCheckedTextView2.perform(click());
-
-        ViewInteraction appCompatEditText11 = onView(
-                allOf(withId(R.id.campoDescricao), isDisplayed()));
-        appCompatEditText11.perform(replaceText("Papa Capim dos Sonhos"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText12 = onView(
-                allOf(withId(R.id.campoObservacao), isDisplayed()));
-        appCompatEditText12.perform(replaceText("Não Deixa Passar Vergonha"), closeSoftKeyboard());
-
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.btnCadastrar),isDisplayed()));
-        appCompatButton2.perform(scrollTo(),click());
-
-        ViewInteraction result = onView(
-                allOf(withId(R.id.btnCadastrar), isDisplayed()));
-        result.check(matches(withText("Cadastrar")));
-
-
-
-        Assert.assertNotNull(result);
+        fazerLogin();
+        abreMenu(R.id.design_menu_item_text,"Novo anúncio");
+        preencheCampo(R.id.campoNomeProduto,"@papa#-#capim$");
+        clicaEm(R.id.spinnerCategoria);
+        clicaEm(android.R.id.text1,"Animal");
+        preencheCampo(R.id.campoValor,"$600.00");
+        preencheCampo(R.id.campoDescricao,"Papa Capim dos Sonhos");
+        preencheCampo(R.id.campoObservacao,"Não Deixa Passar Vergonha");
+        clicaEm(R.id.btnCadastrar,"Cadastrar",scrollTo());
+        vejaErro(R.id.campoNomeProduto,"Nome inválido");
 
     }
 
