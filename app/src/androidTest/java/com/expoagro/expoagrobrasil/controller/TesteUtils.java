@@ -18,6 +18,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
@@ -68,35 +69,21 @@ class TesteUtils {
         }
     }
 
+    public static void fazerLogout(){
+        espera();
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            abreMenu(R.id.design_menu_item_text,"Sair");
+            clicaEm(R.id.buttonAnuncios,"Ver Anúncios");
+        }
+    }
+
     public static void fazerLogin(){
         espera(3000);
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
-
-            ViewInteraction appCompatImageButton2 = onView(
-                    allOf(withContentDescription("Open navigation drawer"),
-                            withParent(withId(R.id.toolbar)),
-                            isDisplayed()));
-            appCompatImageButton2.perform(click());
-
-            ViewInteraction appCompatTextView = onView(
-                    allOf(withId(R.id.menu_email), withText("Fazer Login"), isDisplayed()));
-            appCompatTextView.perform(click());
-
-            ViewInteraction appCompatEditText = onView(
-                    allOf(withId(R.id.campoEmail), isDisplayed()));
-            appCompatEditText.perform(replaceText("dinego.nos@gmail.com"), closeSoftKeyboard());
-
-            ViewInteraction appCompatEditText2 = onView(
-                    allOf(withId(R.id.campoSenha), isDisplayed()));
-            appCompatEditText2.perform(replaceText("123456"), closeSoftKeyboard());
-
-            ViewInteraction appCompatButton = onView(
-                    allOf(withId(R.id.btnEntrar), withText("Entrar"),
-                            withParent(withId(R.id.email_login_form)),
-                            isDisplayed()));
-            appCompatButton.perform(click());
-
-
+            abreMenu(R.id.menu_email,"Fazer Login");
+            preencheCampo(R.id.campoEmail,"dinego.nos@gmail.com");
+            preencheCampo(R.id.campoSenha,"123456");
+            clicaEm(R.id.btnEntrar,"Entrar");
         }
     }
 
@@ -146,6 +133,20 @@ class TesteUtils {
         result.check(matches(isDisplayed()));
 
         Assert.assertNotNull(result);
+    }
+
+    public static void vejaItem(int item,String texto){
+        ViewInteraction editText = onView(
+                allOf(withId(item), withText(texto),isDisplayed()));
+        editText.check(matches(withText(texto)));
+
+        Assert.assertNotNull(editText);
+    }
+
+    public static void naoVejaItem(int item){
+        ViewInteraction button2 = onView(
+                allOf(withId(item),isDisplayed()));
+        button2.check(doesNotExist());
     }
 
     public static void abreMenu(int menu, String texto){
