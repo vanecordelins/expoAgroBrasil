@@ -55,7 +55,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
 
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarServicoActivity.this)
                 .enableAutoManage(VisualizarServicoActivity.this, VisualizarServicoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         idAnunciante = null;
 
 //        progress = new ProgressDialog(VisualizarServicoActivity.this);
@@ -142,8 +142,9 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
 
         final ImageButton mBtnFavoritoServico = (ImageButton) findViewById(R.id.btnFavoritarServico);
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            mBtnFavoritoServico.setVisibility(View.GONE);
+            mBtnFavoritoServico.setEnabled(false);
         } else {
+            final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             Query ref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(keyServico);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -153,7 +154,6 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                         mBtnFavoritoServico.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                mBtnFavoritoServico.setImageResource(R.drawable.star_vazio);
                                 FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(servico.getId()).removeValue();
                                 Intent intent = getIntent();
                                 finish();
@@ -205,7 +205,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 GoogleSignIn.signOut(VisualizarServicoActivity.this, mGoogleApiClient);
             }
-            progress.dismiss();
+          //  progress.dismiss();
             finish();
         }
     }

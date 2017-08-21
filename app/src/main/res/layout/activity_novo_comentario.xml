@@ -70,6 +70,7 @@
 
         <EditText
             android:id="@+id/campoComentario"
+            android:maxLength="200"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/campo_comentario"

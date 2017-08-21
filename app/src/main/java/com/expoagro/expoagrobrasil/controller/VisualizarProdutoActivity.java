@@ -53,7 +53,6 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     private ProgressDialog progress;
     private Produto produto;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +76,7 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                 .enableAutoManage(VisualizarProdutoActivity.this, VisualizarProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         progress.show();
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -174,8 +173,9 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         final ImageButton mBtnFavorito = (ImageButton) findViewById(R.id.btnFavoritarProduto);
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            mBtnFavorito.setVisibility(View.GONE);
+            mBtnFavorito.setEnabled(false);
         } else {
+            final String uid =  FirebaseAuth.getInstance().getCurrentUser().getUid();
             Query ref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(keyProduto);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -185,7 +185,6 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                         mBtnFavorito.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                              //  mBtnFavorito.setImageResource(R.drawable.star_vazio);
                                 FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(produto.getId()).removeValue();
                                 Intent intent = getIntent();
                                 finish();

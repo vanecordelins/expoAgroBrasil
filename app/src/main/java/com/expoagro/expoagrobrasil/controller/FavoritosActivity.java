@@ -216,7 +216,6 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                 Picasso.with(mView.getContext())
                         .load(foto.get(0))
                         .fit()
-                        //.resize(100,100)
                         .into(imageView);
             } else {
                 imageView.setImageResource(R.drawable.services);

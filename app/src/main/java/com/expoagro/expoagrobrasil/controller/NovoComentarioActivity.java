@@ -1,6 +1,7 @@
 package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -42,6 +43,7 @@ public class NovoComentarioActivity extends AppCompatActivity {
     private EditText comentarioText;
     private String key;
     private String nomeUsuario;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,11 @@ public class NovoComentarioActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         comentarioText = (EditText) findViewById(R.id.campoComentario);
+
+        progress = new ProgressDialog(NovoComentarioActivity.this);
+        progress.setMessage("Carregando dados...");
+        progress.setCancelable(false);
+        progress.show();
 
         if(MenuProdutoActivity.getId() != null) {
             key = MenuProdutoActivity.getId();
@@ -90,8 +97,9 @@ public class NovoComentarioActivity extends AppCompatActivity {
                 for (DataSnapshot user : dataSnapshot.getChildren()) {
                     if (user.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         Usuario target = user.getValue(Usuario.class);
-                        ((TextView) findViewById(R.id.nomeUsuario)).setText(target.getNome());
+                        ((TextView) findViewById(R.id.nomeUsuario)).setText(target.getNome() + ": ");
                         nomeUsuario = target.getNome();
+                        progress.dismiss();
                     }
                 }
             }

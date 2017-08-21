@@ -1,5 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,8 @@ import java.util.List;
 public class ComentariosActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,12 @@ public class ComentariosActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String key;
+        progress = new ProgressDialog(ComentariosActivity.this);
+        progress.setCancelable(false);
+        progress.setMessage("Carregando comentários...");
+        progress.show();
+
+        final String key;
         if(MenuProdutoActivity.getId() != null) {
             key = MenuProdutoActivity.getId();
         } else {
@@ -64,37 +72,55 @@ public class ComentariosActivity extends AppCompatActivity {
             });
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ComentariosActivity.this));
-        final Query q = FirebaseDatabase.getInstance().getReference("Comentário").orderByChild("idProduto").equalTo(key);
+        Thread mThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ComentariosActivity.this));
+                final Query q = FirebaseDatabase.getInstance().getReference("Comentário").orderByChild("idProduto").equalTo(key);
 
-        q.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null) {
-                    Toast.makeText(ComentariosActivity.this, "Sem comentários.", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println(databaseError.getMessage());
+                q.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() == null) {
+                            ComentariosActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progress.dismiss();
+                                    Toast.makeText(ComentariosActivity.this, "Sem comentários.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println(databaseError.getMessage());
+                    }
+                });
+                final FirebaseRecyclerAdapter<Comentario, ComentarioViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Comentario, ComentarioViewHolder>(
+                        Comentario.class,
+                        R.layout.comentario,
+                        ComentarioViewHolder.class,
+                        q
+                ) {
+                    @Override
+                    protected void populateViewHolder(ComentarioViewHolder viewHolder, Comentario model, int position) {
+                        viewHolder.setComentario(model.getComentario());
+                        viewHolder.setData(model.getData());
+                        viewHolder.setNomeUsuario(model.getNomeUsuario());
+                        progress.dismiss();
+                    }
+                };
+                ComentariosActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.setAdapter(recyclerAdapter);
+                    }
+                });
             }
         });
-        final FirebaseRecyclerAdapter<Comentario, ComentarioViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Comentario, ComentarioViewHolder>(
-                Comentario.class,
-                R.layout.comentario,
-                ComentarioViewHolder.class,
-                q
-        ) {
-            @Override
-            protected void populateViewHolder(ComentarioViewHolder viewHolder, Comentario model, int position) {
-                viewHolder.setComentario(model.getComentario());
-                viewHolder.setData(model.getData());
-                viewHolder.setNomeUsuario(model.getNomeUsuario());
-            }
-        };
-        recyclerView.setAdapter(recyclerAdapter);
+        mThread.start();
     }
 
     public void onBackPressed() {
