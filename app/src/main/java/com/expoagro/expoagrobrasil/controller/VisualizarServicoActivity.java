@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -47,6 +49,9 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_servico);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar7);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final String keyServico = MenuServicoActivity.getId();
 
@@ -226,7 +231,8 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+//        Intent intent = new Intent(VisualizarServicoActivity.this, VisualizarMeusServicosActivity.class);
+//        startActivity(intent);
         finish();
-        MenuServicoActivity.setId(null);
     }
 }

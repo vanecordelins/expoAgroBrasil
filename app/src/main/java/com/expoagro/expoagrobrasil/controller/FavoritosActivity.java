@@ -40,7 +40,7 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
     private GoogleApiClient mGoogleApiClient;
     private RecyclerView recyclerView;
     private static String idClicado;
-    private static String keyAnuncio;
+    private static String testeId;
     private ProgressDialog progress;
 
     @Override
@@ -96,7 +96,8 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                 ) {
                     @Override
                     protected void populateViewHolder(final FavoritosActivity.AnuncioViewHolder viewHolder, Produto model, int posit) {
-                        keyAnuncio = getRef(posit).getKey();
+                        final String keyAnuncio = getRef(posit).getKey();
+                        testeId = keyAnuncio;
                         viewHolder.setCategoria(model.getCategoria());
                         viewHolder.setData(model.getData());
                         viewHolder.setValor(model.getValor());
@@ -217,7 +218,7 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                         .fit()
                         .into(imageView);
             } else {
-                final Query myQuery1 = ProdutoDAO.getDatabaseReference().child(keyAnuncio);
+                final Query myQuery1 = ProdutoDAO.getDatabaseReference().child(testeId);
                 myQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

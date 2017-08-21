@@ -13,6 +13,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,6 +51,9 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_anuncio);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar4);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = VisualizarMeusProdutosActivity.getId();
@@ -138,7 +143,22 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, VisualizarMeusProdutosActivity.class);
+        startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, VisualizarMeusProdutosActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private boolean checkForConnection() {
