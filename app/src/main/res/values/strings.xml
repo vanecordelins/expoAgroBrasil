@@ -68,6 +68,7 @@
     <string name="title_activity_visualizar_anunciante">VisualizarAnuncianteActivity</string>
     <string name="title_activity_comentarios">Comentários</string>
     <string name="title_activity_novo_comentario">Novo Comentário</string>
+    <string name="title_activity_favoritos">Favoritos</string>
 
     <string name="title_activity_alterar_usuario">AlterarUsuarioActivity</string>
     <string name="title_activity_completar_cadastro">CompletarCadastroActivity</string>

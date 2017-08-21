@@ -127,8 +127,17 @@
         <activity
             android:name=".controller.VisualizarAnuncianteActivity"
             android:label="Anunciante"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".controller.FavoritosActivity"
+            android:label="@string/title_activity_favoritos"
+            android:parentActivityName=".controller.FavoritosActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.FavoritosActivity" />
         </activity>
         <activity
             android:name=".controller.ComentariosActivity"

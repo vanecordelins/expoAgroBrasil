@@ -434,7 +434,9 @@ public class MenuProdutoActivity extends AppCompatActivity
             finish();
         } else if (id == R.id.menu_favoritos) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU FAVORITOS"); // Ja esta logado
+                Intent intent = new Intent(MenuProdutoActivity.this, FavoritosActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 Intent telaLogin = new Intent(MenuProdutoActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
