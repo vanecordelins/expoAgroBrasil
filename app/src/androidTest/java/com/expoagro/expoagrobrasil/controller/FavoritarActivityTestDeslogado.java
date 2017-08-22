@@ -1,7 +1,6 @@
 package com.expoagro.expoagrobrasil.controller;
 
 
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
