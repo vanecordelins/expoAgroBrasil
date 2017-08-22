@@ -76,7 +76,6 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                     if (serv.getKey().equals(keyServico)) {
                         servico = serv.getValue(Servico.class);
                         ((TextView) findViewById(R.id.dataServico)).setText("Publicado em: " + servico.getData());
-
                         ((TextView) findViewById(R.id.descricaoServico)).setText("Descrição: " + servico.getDescricao());
                         ((TextView) findViewById(R.id.nomeServico)).setText("Nome: " + servico.getNome());
                         ((TextView) findViewById(R.id.observacaoServico)).setText("Observação: " + servico.getObservacao());
@@ -102,24 +101,15 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                                     }
                                 }
                             }
-
                             @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                System.out.println("Error - recuperar usuario - Visualizar Anuncio");
-                            }
+                            public void onCancelled(DatabaseError databaseError) { System.out.println("Error - recuperar usuario - Visualizar Anuncio"); }
                         });
-
-                        shareServico = "Confira " + servico.getNome().toUpperCase() +
-                                " por " + servico.getValor() +
-                                " no aplicativo ExpoAgro Brasil!";
+                        shareServico = "Confira " + servico.getNome().toUpperCase() + " por " + servico.getValor() + " no aplicativo ExpoAgro Brasil!";
                     }
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("Visualizar Servico database error");
-            }
+            public void onCancelled(DatabaseError databaseError) { System.out.println("Visualizar Servico database error"); }
         });
 
         TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
@@ -145,6 +135,18 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
             }
         });
 
+        favoritar(keyServico);
+
+        Button alterar = (Button) findViewById(R.id.alterarServico);
+        Button excluir = (Button) findViewById(R.id.excluirServico);
+
+        alterar.setVisibility(View.GONE);
+        excluir.setVisibility(View.GONE);
+
+        checkForConnection();
+    }
+
+    private void favoritar(String keyServico) {
         final ImageButton mBtnFavoritoServico = (ImageButton) findViewById(R.id.btnFavoritarServico);
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             mBtnFavoritoServico.setEnabled(false);
@@ -183,22 +185,12 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
+                public void onCancelled(DatabaseError databaseError) { System.out.println(databaseError.getMessage()); }
             });
 
             mBtnFavoritoServico.setVisibility(View.VISIBLE);
 
         }
-
-        Button alterar = (Button) findViewById(R.id.alterarServico);
-        Button excluir = (Button) findViewById(R.id.excluirServico);
-
-        alterar.setVisibility(View.GONE);
-        excluir.setVisibility(View.GONE);
-
-        checkForConnection();
     }
 
     private void checkForConnection() {

@@ -87,7 +87,7 @@ public class VisualizarAnuncianteActivity extends AppCompatActivity {
 
                         @Override
                         public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                            Avaliacao avaliacao = new Avaliacao(ui, v, idAnunciante);
+                            Avaliacao avaliacao = new Avaliacao(v, idAnunciante);
                             FirebaseDatabase.getInstance().getReference("Avaliacao").child(idAnunciante).child(ui).setValue(avaliacao);
                             ratingBar.setRating(v);
 

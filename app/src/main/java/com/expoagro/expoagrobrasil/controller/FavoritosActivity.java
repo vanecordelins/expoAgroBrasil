@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
-import com.expoagro.expoagrobrasil.util.GoogleSignIn;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -31,8 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritosActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {

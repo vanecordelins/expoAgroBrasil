@@ -113,11 +113,8 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                                     }
                                 }
                             }
-
                             @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                System.out.println("Erro ao pesquisar vendedor");
-                            }
+                            public void onCancelled(DatabaseError databaseError) { System.out.println("Erro ao pesquisar vendedor"); }
                         });
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
@@ -144,12 +141,8 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                     }
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(VisualizarProdutoActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
-            }
-
+            public void onCancelled(DatabaseError databaseError) { Toast.makeText(VisualizarProdutoActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT); }
         });
 
         TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
@@ -175,6 +168,19 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
             }
         });
 
+        favoritar(keyProduto);
+
+        Button alterar = (Button) findViewById(R.id.alterarProduto);
+        Button excluir = (Button) findViewById(R.id.excluirProduto);
+
+        alterar.setVisibility(View.GONE);
+        excluir.setVisibility(View.GONE);
+
+        checkForConnection();
+
+    }
+
+    private void favoritar(String keyProduto) {
         final ImageButton mBtnFavorito = (ImageButton) findViewById(R.id.btnFavoritarProduto);
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
@@ -218,15 +224,6 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
             });
             mBtnFavorito.setVisibility(View.VISIBLE);
         }
-
-        Button alterar = (Button) findViewById(R.id.alterarProduto);
-        Button excluir = (Button) findViewById(R.id.excluirProduto);
-
-        alterar.setVisibility(View.GONE);
-        excluir.setVisibility(View.GONE);
-
-        checkForConnection();
-
     }
 
     private void checkForConnection() {

@@ -8,7 +8,7 @@ import com.expoagro.expoagrobrasil.R;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-;
+
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.abreMenu;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.clicaEm;
