@@ -40,6 +40,15 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
 
         final String keyServico = VisualizarMeusServicosActivity.getId();
 
+        TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
+        verComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaComentarios = new Intent(VisualizarMeuServicoClicadoActivity.this, ComentariosActivity.class);
+                startActivity(telaComentarios);
+            }
+        });
+
         ServicoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,6 +91,7 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialog, int which) {
+                                VisualizarMeusServicosActivity.setId(null);
                                 ServicoDAO pdao = new ServicoDAO();
                                 pdao.delete(keyServico);
                                 Toast.makeText(VisualizarMeuServicoClicadoActivity.this, "Serviço deletado com sucesso.", Toast.LENGTH_SHORT).show();
@@ -100,6 +110,7 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        VisualizarMeusServicosActivity.setId(null);
         Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, VisualizarMeusServicosActivity.class);
         startActivity(intent);
         finish();
@@ -109,6 +120,7 @@ public class VisualizarMeuServicoClicadoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                VisualizarMeusServicosActivity.setId(null);
                 Intent intent = new Intent(VisualizarMeuServicoClicadoActivity.this, VisualizarMeusServicosActivity.class);
                 startActivity(intent);
                 finish();

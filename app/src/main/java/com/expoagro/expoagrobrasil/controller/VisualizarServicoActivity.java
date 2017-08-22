@@ -231,8 +231,21 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        MenuServicoActivity.setId(null);
 //        Intent intent = new Intent(VisualizarServicoActivity.this, VisualizarMeusServicosActivity.class);
 //        startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                MenuServicoActivity.setId(null);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

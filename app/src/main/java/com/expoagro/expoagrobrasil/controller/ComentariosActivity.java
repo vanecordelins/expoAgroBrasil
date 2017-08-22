@@ -55,6 +55,10 @@ public class ComentariosActivity extends AppCompatActivity {
         final String key;
         if(MenuProdutoActivity.getId() != null) {
             key = MenuProdutoActivity.getId();
+        } else if (VisualizarMeusProdutosActivity.getId() != null) {
+            key = VisualizarMeusProdutosActivity.getId();
+        } else if (VisualizarMeusServicosActivity.getId() != null) {
+            key = VisualizarMeusServicosActivity.getId();
         } else {
             key = MenuServicoActivity.getId();
         }

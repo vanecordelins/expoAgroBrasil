@@ -120,6 +120,7 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
             @Override
             public void onClick(View v) {
                 if (checkForConnection()) {
+                    VisualizarMeusProdutosActivity.setId(null);
                     Dialog alertDialog = new AlertDialog.Builder(VisualizarMeuProdutoClicadoActivity.this).setIcon(android.R.drawable.ic_delete).setTitle("EXCLUIR PRODUTO")
                             .setMessage("Deseja realmente EXCLUIR este produto? Todos os seus dados serão perdidos!")
                             .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
@@ -137,6 +138,16 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
                 }
             }
         });
+
+        TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
+        verComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaComentarios = new Intent(VisualizarMeuProdutoClicadoActivity.this, ComentariosActivity.class);
+                startActivity(telaComentarios);
+            }
+        });
+
         checkForConnection();
     }
 
@@ -145,6 +156,7 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
         super.onBackPressed();
         Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, VisualizarMeusProdutosActivity.class);
         startActivity(intent);
+        VisualizarMeusProdutosActivity.setId(null);
         finish();
     }
 
@@ -152,6 +164,7 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                VisualizarMeusProdutosActivity.setId(null);
                 Intent intent = new Intent(VisualizarMeuProdutoClicadoActivity.this, VisualizarMeusProdutosActivity.class);
                 startActivity(intent);
                 finish();
@@ -167,6 +180,7 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
         boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
         if (!isConnected) {
             Toast.makeText(VisualizarMeuProdutoClicadoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            VisualizarMeusProdutosActivity.setId(null);
             finish();
             return false;
         }
@@ -177,4 +191,5 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.out.println("Error API CLIENT");
     }
+
 }

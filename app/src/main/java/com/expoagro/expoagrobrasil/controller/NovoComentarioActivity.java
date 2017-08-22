@@ -120,6 +120,11 @@ public class NovoComentarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String comentario = comentarioText.getText().toString();
+
+                if(comentario.isEmpty()) {
+                    Toast.makeText(NovoComentarioActivity.this, "Não é permitido comentário vazio.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Dialog alertDialog = new AlertDialog.Builder(NovoComentarioActivity.this).setIcon(android.R.drawable.ic_dialog_info).setTitle("Confirmar Comentário")
                         .setMessage("Deseja continuar?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
