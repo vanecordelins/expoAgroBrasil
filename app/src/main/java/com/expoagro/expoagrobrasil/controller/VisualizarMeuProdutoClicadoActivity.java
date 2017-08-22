@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +66,8 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
                 .enableAutoManage(VisualizarMeuProdutoClicadoActivity.this, VisualizarMeuProdutoClicadoActivity.this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
+        ImageButton btnFavoritarProduto = (ImageButton)findViewById(R.id.btnFavoritarProduto);
+        btnFavoritarProduto.setEnabled(false);
 
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

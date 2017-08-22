@@ -54,10 +54,6 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     private static String idAnunciante;
     private ProgressDialog progress;
     private Produto produto;
-<<<<<<< HEAD
-
-=======
->>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,18 +79,9 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
 
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarProdutoActivity.this)
                 .enableAutoManage(VisualizarProdutoActivity.this, VisualizarProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
-<<<<<<< HEAD
-
-
-        progress.show();
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-=======
 
         progress.show();
 
->>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -262,27 +249,11 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         }
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
     @Override
     public void onBackPressed() {
         MenuProdutoActivity.setId(null);
         finish();
     }
-<<<<<<< HEAD
-
-//    @Override
-//    public void onBackPressed() {
-//        Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
-//        startActivity(intent);
-//        finish();
-//    }
-
-
-=======
->>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

@@ -24,7 +24,9 @@
         app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintLeft_toRightOf="@+id/cidadeText"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/emailEditText"
@@ -44,7 +46,9 @@
         app:layout_constraintHorizontal_bias="0.434"
         app:layout_constraintLeft_toRightOf="@+id/emailText"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/telefoneEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/telefoneEditText"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/telefoneEditText"
@@ -64,10 +68,12 @@
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintLeft_toRightOf="@+id/telefoneText"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeEditText"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         tools:layout_editor_absoluteY="0dp"
@@ -92,7 +98,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="22dp"
-        android:text="Avalição"
+        android:text="Avaliação"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -204,7 +210,7 @@
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="240dp"
-        android:layout_height="44dp"
+        android:layout_height="57dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -237,7 +243,9 @@
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintLeft_toRightOf="@+id/nomeText"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/avaliacaoText"
@@ -254,15 +262,13 @@
         app:layout_constraintRight_toRightOf="@+id/ratingBar2"
         app:layout_constraintHorizontal_bias="0.172"
         app:layout_constraintTop_toTopOf="@+id/ratingBar2"
-        android:layout_marginTop="-12dp"
         app:layout_constraintBottom_toBottomOf="@+id/ratingBar2"
-        android:layout_marginBottom="0dp"
         app:layout_constraintVertical_bias="1.0" />
 
     <RatingBar
         android:id="@+id/ratingBar2"
         android:layout_width="243dp"
-        android:layout_height="48dp"
+        android:layout_height="57dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -284,6 +290,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline"
         app:layout_constraintGuide_begin="20dp"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="20dp"
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>

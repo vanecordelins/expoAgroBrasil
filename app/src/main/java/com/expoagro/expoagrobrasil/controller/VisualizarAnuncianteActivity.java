@@ -33,7 +33,7 @@ public class VisualizarAnuncianteActivity extends AppCompatActivity {
     private Avaliacao avaliacao;
     private String idAnunciante;
     private ArrayList<Float> listAvaliacao ;
-
+    private String ui;
 
 
     private ProgressDialog progress;
@@ -52,6 +52,12 @@ public class VisualizarAnuncianteActivity extends AppCompatActivity {
         progress.setMessage("Carregando dados...");
         progress.setCancelable(false);
 
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar2 = (RatingBar) findViewById(R.id.ratingBar2);
+        avaliacaoText = (TextView) findViewById(R.id.avaliacaoText);
+
+        ratingBar2.setActivated(false);
+
         if (VisualizarProdutoActivity.getIdAnunciante() != null) {
             idAnunciante = VisualizarProdutoActivity.getIdAnunciante();
             getAnuncianteInfo(idAnunciante);
@@ -61,10 +67,13 @@ public class VisualizarAnuncianteActivity extends AppCompatActivity {
         }
         mediaAvalicaco();
 
-        final String ui = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        ratingBar2 = (RatingBar) findViewById(R.id.ratingBar2);
-        avaliacaoText = (TextView) findViewById(R.id.avaliacaoText);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+             ui = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        } else {
+            ratingBar.setActivated(false);
+            ratingBar.setEnabled(false);
+        }
+
         FirebaseDatabase.getInstance().getReference("Avaliacao").child(idAnunciante).addValueEventListener(new ValueEventListener() {
             @Override
             public void onCancelled(DatabaseError databaseError) {
