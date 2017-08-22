@@ -20,6 +20,7 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -29,6 +30,7 @@ import static org.hamcrest.Matchers.allOf;
 
 
 class TesteUtils {
+
     public static class ToastMatcher extends TypeSafeMatcher<Root> {
 
         @Override
@@ -67,6 +69,7 @@ class TesteUtils {
     }
 
     public static void fazerLogin(){
+        espera(3000);
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
             ViewInteraction appCompatImageButton2 = onView(
@@ -92,6 +95,8 @@ class TesteUtils {
                             withParent(withId(R.id.email_login_form)),
                             isDisplayed()));
             appCompatButton.perform(click());
+
+
         }
     }
 
@@ -106,6 +111,7 @@ class TesteUtils {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(botao), withText(texto), isDisplayed()));
         appCompatButton.perform(click());
+        espera();
     }
 
     public static void clicaEm(int botao, String texto,ViewAction scroll){
@@ -114,9 +120,23 @@ class TesteUtils {
         appCompatButton.perform(scroll, click());
     }
 
-    public static void verificaTexto(String texto){
+    public static void clicaEm(int botao){
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(botao), isDisplayed()));
+        appCompatButton.perform(click());
+    }
+
+    public static void vejaTexto(String texto){
         ViewInteraction result = onView(withText(texto)).inRoot(new TesteUtils.ToastMatcher())
                 .check(matches(withText(texto)));
+
+        Assert.assertNotNull(result);
+    }
+
+    public static void vejaErro(int campo,String texto){
+        ViewInteraction result = onView(
+                allOf(withId(campo), isDisplayed()));
+        result.check(matches(hasErrorText(texto)));
 
         Assert.assertNotNull(result);
     }
@@ -129,6 +149,7 @@ class TesteUtils {
     }
 
     public static void abreMenu(int menu, String texto){
+        espera(3000);
         ViewInteraction appCompatImageButton2 = onView(
                 allOf(withContentDescription("Open navigation drawer"),
                         withParent(withId(R.id.toolbar)),
@@ -138,6 +159,8 @@ class TesteUtils {
         ViewInteraction appCompatCheckedTextView2 = onView(
                 allOf(withId(menu), withText(texto), isDisplayed()));
         appCompatCheckedTextView2.perform(click());
+
+
     }
 
     public static void selecionaItem(int recycle, int item){

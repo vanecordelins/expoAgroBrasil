@@ -26,6 +26,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -153,7 +157,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             } else {
                 mProgressDialog.dismiss();
-                Toast.makeText(LoginActivity.this, "Sem conexão com a internet.", Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance().getReference(".info/connected").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean connected = dataSnapshot.getValue(Boolean.class);
+                        if (connected) {
+                            System.out.println("connected");
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Sem conexão com a internet.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { System.out.println(databaseError.getMessage()); }
+                });
+
             }
         }
     }

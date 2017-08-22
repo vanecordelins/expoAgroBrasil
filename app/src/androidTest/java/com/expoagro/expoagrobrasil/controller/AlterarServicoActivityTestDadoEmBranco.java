@@ -25,6 +25,7 @@ import static com.expoagro.expoagrobrasil.controller.TesteUtils.espera;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogin;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.preencheCampo;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.selecionaItem;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.vejaErro;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -35,29 +36,14 @@ public class AlterarServicoActivityTestDadoEmBranco {
 
     @Test
     public void alterarServicoActivityTestNomeEmBranco() throws InterruptedException {
-        espera();
-
         fazerLogin();
-
-        espera();
-
         abreMenu(R.id.design_menu_item_text,"Meus anúncios");
-        espera();
         clicaEm(R.id.rdoBtnServico3,"Serviços");
-
-        selecionaItem(R.id.recyclerview4, 0);
-
+        selecionaItem(R.id.recyclerview4,0);
         clicaEm(R.id.alterarServico,"Alterar");
         preencheCampo(R.id.campoNomeServico,"");
-
-        espera();
-
-        clicaEm(R.id.btnCadastrar,"ALTERAR",scrollTo());
-
-        ViewInteraction result = onView(allOf(withId(R.id.campoNomeServico),isDisplayed()))
-        .check(matches(hasErrorText("Campo obrigatório")));
-
-        Assert.assertNotNull(result);
+        clicaEm(R.id.btnAlterar,"Confirmar",scrollTo());
+        vejaErro(R.id.campoNomeServico,"Campo obrigatório");
     }
 
 }

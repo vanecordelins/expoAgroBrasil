@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -52,12 +53,18 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     private static String idAnunciante;
     private ProgressDialog progress;
     private Produto produto;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_anuncio);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar4);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = MenuProdutoActivity.getId();
@@ -75,12 +82,18 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
 
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarProdutoActivity.this)
                 .enableAutoManage(VisualizarProdutoActivity.this, VisualizarProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+<<<<<<< HEAD
 
 
         progress.show();
         final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
+=======
+
+        progress.show();
+
+>>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -88,7 +101,8 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                 for (DataSnapshot prod : dataSnapshot.getChildren()) {
                     if (prod.getKey().equals(keyProduto) ) {
                         produto = prod.getValue(Produto.class);
-                        ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
+                        ((TextView) findViewById(R.id.dataProduto)).setText("Publicado em: " + produto.getData());
+
                         UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -150,6 +164,15 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
 
         });
 
+        TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
+        verComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaComentarios = new Intent(VisualizarProdutoActivity.this, ComentariosActivity.class);
+                startActivity(telaComentarios);
+            }
+        });
+
         ImageButton mBtnCompartilhar = (ImageButton) findViewById(R.id.btnCompartilharProduto);
         mBtnCompartilhar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,8 +190,9 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         final ImageButton mBtnFavorito = (ImageButton) findViewById(R.id.btnFavoritarProduto);
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            mBtnFavorito.setVisibility(View.GONE);
+            mBtnFavorito.setEnabled(false);
         } else {
+            final String uid =  FirebaseAuth.getInstance().getCurrentUser().getUid();
             Query ref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(keyProduto);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -178,7 +202,6 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                         mBtnFavorito.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                mBtnFavorito.setImageResource(R.drawable.star_vazio);
                                 FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(produto.getId()).removeValue();
                                 Intent intent = getIntent();
                                 finish();
@@ -238,11 +261,16 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         }
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
     @Override
     public void onBackPressed() {
+        MenuProdutoActivity.setId(null);
         finish();
     }
+<<<<<<< HEAD
 
 //    @Override
 //    public void onBackPressed() {
@@ -252,6 +280,8 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
 //    }
 
 
+=======
+>>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

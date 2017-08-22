@@ -25,6 +25,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.abreMenu;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.clicaEm;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogin;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.preencheCampo;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.vejaTexto;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -35,6 +40,7 @@ public class CadastroServicoActivityTestNovo {
 
     @Test
     public void cadastroServicoActivityTest() {
+<<<<<<< HEAD
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
 
             ViewInteraction appCompatImageButton2 = onView(
@@ -120,6 +126,20 @@ public class CadastroServicoActivityTestNovo {
 
         Assert.assertNotNull(result);
 
+=======
+        fazerLogin();
+        abreMenu(R.id.design_menu_item_text,"Novo anúncio");
+        clicaEm(R.id.rdoBtnServico2,"Serviço");
+        preencheCampo(R.id.campoNomeServico,"Serviço Valido");
+        clicaEm(R.id.spinnerFrequencia);
+        clicaEm(android.R.id.text1,"Por Dia");
+        preencheCampo(R.id.campoValor,"$600.00");
+        preencheCampo(R.id.campoDescricao,"Criar Novo Serviço");
+        preencheCampo(R.id.campoObservacao,"Novo Serviço será Criado");
+        clicaEm(R.id.btnCadastrar,"Cadastrar",scrollTo());
+        clicaEm(android.R.id.button1,"Sim",scrollTo());
+        vejaTexto("Cadastro realizado com sucesso");
+>>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
     }
 
 }

@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -47,6 +49,9 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_servico);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar7);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final String keyServico = MenuServicoActivity.getId();
 
@@ -55,14 +60,14 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
 
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarServicoActivity.this)
                 .enableAutoManage(VisualizarServicoActivity.this, VisualizarServicoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         idAnunciante = null;
 
-//        progress = new ProgressDialog(VisualizarServicoActivity.this);
-//        progress.setCancelable(false);
-//        progress.setIndeterminate(true);
-//        progress.setMessage("Carregando anúncio...");
-//        progress.show();
+        progress = new ProgressDialog(VisualizarServicoActivity.this);
+        progress.setCancelable(false);
+        progress.setIndeterminate(true);
+        progress.setMessage("Carregando anúncio...");
+        progress.show();
 
         ServicoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -70,7 +75,8 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                 for (DataSnapshot serv : dataSnapshot.getChildren()) {
                     if (serv.getKey().equals(keyServico)) {
                         servico = serv.getValue(Servico.class);
-                        ((TextView) findViewById(R.id.dataServico)).setText("Data: " + servico.getData());
+                        ((TextView) findViewById(R.id.dataServico)).setText("Publicado em: " + servico.getData());
+
                         ((TextView) findViewById(R.id.descricaoServico)).setText("Descrição: " + servico.getDescricao());
                         ((TextView) findViewById(R.id.nomeServico)).setText("Nome: " + servico.getNome());
                         ((TextView) findViewById(R.id.observacaoServico)).setText("Observação: " + servico.getObservacao());
@@ -91,7 +97,7 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                                                 startActivity(intent);
                                             }
                                         });
-//                                        progress.dismiss();
+                                        progress.dismiss();
                                         break;
                                     }
                                 }
@@ -116,6 +122,15 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
             }
         });
 
+        TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
+        verComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaComentarios = new Intent(VisualizarServicoActivity.this, ComentariosActivity.class);
+                startActivity(telaComentarios);
+            }
+        });
+
         ImageButton mBtnServico = (ImageButton) findViewById(R.id.btnCompartilharServico);
         mBtnServico.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +147,9 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
 
         final ImageButton mBtnFavoritoServico = (ImageButton) findViewById(R.id.btnFavoritarServico);
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            mBtnFavoritoServico.setVisibility(View.GONE);
+            mBtnFavoritoServico.setEnabled(false);
         } else {
+            final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             Query ref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(keyServico);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -143,7 +159,6 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
                         mBtnFavoritoServico.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                mBtnFavoritoServico.setImageResource(R.drawable.star_vazio);
                                 FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(servico.getId()).removeValue();
                                 Intent intent = getIntent();
                                 finish();
@@ -211,5 +226,13 @@ public class VisualizarServicoActivity extends AppCompatActivity implements Goog
 
     public static String getIdAnunciante() {
         return idAnunciante;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        Intent intent = new Intent(VisualizarServicoActivity.this, VisualizarMeusServicosActivity.class);
+//        startActivity(intent);
+        finish();
     }
 }

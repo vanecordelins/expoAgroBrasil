@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_meusanuncios"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar6"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <RadioButton
         android:id="@+id/rdoBtnProduto3"
@@ -12,7 +26,7 @@
         android:layout_height="wrap_content"
         android:text="Produtos"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="70dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="110dp"
@@ -34,6 +48,7 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:id="@+id/recyclerview4"
+        android:layout_marginTop="11dp"
         android:layout_below="@+id/rdoBtnServico3"
         android:layout_centerHorizontal="true">
     </android.support.v7.widget.RecyclerView>

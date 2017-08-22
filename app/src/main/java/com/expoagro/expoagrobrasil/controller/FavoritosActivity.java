@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,8 +40,8 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
     private GoogleApiClient mGoogleApiClient;
     private RecyclerView recyclerView;
     private static String idClicado;
+    private static String testeId;
     private ProgressDialog progress;
-    Query myQuery1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,26 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                 final Query myref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid);
                 ArrayList<String> idAnuncio;
 
+                myref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() == null) {
+                            progress.dismiss();
+                            FavoritosActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(FavoritosActivity.this, "Nenhum anúncio favoritado.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println(databaseError.getMessage());
+                    }
+                });
+
                 final FirebaseRecyclerAdapter<Produto, FavoritosActivity.AnuncioViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Produto, FavoritosActivity.AnuncioViewHolder>(
                         Produto.class,
                         R.layout.linha,
@@ -76,6 +97,7 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                     @Override
                     protected void populateViewHolder(final FavoritosActivity.AnuncioViewHolder viewHolder, Produto model, int posit) {
                         final String keyAnuncio = getRef(posit).getKey();
+                        testeId = keyAnuncio;
                         viewHolder.setCategoria(model.getCategoria());
                         viewHolder.setData(model.getData());
                         viewHolder.setValor(model.getValor());
@@ -90,7 +112,6 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                                 myQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        Produto data = dataSnapshot.getValue(Produto.class);
                                         System.out.println("CONSULTA: " + myQuery1);
                                         System.out.println("NÃO Existe: " + !dataSnapshot.exists());
                                         if (!dataSnapshot.exists()) {
@@ -106,7 +127,7 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-
+                                        System.out.println(databaseError.getMessage());
                                     }
                                 });
                             }
@@ -195,12 +216,47 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                 Picasso.with(mView.getContext())
                         .load(foto.get(0))
                         .fit()
-                        //.resize(100,100)
                         .into(imageView);
             } else {
-                imageView.setImageResource(R.drawable.services);
+                final Query myQuery1 = ProdutoDAO.getDatabaseReference().child(testeId);
+                myQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                         if (!dataSnapshot.exists()) {
+                             imageView.setImageResource(R.drawable.services);
+                         } else {
+                             imageView.setImageResource(R.drawable.sem_foto);
+                         }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println(databaseError.getMessage());
+                    }
+                });
             }
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(FavoritosActivity.this, MenuProdutoActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(FavoritosActivity.this, MenuProdutoActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
