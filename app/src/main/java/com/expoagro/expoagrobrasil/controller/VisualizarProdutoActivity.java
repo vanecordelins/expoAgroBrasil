@@ -214,13 +214,9 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
+                public void onCancelled(DatabaseError databaseError) { System.out.println(databaseError.getMessage()); }
             });
-
             mBtnFavorito.setVisibility(View.VISIBLE);
-
         }
 
         Button alterar = (Button) findViewById(R.id.alterarProduto);

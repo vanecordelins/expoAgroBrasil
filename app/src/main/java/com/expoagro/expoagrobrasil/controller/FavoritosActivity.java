@@ -37,7 +37,6 @@ import java.util.List;
 
 public class FavoritosActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private GoogleApiClient mGoogleApiClient;
     private RecyclerView recyclerView;
     private static String idClicado;
     private static String testeId;
@@ -56,7 +55,6 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncios...");
         final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        myQuery1 = ProdutoDAO.getDatabaseReference();
 
         progress.show();
         Thread mThread = new Thread() {
@@ -66,7 +64,6 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(FavoritosActivity.this));
                 final Query myref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid);
-                ArrayList<String> idAnuncio;
 
                 myref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -153,9 +150,6 @@ public class FavoritosActivity extends AppCompatActivity implements GoogleApiCli
         if (!isConnected) {
             Toast.makeText(FavoritosActivity.this, "Você não está conectado a Internet", Toast.LENGTH_LONG).show();
             progress.dismiss();
-            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                GoogleSignIn.signOut(FavoritosActivity.this, mGoogleApiClient);
-            }
         }
     }
 

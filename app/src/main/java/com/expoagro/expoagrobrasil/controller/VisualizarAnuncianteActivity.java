@@ -30,9 +30,7 @@ public class VisualizarAnuncianteActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private RatingBar ratingBar2;
     private TextView avaliacaoText;
-    private Avaliacao avaliacao;
     private String idAnunciante;
-    private ArrayList<Float> listAvaliacao ;
     private String ui;
 
 
@@ -166,7 +164,7 @@ public class VisualizarAnuncianteActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 float ava = 0;
-                listAvaliacao = new ArrayList();
+                ArrayList<Float> listAvaliacao = new ArrayList();
                 for (DataSnapshot avaliacao : dataSnapshot.getChildren()) {
                     Avaliacao a = avaliacao.getValue(Avaliacao.class);
                     listAvaliacao.add(a.getAvaliacao());

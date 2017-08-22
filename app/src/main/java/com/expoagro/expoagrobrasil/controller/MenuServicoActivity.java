@@ -41,9 +41,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by joao on 31/07/17.
  */
@@ -55,7 +52,6 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
     private RecyclerView recyclerView;
     private static String idClicado;
     private ProgressDialog progress;
-    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -275,7 +271,7 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.teste_filtro, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
-        searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(this);
         searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override

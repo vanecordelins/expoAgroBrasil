@@ -9,7 +9,7 @@ public class Avaliacao {
     private float avaliacao;
     private String idAnuciante;
 
-    public Avaliacao(String idUsuario, float avaliacao, String idAnuciante){
+    public Avaliacao(float avaliacao, String idAnuciante){
         this.idAnuciante = idAnuciante;
         this.avaliacao = avaliacao;
     }
@@ -30,6 +30,7 @@ public class Avaliacao {
     public void setIdAnuciante(String idAnuciante) {
         this.idAnuciante = idAnuciante;
     }
+
 
 
 }

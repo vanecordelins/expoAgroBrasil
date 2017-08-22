@@ -25,9 +25,6 @@ import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.ProdutoDAO;
 import com.expoagro.expoagrobrasil.model.Produto;
 import com.expoagro.expoagrobrasil.util.AnuncioViewPager;
-import com.expoagro.expoagrobrasil.util.GoogleSignIn;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.DataSnapshot;
@@ -46,7 +43,6 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
 
     private ViewPager viewPager;
     private AnuncioViewPager testeViewPager;
-    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +54,6 @@ public class VisualizarMeuProdutoClicadoActivity extends AppCompatActivity imple
         final ArrayList<String> img = new ArrayList<>();
 
         final String keyProduto = VisualizarMeusProdutosActivity.getId();
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(VisualizarMeuProdutoClicadoActivity.this)
-                .enableAutoManage(VisualizarMeuProdutoClicadoActivity.this, VisualizarMeuProdutoClicadoActivity.this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         ImageButton btnFavoritarProduto = (ImageButton)findViewById(R.id.btnFavoritarProduto);
         btnFavoritarProduto.setEnabled(false);
