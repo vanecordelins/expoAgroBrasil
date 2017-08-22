@@ -63,14 +63,12 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ArrayList<String> img = new ArrayList<>();
-
         final String keyProduto = MenuProdutoActivity.getId();
 
         progress = new ProgressDialog(VisualizarProdutoActivity.this);
         progress.setCancelable(false);
         progress.setIndeterminate(true);
         progress.setMessage("Carregando anúncio...");
-
         shareProduto = "";
         idAnunciante = null;
 
@@ -81,7 +79,6 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                 .enableAutoManage(VisualizarProdutoActivity.this, VisualizarProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         progress.show();
-
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -123,14 +120,10 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
                         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
 
-                        shareProduto = "Confira " + produto.getNome().toUpperCase() +
-                                       " por " + produto.getValor() +
-                                       " no aplicativo ExpoAgro Brasil!";
+                        shareProduto = "Confira " + produto.getNome().toUpperCase() + " por " + produto.getValor() + " no aplicativo ExpoAgro Brasil!";
 
                         if(produto.getFoto() != null){
-                            if (!produto.getFoto().isEmpty()) {
-                                viewPager.setBackground(null);
-                            }
+                            if (!produto.getFoto().isEmpty()) { viewPager.setBackground(null); }
                             for (int i =0; i<produto.getFoto().size(); i++){
                                 img.add(produto.getFoto().get(i));
                             }
@@ -167,17 +160,14 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                 startActivity(Intent.createChooser(myIntent, "Compartilhar usando"));
             }
         });
-
         favoritar(keyProduto);
 
         Button alterar = (Button) findViewById(R.id.alterarProduto);
         Button excluir = (Button) findViewById(R.id.excluirProduto);
-
         alterar.setVisibility(View.GONE);
         excluir.setVisibility(View.GONE);
 
         checkForConnection();
-
     }
 
     private void favoritar(String keyProduto) {
