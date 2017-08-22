@@ -80,6 +80,7 @@ public class CategoriasActivity extends AppCompatActivity {
         });
 
     }
+
     public void acao(){
         Intent intent = new Intent(CategoriasActivity.this, MenuProdutoActivity.class);
         startActivity(intent);
@@ -113,6 +114,14 @@ public class CategoriasActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(CategoriasActivity.this, MenuProdutoActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

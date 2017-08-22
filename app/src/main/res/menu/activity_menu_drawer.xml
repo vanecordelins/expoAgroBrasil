@@ -7,8 +7,11 @@
             android:id="@+id/menu_meu_perfil"
             android:title="@string/menu_perfil" />
         <item
-            android:id="@+id/menu_novo_anuncio"
-            android:title="@string/menu_novo_anuncio" />
+            android:id="@+id/menu_novo_produto"
+            android:title="@string/menu_novo_produto" />
+        <item
+            android:id="@+id/menu_novo_servico"
+            android:title="@string/menu_novo_servico" />
         <item
             android:id="@+id/menu_meus_anuncios"
             android:title="@string/menu_meus_anuncios" />

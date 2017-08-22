@@ -3,10 +3,13 @@ package com.expoagro.expoagrobrasil.controller;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -114,7 +117,11 @@ public class AlterarProdutoActivity extends AppCompatActivity {
         mAlterarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alterar(); //Aqui chamar o método para cadastrar *****************
+                if (checkForConnection()) {
+                    alterar(); //Aqui chamar o método para cadastrar *****************
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -183,6 +190,18 @@ public class AlterarProdutoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(AlterarProdutoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            finish();
+            return false;
+        }
+        return true;
     }
 
     private void carregarProduto() {
