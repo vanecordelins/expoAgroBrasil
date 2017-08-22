@@ -4,6 +4,7 @@ import android.os.IBinder;
 import android.support.test.espresso.Root;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewInteraction;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.expoagro.expoagrobrasil.R;
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import junit.framework.Assert;
 
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -148,6 +150,13 @@ class TesteUtils {
                 allOf(withId(item),isDisplayed()));
         button2.check(doesNotExist());
     }
+    public static void verificaBotaoAtivo(int item, Matcher<View> arg){
+        ViewInteraction result = onView(
+                allOf(withId(item),isDisplayed()));
+        result.check(matches(arg));
+       Assert.assertNotNull(result);
+    }
+
 
     public static void abreMenu(int menu, String texto){
         espera(3000);

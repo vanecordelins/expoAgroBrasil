@@ -3,7 +3,6 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
 
 import com.expoagro.expoagrobrasil.R;
 
@@ -18,7 +17,6 @@ import static com.expoagro.expoagrobrasil.controller.TesteUtils.preencheCampo;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.selecionaItem;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.vejaTexto;
 
-@LargeTest
 @RunWith(AndroidJUnit4.class)
 public class ComentarActivityTestEmBranco {
 

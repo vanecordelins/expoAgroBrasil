@@ -10,25 +10,24 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static com.expoagro.expoagrobrasil.R.id.btnFavoritarProduto;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.clicaEm;
-import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogout;
-import static com.expoagro.expoagrobrasil.controller.TesteUtils.naoVejaItem;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogin;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.selecionaItem;
+import static com.expoagro.expoagrobrasil.controller.TesteUtils.verificaBotaoAtivo;
 
 @RunWith(AndroidJUnit4.class)
-public class ComentarActivityTestDeslogado {
+public class FavoritarActivityTest {
 
     @Rule
     public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
 
     @Test
-    public void inicialArrobaActivityTest() {
-        fazerLogout();
+    public void favoritarActivityTest() {
+        fazerLogin();
         selecionaItem(R.id.recyclerview,0);
-        clicaEm(R.id.textoComentarios,"VER COMENTÁRIOS",scrollTo());
-        clicaEm(R.id.btnComentar);
-        naoVejaItem(R.id.btnComentar);
-
+        clicaEm(btnFavoritarProduto);
+        verificaBotaoAtivo(btnFavoritarProduto,isEnabled());
     }
 }
