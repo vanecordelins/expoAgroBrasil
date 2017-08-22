@@ -63,10 +63,10 @@
         </activity>
         <activity
             android:name=".controller.CadastroProdutoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".controller.CadastroServicoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".controller.MenuProdutoActivity"
             android:parentActivityName=".controller.MenuProdutoActivity"
@@ -78,18 +78,32 @@
         </activity>
         <activity
             android:name=".controller.VisualizarProdutoActivity"
-            android:screenOrientation="portrait" />
-
+            android:parentActivityName=".controller.VisualizarProdutoActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.VisualizarProdutoActivity" />
+        </activity>
         <activity
             android:name=".controller.VisualizarServicoActivity"
-            android:screenOrientation="portrait"/>
-
+            android:parentActivityName=".controller.VisualizarServicoActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.VisualizarServicoActivity" />
+        </activity>
         <activity
             android:name=".controller.VisualizarMeusProdutosActivity"
+            android:parentActivityName=".controller.VisualizarMeusProdutosActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.VisualizarMeusProdutosActivity" />
+        </activity>
         <activity
             android:name=".controller.VisualizarMeuProdutoClicadoActivity"
+            android:parentActivityName=".controller.VisualizarMeuProdutoClicadoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".controller.AlterarProdutoActivity"
@@ -109,7 +123,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".controller.VisualizarMeusServicosActivity"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".controller.VisualizarMeusServicosActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.VisualizarMeusServicosActivity" />
+        </activity>
         <activity
             android:name=".controller.VisualizarMeuServicoClicadoActivity"
             android:screenOrientation="portrait" />
@@ -125,7 +144,46 @@
         </activity>
         <activity
             android:name=".controller.AlterarServicoActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".controller.VisualizarAnuncianteActivity"
+            android:label="Anunciante"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".controller.FavoritosActivity"
+            android:label="@string/title_activity_favoritos"
+            android:parentActivityName=".controller.FavoritosActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.FavoritosActivity" />
+        </activity>
+        <activity
+            android:name=".controller.ComentariosActivity"
+            android:label="@string/title_activity_comentarios"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".controller.NovoComentarioActivity"
+            android:label="Novo Comentário"
+            android:parentActivityName=".controller.ComentariosActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.ComentariosActivity" />
+        </activity>
+        <activity
+            android:name=".controller.SobreActivity"
+            android:parentActivityName=".controller.SobreActivity"
+            android:label="Sobre"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.expoagro.expoagrobrasil.controller.SobreActivity" />
+        </activity>
     </application>
 
 </manifest>

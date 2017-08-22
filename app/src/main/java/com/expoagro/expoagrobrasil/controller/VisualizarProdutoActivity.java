@@ -1,7 +1,9 @@
 package com.expoagro.expoagrobrasil.controller;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -10,6 +12,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -30,6 +34,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -45,16 +51,26 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
     private AnuncioViewPager testeViewPager;
     private GoogleApiClient mGoogleApiClient;
     private String shareProduto;
+    private static String idAnunciante;
+    private ProgressDialog progress;
+    private Produto produto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_anuncio);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar4);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final ArrayList<String> img = new ArrayList<>();
-
         final String keyProduto = MenuProdutoActivity.getId();
 
+        progress = new ProgressDialog(VisualizarProdutoActivity.this);
+        progress.setCancelable(false);
+        progress.setIndeterminate(true);
+        progress.setMessage("Carregando anúncio...");
         shareProduto = "";
+        idAnunciante = null;
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
@@ -62,32 +78,40 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         mGoogleApiClient = new GoogleApiClient.Builder(VisualizarProdutoActivity.this)
                 .enableAutoManage(VisualizarProdutoActivity.this, VisualizarProdutoActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
-
+        progress.show();
         ProdutoDAO.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot prod : dataSnapshot.getChildren()) {
                     if (prod.getKey().equals(keyProduto) ) {
-                        final Produto produto = prod.getValue(Produto.class);
-                        ((TextView) findViewById(R.id.dataProduto)).setText("Data: " + produto.getData());
+                        produto = prod.getValue(Produto.class);
+                        ((TextView) findViewById(R.id.dataProduto)).setText("Publicado em: " + produto.getData());
+
                         UserDAO.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot user : dataSnapshot.getChildren()) {
                                     if (user.getKey().equals(produto.getIdUsuario())) {
-                                        Usuario target = user.getValue(Usuario.class);
-                                        System.out.println(target.getNome());
+                                        final Usuario target = user.getValue(Usuario.class);
                                         ((TextView) findViewById(R.id.vendedorProduto)).setText("Vendedor: " + target.getNome());
+                                        ((TextView) findViewById(R.id.vendedorProduto)).setTypeface(null, Typeface.BOLD);
+                                        ((TextView) findViewById(R.id.vendedorProduto)).setTextColor(getResources().getColor(R.color.colorAccent));
+                                        findViewById(R.id.vendedorProduto).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                VisualizarProdutoActivity.setIdAnunciante(target.getId());
+                                                Intent intent = new Intent(VisualizarProdutoActivity.this, VisualizarAnuncianteActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        progress.dismiss();
                                         break;
                                     }
                                 }
                             }
-
                             @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                System.out.println("Erro ao pesquisar vendedor");
-                            }
+                            public void onCancelled(DatabaseError databaseError) { System.out.println("Erro ao pesquisar vendedor"); }
                         });
                         ((TextView) findViewById(R.id.descricaoProduto)).setText("Descrição: " + produto.getDescricao());
                         ((TextView) findViewById(R.id.nomeProduto)).setText("Nome: " + produto.getNome());
@@ -96,14 +120,10 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                         viewPager = (ViewPager)findViewById(R.id.viewPager);
                         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
 
-                        shareProduto = "Confira " + produto.getNome().toUpperCase() +
-                                       " por " + produto.getValor() +
-                                       " no aplicativo ExpoAgro Brasil!";
+                        shareProduto = "Confira " + produto.getNome().toUpperCase() + " por " + produto.getValor() + " no aplicativo ExpoAgro Brasil!";
 
                         if(produto.getFoto() != null){
-                            if (!produto.getFoto().isEmpty()) {
-                                viewPager.setBackground(null);
-                            }
+                            if (!produto.getFoto().isEmpty()) { viewPager.setBackground(null); }
                             for (int i =0; i<produto.getFoto().size(); i++){
                                 img.add(produto.getFoto().get(i));
                             }
@@ -114,12 +134,17 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                     }
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(VisualizarProdutoActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT);
-            }
+            public void onCancelled(DatabaseError databaseError) { Toast.makeText(VisualizarProdutoActivity.this, "Erro ao recuperar produto.", Toast.LENGTH_SHORT); }
+        });
 
+        TextView verComentarios = (TextView) findViewById(R.id.textoComentarios);
+        verComentarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaComentarios = new Intent(VisualizarProdutoActivity.this, ComentariosActivity.class);
+                startActivity(telaComentarios);
+            }
         });
 
         ImageButton mBtnCompartilhar = (ImageButton) findViewById(R.id.btnCompartilharProduto);
@@ -135,15 +160,60 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
                 startActivity(Intent.createChooser(myIntent, "Compartilhar usando"));
             }
         });
+        favoritar(keyProduto);
 
         Button alterar = (Button) findViewById(R.id.alterarProduto);
         Button excluir = (Button) findViewById(R.id.excluirProduto);
-
         alterar.setVisibility(View.GONE);
         excluir.setVisibility(View.GONE);
 
         checkForConnection();
+    }
 
+    private void favoritar(String keyProduto) {
+        final ImageButton mBtnFavorito = (ImageButton) findViewById(R.id.btnFavoritarProduto);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            mBtnFavorito.setEnabled(false);
+        } else {
+            final String uid =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+            Query ref = FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(keyProduto);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(final DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        mBtnFavorito.setImageResource(R.drawable.if_star_285661);
+                        mBtnFavorito.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(produto.getId()).removeValue();
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        mBtnFavorito.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mBtnFavorito.setImageResource(R.drawable.if_star_285661);
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                FirebaseDatabase.getInstance().getReference("Favoritos").child(uid).child(produto.getId()).setValue(produto);
+                                /*atualização da activity*/
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) { System.out.println(databaseError.getMessage()); }
+            });
+            mBtnFavorito.setVisibility(View.VISIBLE);
+        }
     }
 
     private void checkForConnection() {
@@ -152,22 +222,44 @@ public class VisualizarProdutoActivity extends AppCompatActivity implements Goog
         boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
         if (!isConnected) {
             Toast.makeText(VisualizarProdutoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+            //Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
+            //startActivity(intent);
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 GoogleSignIn.signOut(VisualizarProdutoActivity.this, mGoogleApiClient);
             }
+            progress.dismiss();
+            finish();
         }
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(VisualizarProdutoActivity.this, MenuProdutoActivity.class);
-        startActivity(intent);
+        MenuProdutoActivity.setId(null);
         finish();
     }
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         System.out.println("on Connection failed.");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                MenuProdutoActivity.setId(null);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static void setIdAnunciante(String id) {
+        idAnunciante = id;
+    }
+
+    public static String getIdAnunciante() {
+        return idAnunciante;
     }
 }

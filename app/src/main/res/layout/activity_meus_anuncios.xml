@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_meusanuncios"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar5"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="115dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/recyclerview2">
     </android.support.v7.widget.RecyclerView>
@@ -20,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="Produtos"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="70dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="110dp"
@@ -35,5 +50,5 @@
         android:layout_toLeftOf="@+id/rdoBtnProduto3"
         android:layout_toStartOf="@+id/rdoBtnProduto3"
         android:layout_marginRight="46dp"
-        android:layout_marginEnd="46dp" />
+        android:layout_marginEnd="46dp"  />
 </RelativeLayout>

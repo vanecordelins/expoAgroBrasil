@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -41,8 +42,9 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meus_anuncios);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar5);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progress = new ProgressDialog(VisualizarMeusProdutosActivity.this);
         progress.setCancelable(false);
@@ -73,7 +75,7 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 Query myref = FirebaseDatabase.getInstance().getReference("Produto").orderByChild("idUsuario").equalTo(uid);
 
-                myref.addValueEventListener(new ValueEventListener() {
+                myref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
@@ -107,7 +109,6 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                                 setId(key);
                                 Intent intent = new Intent(VisualizarMeusProdutosActivity.this, VisualizarMeuProdutoClicadoActivity.class);
                                 startActivity(intent);
-                                finish();
                             }
                         });
                     }
@@ -131,6 +132,7 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (!connected) {
                     Toast.makeText(VisualizarMeusProdutosActivity.this, "Você não está conectado a Internet", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -194,9 +196,23 @@ public class VisualizarMeusProdutosActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(VisualizarMeusProdutosActivity.this, MenuProdutoActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(VisualizarMeusProdutosActivity.this, MenuProdutoActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onConnectionFailed(ConnectionResult connectionResult) {

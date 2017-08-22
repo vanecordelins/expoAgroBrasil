@@ -2,9 +2,12 @@ package com.expoagro.expoagrobrasil.controller;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +23,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,7 +95,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         spinnerCategoria = (Spinner) findViewById(R.id.spinnerCategoria);
         spinnerCategoria.setAdapter(adapter);
 
-        RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico);
+        /*RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico);
         rdoBtnServico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,13 +103,17 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 startActivity(telaCadastrarServico);
                 finish();
             }
-        });
+        });*/
 
         Button mCadastrarButton = (Button) findViewById(R.id.btnCadastrar);
         mCadastrarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cadastrar(); //Aqui chamar o método para cadastrar *****************
+                if (checkForConnection()) {
+                    cadastrar(); //Aqui chamar o método para cadastrar *****************
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -157,6 +163,17 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean checkForConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        boolean isConnected =  netInfo != null && netInfo.isConnectedOrConnecting();
+        if (!isConnected) {
+            Toast.makeText(CadastroProdutoActivity.this, "Você não está conectado a Internet", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     @Override

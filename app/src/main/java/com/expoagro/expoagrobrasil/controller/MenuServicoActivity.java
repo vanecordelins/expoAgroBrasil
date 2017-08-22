@@ -172,53 +172,51 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         idClicado = id;
     }
 
+
     @Override
     public boolean onQueryTextSubmit(final String query) {
-        final Query q = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome");
+        String newQuery = query.substring(0,1).toUpperCase().concat(query.substring(1));
+
+        final Query q = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome").startAt(newQuery).endAt(newQuery+"\uf8ff");
+
         q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot serv : dataSnapshot.getChildren()){
-                    Servico servico = serv.getValue(Servico.class);
-                    System.out.println(servico.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1))));
-                    if(servico.getNome().contains(query.substring(0,1).toUpperCase().concat(query.substring(1)))){
-                        Query q1 = FirebaseDatabase.getInstance().getReference("Serviço").orderByChild("nome").equalTo(servico.getNome());
-                        final FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder>(
-                                Servico.class,
-                                R.layout.linha,
-                                MenuServicoActivity.ServicoViewHolder.class,
-                                q1
-                        ) {
-                            @Override
-                            protected void populateViewHolder(MenuServicoActivity.ServicoViewHolder viewHolder, Servico model, int position) {
-                                final String keyServico = getRef(position).getKey();
-                                viewHolder.setFrequencia(model.getFrequencia());
-                                viewHolder.setData(model.getData());
-                                viewHolder.setValor(model.getValor());
-                                viewHolder.setNome(model.getNome());
-                                viewHolder.setFoto();
-
-                                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        setId(keyServico);
-                                        Intent intent = new Intent(MenuServicoActivity.this, VisualizarProdutoActivity.class);
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
-                        };
-                        recyclerView.setAdapter(recyclerAdapter2);
-                    }
+                if (dataSnapshot.getValue() == null) {
+                    Toast.makeText(MenuServicoActivity.this, "Serviços não encontrados", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println(databaseError.getMessage());
             }
         });
+        final FirebaseRecyclerAdapter<Servico, ServicoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Servico, ServicoViewHolder>(
+                Servico.class,
+                R.layout.linha,
+                ServicoViewHolder.class,
+                q
+        ) {
+            @Override
+            protected void populateViewHolder(ServicoViewHolder viewHolder, Servico model, int position) {
+                final String keyServico = getRef(position).getKey();
+                viewHolder.setFrequencia(model.getFrequencia());
+                viewHolder.setData(model.getData());
+                viewHolder.setValor(model.getValor());
+                viewHolder.setNome(model.getNome());
+                viewHolder.setFoto();
 
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setId(keyServico);
+                        Intent intent = new Intent(MenuServicoActivity.this, VisualizarServicoActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        };
+        recyclerView.setAdapter(recyclerAdapter2);
         return true;
     }
 
@@ -275,7 +273,43 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         MenuItem menuItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(this);
+        searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                System.out.println("opened");
+            }
 
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                Query q1 = FirebaseDatabase.getInstance().getReference("Serviço");
+                final FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder> recyclerAdapter2 = new FirebaseRecyclerAdapter<Servico, MenuServicoActivity.ServicoViewHolder>(
+                        Servico.class,
+                        R.layout.linha,
+                        MenuServicoActivity.ServicoViewHolder.class,
+                        q1
+                ) {
+                    @Override
+                    protected void populateViewHolder(MenuServicoActivity.ServicoViewHolder viewHolder, Servico model, int position) {
+                        final String keyServico = getRef(position).getKey();
+                        viewHolder.setFrequencia(model.getFrequencia());
+                        viewHolder.setData(model.getData());
+                        viewHolder.setValor(model.getValor());
+                        viewHolder.setNome(model.getNome());
+                        viewHolder.setFoto();
+
+                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                setId(keyServico);
+                                Intent intent = new Intent(MenuServicoActivity.this, VisualizarServicoActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                };
+                recyclerView.setAdapter(recyclerAdapter2);
+            }
+        });
         final TextView nomeUsuarioLogado = (TextView) findViewById(R.id.menu_nome);
         final TextView emailUsuarioLogado = (TextView) findViewById(R.id.menu_email);
 
@@ -322,6 +356,7 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+        super.onBackPressed();
         finish();
     }
 
@@ -343,10 +378,20 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
                 startActivity(telaLogin);
                 finish();
             }
-        } else if (id == R.id.menu_novo_anuncio) {
+        } else if (id == R.id.menu_novo_produto) {
             if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
-                Intent telaCadastrarAnuncio = new Intent(MenuServicoActivity.this, CadastroProdutoActivity.class);
-                startActivity(telaCadastrarAnuncio);
+                Intent telaCadastrarProduto = new Intent(MenuServicoActivity.this, CadastroProdutoActivity.class);
+                startActivity(telaCadastrarProduto);
+                finish();
+            } else {
+                Intent telaLogin = new Intent(MenuServicoActivity.this, LoginActivity.class);
+                startActivity(telaLogin);
+                finish();
+            }
+        } else if (id == R.id.menu_novo_servico) {
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) { // Ja esta logado
+                Intent telaCadastrarServico = new Intent(MenuServicoActivity.this, CadastroServicoActivity.class);
+                startActivity(telaCadastrarServico);
                 finish();
             } else {
                 Intent telaLogin = new Intent(MenuServicoActivity.this, LoginActivity.class);
@@ -355,7 +400,6 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
             }
         } else if (id == R.id.menu_meus_anuncios) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU MEUS FAVORITOS"); // Ja esta logado
                 Intent telaLogin = new Intent(MenuServicoActivity.this, VisualizarMeusServicosActivity.class);
                 startActivity(telaLogin);
                 finish();
@@ -368,7 +412,9 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
             finish();
         } else if (id == R.id.menu_favoritos) {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                System.out.println("MENU FAVORITOS"); // Ja esta logado
+                Intent intent = new Intent(MenuServicoActivity.this, FavoritosActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 Intent telaLogin = new Intent(MenuServicoActivity.this, LoginActivity.class);
                 startActivity(telaLogin);
@@ -377,7 +423,9 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.menu_sair) {
             GoogleSignIn.signOut(MenuServicoActivity.this, mGoogleApiClient);
         }  else if (id == R.id.menu_sobre) {
-            System.out.println("SOBRE");
+            Intent intent = new Intent(MenuServicoActivity.this, SobreActivity.class);
+            startActivity(intent);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_2);
         drawer.closeDrawer(GravityCompat.START);
