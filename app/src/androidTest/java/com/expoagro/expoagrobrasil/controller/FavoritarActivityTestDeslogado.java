@@ -1,6 +1,7 @@
 package com.expoagro.expoagrobrasil.controller;
 
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -25,7 +26,7 @@ public class FavoritarActivityTestDeslogado {
     public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
 
     @Test
-    public void favoritarActivityTest() {
+    public void favoritarDeslogadoActivityTest() {
         fazerLogout();
         selecionaItem(R.id.recyclerview,0);
         clicaEm(btnFavoritarProduto);

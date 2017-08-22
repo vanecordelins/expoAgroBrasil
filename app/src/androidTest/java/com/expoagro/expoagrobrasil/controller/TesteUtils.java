@@ -149,12 +149,15 @@ class TesteUtils {
         ViewInteraction button2 = onView(
                 allOf(withId(item),isDisplayed()));
         button2.check(doesNotExist());
+
+        Assert.assertNotNull(button2);
     }
     public static void verificaBotaoAtivo(int item, Matcher<View> arg){
         ViewInteraction result = onView(
                 allOf(withId(item),isDisplayed()));
         result.check(matches(arg));
-       Assert.assertNotNull(result);
+
+        Assert.assertNotNull(result);
     }
 
 
