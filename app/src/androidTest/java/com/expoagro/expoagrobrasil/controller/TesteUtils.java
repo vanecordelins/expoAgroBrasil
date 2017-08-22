@@ -14,6 +14,11 @@ import junit.framework.Assert;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
+import cucumber.api.CucumberOptions;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
