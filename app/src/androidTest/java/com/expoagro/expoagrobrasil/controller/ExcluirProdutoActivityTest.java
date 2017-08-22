@@ -22,7 +22,7 @@ import static com.expoagro.expoagrobrasil.controller.TesteUtils.espera;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.fazerLogin;
 import static com.expoagro.expoagrobrasil.controller.TesteUtils.selecionaItem;
 @RunWith(AndroidJUnit4.class)
-public class ExcluirProdutoActivityTestComSucesso {
+public class ExcluirProdutoActivityTest {
 
     @Rule
     public ActivityTestRule<MenuProdutoActivity> mActivityTestRule = new ActivityTestRule<>(MenuProdutoActivity.class);
