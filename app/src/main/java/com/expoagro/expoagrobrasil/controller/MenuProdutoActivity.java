@@ -444,8 +444,11 @@ public class MenuProdutoActivity extends AppCompatActivity
             }
         } else if (id == R.id.menu_sair) {
             GoogleSignIn.signOut(MenuProdutoActivity.this, mGoogleApiClient);
-        } /* else if (id == R.id.menu_sobre) {
-          }*/
+        }  else if (id == R.id.menu_sobre) {
+            Intent intent = new Intent(MenuProdutoActivity.this, SobreActivity.class);
+            startActivity(intent);
+            finish();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

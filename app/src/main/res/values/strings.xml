@@ -99,4 +99,17 @@
         <item>Outra</item>
     </string-array>
 
+    <string name="sobre">
+\n
+        Nossa Equipe:
+\n \n
+Gerente de Projetos: Vanessa Lins \n
+Testadores: Vanessa Lins, Diego das Neves \n
+Desenvolvedores: Fabrício Paes, Alexandre Jorge , Samir Soares e João Bosco \n
+Consultor Especializado: Professor Veras
+\n\n
+Você pode conferir o andamento do projeto na nossa wiki: https://goo.gl/JAahnV
+
+</string>>
+
 </resources>

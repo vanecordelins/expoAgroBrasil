@@ -423,7 +423,9 @@ public class MenuServicoActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.menu_sair) {
             GoogleSignIn.signOut(MenuServicoActivity.this, mGoogleApiClient);
         }  else if (id == R.id.menu_sobre) {
-            System.out.println("SOBRE");
+            Intent intent = new Intent(MenuServicoActivity.this, SobreActivity.class);
+            startActivity(intent);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_2);
         drawer.closeDrawer(GravityCompat.START);
