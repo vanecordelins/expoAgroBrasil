@@ -50,5 +50,5 @@
         android:layout_toLeftOf="@+id/rdoBtnProduto3"
         android:layout_toStartOf="@+id/rdoBtnProduto3"
         android:layout_marginRight="46dp"
-        android:layout_marginEnd="46dp" />
+        android:layout_marginEnd="46dp"  />
 </RelativeLayout>

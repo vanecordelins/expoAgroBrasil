@@ -4,21 +4,37 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expoagro.expoagrobrasil.R;
 import com.expoagro.expoagrobrasil.dao.UserDAO;
+import com.expoagro.expoagrobrasil.model.Avaliacao;
 import com.expoagro.expoagrobrasil.model.Usuario;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class VisualizarAnuncianteActivity extends AppCompatActivity {
+
+    private RatingBar ratingBar;
+    private RatingBar ratingBar2;
+    private TextView avaliacaoText;
+    private Avaliacao avaliacao;
+    private String idAnunciante;
+    private ArrayList<Float> listAvaliacao ;
+
+
 
     private ProgressDialog progress;
 
@@ -37,14 +53,47 @@ public class VisualizarAnuncianteActivity extends AppCompatActivity {
         progress.setCancelable(false);
 
         if (VisualizarProdutoActivity.getIdAnunciante() != null) {
-            String idAnunciante = VisualizarProdutoActivity.getIdAnunciante();
+            idAnunciante = VisualizarProdutoActivity.getIdAnunciante();
             getAnuncianteInfo(idAnunciante);
         } else if (VisualizarServicoActivity.getIdAnunciante() != null){
-            String idAnunciante = VisualizarServicoActivity.getIdAnunciante();
+            idAnunciante = VisualizarServicoActivity.getIdAnunciante();
             getAnuncianteInfo(idAnunciante);
         }
+        mediaAvalicaco();
+
+        final String ui = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar2 = (RatingBar) findViewById(R.id.ratingBar2);
+        avaliacaoText = (TextView) findViewById(R.id.avaliacaoText);
+        FirebaseDatabase.getInstance().getReference("Avaliacao").child(idAnunciante).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() == null || ratingBar2.getNumStars() != 0) {
+
+                    ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+                        @Override
+                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                            Avaliacao avaliacao = new Avaliacao(ui, v, idAnunciante);
+                            FirebaseDatabase.getInstance().getReference("Avaliacao").child(idAnunciante).child(ui).setValue(avaliacao);
+                            ratingBar.setRating(v);
+
+                            mediaAvalicaco();
+                        }
+                    });
+                }
+            }
+        });
+
         checkForConnection();
     }
+
 
     private void getAnuncianteInfo(final String id) {
         progress.show();
@@ -97,5 +146,32 @@ public class VisualizarAnuncianteActivity extends AppCompatActivity {
             progress.dismiss();
             finish();
         }
+    }
+    public void mediaAvalicaco() {
+        FirebaseDatabase.getInstance().getReference("Avaliacao").child(idAnunciante).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                float ava = 0;
+                listAvaliacao = new ArrayList();
+                for (DataSnapshot avaliacao : dataSnapshot.getChildren()) {
+                    Avaliacao a = avaliacao.getValue(Avaliacao.class);
+                    listAvaliacao.add(a.getAvaliacao());
+                }
+                for (int i = 0; i < listAvaliacao.size(); i++) {
+                    ava = listAvaliacao.get(i) + ava;
+                }
+                float ava1 = ava / listAvaliacao.size();
+                ratingBar2 = (RatingBar) findViewById(R.id.ratingBar2);
+                ratingBar2.setRating(ava1);
+                avaliacaoText.setText("" + ratingBar2.getRating());
+                progress.dismiss();
+            }
+
+        });
     }
 }

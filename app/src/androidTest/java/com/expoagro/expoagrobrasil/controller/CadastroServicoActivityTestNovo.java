@@ -40,6 +40,93 @@ public class CadastroServicoActivityTestNovo {
 
     @Test
     public void cadastroServicoActivityTest() {
+<<<<<<< HEAD
+        if(FirebaseAuth.getInstance().getCurrentUser()==null){
+
+            ViewInteraction appCompatImageButton2 = onView(
+                    allOf(withContentDescription("Open navigation drawer"),
+                            withParent(withId(R.id.toolbar)),
+                            isDisplayed()));
+            appCompatImageButton2.perform(click());
+
+            ViewInteraction appCompatTextView = onView(
+                    allOf(withId(R.id.menu_email), withText("Fazer Login"), isDisplayed()));
+            appCompatTextView.perform(click());
+
+            ViewInteraction appCompatEditText = onView(
+                    allOf(withId(R.id.campoEmail), isDisplayed()));
+            appCompatEditText.perform(replaceText("dinego.nos@gmail.com"), closeSoftKeyboard());
+
+            ViewInteraction appCompatEditText2 = onView(
+                    allOf(withId(R.id.campoSenha), isDisplayed()));
+            appCompatEditText2.perform(replaceText("123456"), closeSoftKeyboard());
+
+            ViewInteraction appCompatButton = onView(
+                    allOf(withId(R.id.btnEntrar), withText("Entrar"),
+                            withParent(withId(R.id.email_login_form)),
+                            isDisplayed()));
+            appCompatButton.perform(click());
+        }
+
+
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withContentDescription("Open navigation drawer"),
+                        withParent(withId(R.id.toolbar)),
+                        isDisplayed()));
+        appCompatImageButton2.perform(click());
+
+        ViewInteraction appCompatCheckedTextView4 = onView(
+                allOf(withId(R.id.design_menu_item_text), withText("Novo anúncio"), isDisplayed()));
+        appCompatCheckedTextView4.perform(click());
+
+
+/*        ViewInteraction appCompatRadioButton2 = onView(
+                allOf(withId(R.id.rdoBtnServico), withText("Serviço"),
+                        withParent(withId(R.id.tipoAnuncio)),
+                        isDisplayed()));
+        appCompatRadioButton2.perform(click());*/
+
+
+        ViewInteraction appCompatAutoCompleteTextView2 = onView(
+                allOf(withId(R.id.campoNomeServico), isDisplayed()));
+        appCompatAutoCompleteTextView2.perform(replaceText("servico"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText7 = onView(
+                allOf(withId(R.id.campoValor), isDisplayed()));
+        appCompatEditText7.perform(replaceText("R$1,000"), closeSoftKeyboard());
+
+
+        ViewInteraction appCompatSpinner2 = onView(
+                allOf(withId(R.id.spinnerFrequencia), isDisplayed()));
+        appCompatSpinner2.perform(click());
+
+        ViewInteraction appCompatCheckedTextView5 = onView(
+                allOf(withId(android.R.id.text1), withText("Por Dia"), isDisplayed()));
+        appCompatCheckedTextView5.perform(click());
+
+        ViewInteraction appCompatEditText11 = onView(
+                allOf(withId(R.id.campoDescricao), isDisplayed()));
+        appCompatEditText11.perform(replaceText("servico"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText12 = onView(
+                allOf(withId(R.id.campoObservacao), isDisplayed()));
+        appCompatEditText12.perform(replaceText("observaçao"), closeSoftKeyboard());
+
+
+        ViewInteraction appCompatButton2 = onView(
+                allOf(withId(R.id.btnCadastrar), isDisplayed()));
+        appCompatButton2.perform(click());
+
+        ViewInteraction appCompatButton3 = onView(
+                allOf(withId(android.R.id.button1), withText("Sim")));
+        appCompatButton3.perform(scrollTo(), click());
+
+        ViewInteraction result = onView(withText(R.string.msg_cadastro_sucesso)).inRoot(new TesteUtils.ToastMatcher())
+                .check(matches(withText("Cadastro realizado com sucesso")));
+
+        Assert.assertNotNull(result);
+
+=======
         fazerLogin();
         abreMenu(R.id.design_menu_item_text,"Novo anúncio");
         clicaEm(R.id.rdoBtnServico2,"Serviço");
@@ -52,6 +139,7 @@ public class CadastroServicoActivityTestNovo {
         clicaEm(R.id.btnCadastrar,"Cadastrar",scrollTo());
         clicaEm(android.R.id.button1,"Sim",scrollTo());
         vejaTexto("Cadastro realizado com sucesso");
+>>>>>>> 9beaa2b544845acf0f35211191e253f14c1c6611
     }
 
 }

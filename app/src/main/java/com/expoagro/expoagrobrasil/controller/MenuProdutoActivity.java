@@ -84,12 +84,12 @@ public class MenuProdutoActivity extends AppCompatActivity
         // ----------------------------------RadioButton-----------------------------------------------------------
         RadioButton rdoBtnServico = (RadioButton) findViewById(R.id.rdoBtnServico2);
         rdoBtnServico.setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View view) {
-            Intent telaCadastrarServico = new Intent(MenuProdutoActivity.this, MenuServicoActivity.class);
-            startActivity(telaCadastrarServico);
-            finish();
-                                             }
+            @Override
+            public void onClick(View view) {
+                Intent telaCadastrarServico = new Intent(MenuProdutoActivity.this, MenuServicoActivity.class);
+                startActivity(telaCadastrarServico);
+                finish();
+            }
         });
         ((RadioButton) findViewById(R.id.rdoBtnProduto2)).setChecked(true);
         // ----------------------------------RecyclerView-----------------------------------------------------------
@@ -471,5 +471,4 @@ public class MenuProdutoActivity extends AppCompatActivity
     }
 
 }
-
 
